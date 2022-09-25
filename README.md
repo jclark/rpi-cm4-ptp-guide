@@ -2,3 +2,7 @@
 
 The Raspberry Pi Compute Module 4 (CM4) has hardware support for the Precision Time Protocol (PTP).
 This goal of this repository is to be a guide to taking advantage of this.
+
+* [hardware](hardware.md)
+* [software](software.md)
+
