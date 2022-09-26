@@ -117,5 +117,6 @@ I like the metal ones better. They attach very firmly and can be easily removed 
 
 Both kinds are available in a range of heights. A height of around 5mm is ideal. I am currently using magnetic ones that are 12mm high, which I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm). These do work with the official IO board and Waveshare case (which has extra space on the left side) but are a tight fit. Shorter supports woulf work better, and would work the other cases. I have some [shorter ones](https://www.aliexpress.com/item/32858048503.html) on order. One can also get magnets with a countersunk M3 hole, which could then be used with a normal M3 spacer and screw.
 
+![image](https://user-images.githubusercontent.com/499966/192184772-14e5f688-ee55-45ed-ab7f-d67dc5e1db10.png)
 
 
