@@ -108,6 +108,17 @@ This needs two cables to connect it:
 * a cable that plugs into the antenna connector on the board and attaches to the antenna hold in the case: this needs a SMB female (plug) to SMA female bulkhead pigtail; ideal length is about 15cm; and straight works better than right-angled
 * a cable to connect from the pins on the board to the pins on the IO board: you can buy a 20cm cable consisting of a strip of 40 wires, with one end having 2.54mm Dupont 1-pin female connectors and the other end having 2.0mm 2-pin female Dupont connectors [AliExpress](https://www.aliexpress.com/item/32872192805.html), [AdaFruit](https://www.adafruit.com/product/1919), [eBay](https://www.ebay.com/itm/253963096627)
 
+| u-blox pin no | u-blox pin name | header | header pin no | header pin name | Description |
+| --- | --- | --- | --- | --- | --- |
+| 1 | VCC_ANT | HAT | 2 | 5V | Antenna power |
+| 2 | VCC | HAT | 1 | 3V3 | Operating power for GPS |
+| 3 | TXD | HAT | 10 | UART0_RXD | GPS to CM4 |
+| 4 | RST | HAT | ?? | | Reset |
+| 5 | RXD | HAT | 8 | UART0_TXD | CM4 to GPS |
+| 6 | TP1 | J2 | 9 | SYNC_OUT | Time pulse |
+| 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 |
+| 8 | GND | HAT | 6 | GND | Ground |
+
 We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 holes. There are two kinds available:
 
 * nylon PCB standoff with an adhesive base and a post that pushes through the PCB hole
