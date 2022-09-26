@@ -117,7 +117,7 @@ This needs two cables to connect it:
 | 5 | RXD | HAT | 8 | UART0_TXD | CM4 to GPS |
 | 6 | TP1 | J2 | 9 | SYNC_OUT | Time pulse |
 | 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 |
-| 8 | GND | HAT | 6 | GND | Ground |
+| 8 | GND | HAT | 6 or 14 | GND | Ground |
 
 We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 holes. There are two kinds available:
 
