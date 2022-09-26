@@ -103,11 +103,19 @@ This form factor has
 * an 8-pin connector with 2 rows of 4 pins with a 2.0mm pitch
 * 4 mounting holes in the PCB with a spacing of 26x60.5mm and a diameter of 3.1mm
 
-We therefore need
+This needs two cables to connect it:
 
 * a cable that plugs into the antenna connector on the board and attaches to the antenna hold in the case: this needs a SMB female (plug) to SMA female bulkhead pigtail; ideal length is about 15cm; and straight works better than right-angled
 * a cable to connect from the pins on the board to the pins on the IO board: you can buy a 20cm cable consisting of a strip of 40 wires, with one end having 2.54mm Dupont 1-pin female connectors and the other end having 2.0mm 2-pin female Dupont connectors [AliExpress](https://www.aliexpress.com/item/32872192805.html), [AdaFruit](https://www.adafruit.com/product/1919), [eBay](https://www.ebay.com/itm/253963096627)
-* PCB supports attaching to the top of the case. We need 4 supports designed for M3 holes. The easiest solution I have found is to use magnetic supports. These are metal columns with a round base containing a magnet and with a thread for an M3 screw at the columm. They are available in a variety of heights. I am currently using 12mm high supports that I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm); these are a bit of a tight fit and work OK with the official IO board and Waveshare case (which has extra space on the side). With shorter supports, I think it would work well with the other cases. On AliExpress you can find them by searching for "M3 magnetic screw for LED" e.g. [8mm high](https://www.aliexpress.com/item/32858048503.html).
+
+We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 holes. There are two kinds available:
+
+* nylon PCB standoff with an adhesive base and a post that pushes through the PCB hole
+* a metal stand with a magnetic base and a post threaded to accept an M3 screw; you can find these on AliExpress by searching for "M3 magnetic screw" (they seem to be mostly designed for used with LED light fittings)
+
+I like the metal ones better. They attach very firmly and can be easily removed when needed. 
+
+Both kinds are available in a range of heights. A height of around 5mm is ideal. I am currently using magnetic ones that are 12mm high, which I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm). These do work with the official IO board and Waveshare case (which has extra space on the left side) but are a tight fit. Shorter supports woulf work better, and would work the other cases. I have some [shorter ones](https://www.aliexpress.com/item/32858048503.html) on order. One can also get magnets with a countersunk M3 hole, which could then be used with a normal M3 spacer and screw.
 
 
 
