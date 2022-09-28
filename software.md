@@ -19,12 +19,11 @@ Update packages
 ```
 sudo apt update
 sudo apt upgrade
-sudo rpi-update
 ```
 
 Run `raspi-config`:
 
-* enable serial port (under Interfacing/Serial Port); answer
+* enable serial port (under Interface/Serial Port); answer
    * No to login shell accessible over serial
    * Yes to enable serial port hardware
 
@@ -58,11 +57,46 @@ Reboot.
 
 ## Verify setup
 
+Check the check the kernel version using
+
+```
+uname -r
+```
+
+This should be at least `5.15.61-v8+`.
+
 Check that you have PTP hardware support
 
 ```
 ethtool -T eth0
 ```
+
+You should see:
+
+```
+Time stamping parameters for eth0:
+Capabilities:
+        hardware-transmit
+        hardware-receive
+        hardware-raw-clock
+PTP Hardware Clock: 0
+Hardware Transmit Timestamp Modes:
+        off
+        on
+        onestep-sync
+        onestep-p2p
+Hardware Receive Filter Modes:
+        none
+        ptpv2-event
+```
+
+If the `ethtool` output doesn't look right, or the kernel version is too low, you can run
+
+```
+sudo rpi-update
+```
+
+and then reboot to update to a bleeding edge kernel.
 
 Download and compile `testptp` program:
 
@@ -86,10 +120,10 @@ Check serial connection to GPS
 cat </dev/ttyAMA0
 ```
 
-Check RTC
+Check the RTC
 
 ```
-ls -l /dev/rtc0
+sudo hwclock --show
 ```
 
 Check that the current date is correct:
