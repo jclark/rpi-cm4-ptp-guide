@@ -53,6 +53,13 @@ Set the timezone:
 sudo dpkg-reconfigure tzdata
 ```
 
+You probably want a static IP address. Edit the section of `/etc/dhcpcd.conf` starting
+`Example static IP configuration`.
+
+Use raspi-config to set
+* wifi country (under System Options)
+* hostname (under System Options)
+
 Reboot.
 
 ## Verify setup
