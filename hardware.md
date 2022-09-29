@@ -39,22 +39,24 @@ Waveshare make two boards that expose the sync pins. Each of these has its own c
 * [PoE board and case (Type B)](https://www.waveshare.com/product/cm4-io-poe-box-b.htm)
 
 
-## GPS/PPS connection
+## GPS connection
 
 The cases all have a hole that is designed to work with the [official antenna kit](https://www.raspberrypi.com/products/compute-module-4-antenna-kit/), which uses an SMA female bulkhead connector.
 The CM4 SYNC_OUT pin can be connected in two ways:
 
 * external: the SYNC_OUT signal on the carrier board can be exposed using an SMA connector on the case, and then, either
-   * an external GPS receiver can be connector to the SMA connector on the case and to a USB port on te case
+   * an external GPS receiver can be connected to the SMA connector on the case and to a USB port on te case
    * the SMA connector on the case can be connected to a device to measure the PPS signal
 * internal: a GPS module can be mounted in the case containing the CM4, with the PPS pin connected to the SYNC_OUT pin and the TX/RX pins connected to the GPIO header
 
 ### External
 
+#### SMA connector for SYNC_OUT
+
 There are two ways to expose the SYNC_OUT signal using an SMA connector on the case:
 
 * Use a cable that is an SMA female bulkhead connector on one end and a pair of Dupont female connectors on the other; this is available on eBay
-* Use a purpose-built board that exposes the pins on the IO board as a U.FL connector and then use a pigtail to connect that to a SMA connector on the case. Note that the pigtail needed here is not the same as the pigtail that comes with the official antenna kit. That uses an RP-SMA connector (suitable for wifi antennas); but we need a SMA connector (suitable for GPS/coaxial antennas).
+* Use a [purpose-built board](https://store.timebeat.app/products/raspberry-pi-cm4-1pps-breakout-board) from Timebeat that exposes the pins on the IO board as a U.FL connector and then use a pigtail to connect that to a SMA connector on the case. Note that the pigtail needed here is not the same as the pigtail that comes with the official antenna kit. That uses an RP-SMA connector (suitable for wifi antennas); but we need a SMA connector (suitable for GPS/coaxial antennas).
 
 We then need a external GPS receiver than can provide
 - a serial connection through USB, and
@@ -67,7 +69,7 @@ There are a number of GPS disciplined oscillators available. One inexpensive Chi
 - a PPS signal on a BNC connector: this needs an BNC male to SMA male cable
 - a serial signal on a DB9 connector: this needs a RS232 DB9 male to USB A cable
 
-### USB GPS module
+#### USB GPS module
 
 (I haven't tried this.)
 
@@ -80,30 +82,30 @@ Downside is that it's expensive.
 
 ### Internal
 
-### u-blox telecom form-factor
+#### Telecom form-factor
 
-There are a variety of boards available using u-blox modules that use a form-factor
-originally designed for the telecom industry. (It seems to have been made to fit the )
+There are a variety of boards available that use a form-factor originally designed for use in the telecom industry in cellular base stations. This form factor has
 
-The most recent of these is the u-blox [RCB-F9T](https://www.u-blox.com/en/product/rcb-f9t-timing-board), which is avaiable from Mouser
-and [Digikey](https://www.digikey.com/en/products/detail/u-blox/RCB-F9T/12090682). This comes in two variants the original RCB-F9T-00 which supports the L1 and L2 bands, and the RBC-F9T-01, which supports the L1 and L5 bands.  This is expensive at USD$247. There are two variants
+* a SMB male (jack) antenna connector
+* an 8-pin connector with 2 rows of 4 pins with a 2.0mm pitch; pins are 0.5mm square
+* 4 mounting holes in the PCB with a spacing of 26x60.5mm
+
+Mostly these use u-blox modules. The most recent of these is the u-blox [RCB-F9T](https://www.u-blox.com/en/product/rcb-f9t-timing-board), which is avaiable from [Mouser](https://www.mouser.com/ProductDetail/u-blox/RCB-F9T-0?qs=ljCeji4nMDkDS2PT5ijKCg%3D%3D) and [Digikey](https://www.digikey.com/en/products/detail/u-blox/RCB-F9T/12090682). This is expensive at USD$247. There are two variants
 
 * RCB-F9T-0 - this is the original model and supports the L2 band as well as the normal L1 band
 * RCB-F9T-1 - this is a newer model and supports the new L5 band (but not the L2 band) as well as the normal L5 band
 
-However, there are much cheaper boards available on eBay that use the same form factor but an older u-blox module
+However, there are much cheaper boards available on eBay that use the same form factor but older modules
 
-* [LEA-M8T](https://www.ebay.com/itm/333619130232) - $50
-* [LEA-6T](https://www.ebay.com/itm/134203045552) - $15
-* [LEA-5T](https://www.ebay.com/itm/134203047949) - $12
+* [u-blox LEA-M8T](https://www.ebay.com/itm/333619130232) - $50
+* [u-blox LEA-6T](https://www.ebay.com/itm/134203045552) - $15
+* [u-blox LEA-5T](https://www.ebay.com/itm/134203047949) - $12
+* [Trimble 66266-45](https://www.ebay.com/itm/134243323986) - $9
 
-This form factor has
+Most of the modules on eBay seem to have been manufactured for use with a Huawei base stations (specifically to plug into the UMPT unit of a BBU3900 series). There are a lot of u-blox fakes on eBay, but this form factor does not appear to be a popular target
+for fakes.
 
-* a SMB male (jack) antenna connector
-* an 8-pin connector with 2 rows of 4 pins with a 2.0mm pitch
-* 4 mounting holes in the PCB with a spacing of 26x60.5mm and a diameter of 3.1mm
-
-This needs two cables to connect it:
+A board in this form factor needs two cables to connect it:
 
 * a cable that plugs into the antenna connector on the board and attaches to the antenna hold in the case: this needs a SMB female (plug) to SMA female bulkhead pigtail; ideal length is about 15cm; and straight works better than right-angled
 * a cable to connect from the pins on the board to the pins on the IO board: you can buy a 20cm cable consisting of a strip of 40 wires, with one end having 2.54mm Dupont 1-pin female connectors and the other end having 2.0mm 2-pin female Dupont connectors [AliExpress](https://www.aliexpress.com/item/32872192805.html), [AdaFruit](https://www.adafruit.com/product/1919), [eBay](https://www.ebay.com/itm/253963096627)
@@ -119,15 +121,24 @@ This needs two cables to connect it:
 | 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 |
 | 8 | GND | HAT | 6 or 14 | GND | Ground |
 
-We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 holes. There are two kinds available:
+We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 or M2.5 holes There are two kinds available:
 
 * nylon PCB standoff with an adhesive base and a post that pushes through the PCB hole
 * a metal stand with a magnetic base and a post threaded to accept an M3 screw; you can find these on AliExpress by searching for "M3 magnetic screw" (they seem to be mostly designed for used with LED light fittings)
 
-I like the metal ones better. They attach very firmly and can be easily removed when needed. 
+Both kinds are available in a range of heights. A height of around 5mm is ideal. Things get tighter and more awkward with taller
+stands. But 12mm stands work with the official IO board and Waveshare case (which has extra space on the left side).
 
-Both kinds are available in a range of heights. A height of around 5mm is ideal. I am currently using magnetic ones that are 12mm high, which I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm). These do work with the official IO board and Waveshare case (which has extra space on the left side) but are a tight fit. Shorter supports woulf work better, and would work the other cases. I have some [shorter ones](https://www.aliexpress.com/item/32858048503.html) on order. One can also get magnets with a countersunk M3 hole, which could then be used with a normal M3 spacer and screw.
+I like the magnetic ones better. They attach very firmly and can be easily removed when needed.  I have used magnetic ones that are 12mm high, which I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm). I have some [shorter ones](https://www.aliexpress.com/item/32858048503.html) on order. I am currently using a support that combines a 10x3mm magnet with a countersunk M3 hole ([AliExpress}(https://www.aliexpress.com/item/1005002932284493.htm)), a M2.5 4mm countersunk screw, a M2.5 5mm nylon spacer, and a M2.5 4mm nylon pan head screw. (I found that an M3 countersunk screw wasn't completely flush.)
 
 ![image](https://user-images.githubusercontent.com/499966/192184772-14e5f688-ee55-45ed-ab7f-d67dc5e1db10.png)
+
+#### Time4Pi Module
+
+This is a [purpose built module](https://store.timebeat.app/products/gnss-raspberry-pi-cm4-module) from Timebeat designed for use with the CM4.
+
+There is also some [information](https://github.com/opencomputeproject/Time-Appliance-Project/tree/master/RPi-Timing/Time4Pi) in the Time Appliance Project of the Open Compute Project (initiated by Facebook).
+
+I don't know if there is a case that will work with this.
 
 
