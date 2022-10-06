@@ -10,4 +10,8 @@ This goal of this repository is to be a guide to taking advantage of this. There
 * [hardware](hardware.md) - additional bits of hardware needed
 * [software](software.md) - how to configure the needed software
 
+## References
+
+Fedora has great [docs](https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/servers/Configuring_PTP_Using_ptp4l/) for PTP, although some details are different for Raspberry Pi OS, which is Debian-based.
+
 
