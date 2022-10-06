@@ -351,7 +351,7 @@ Change `/etc/linuxptp/timemaster.conf` to the following
 ```
 # Configuration file for timemaster
 
-[ntp_server 10.56.65.10]
+[ntp_server 192.168.0.10]
 minpoll 4
 maxpoll 4
 
@@ -368,6 +368,7 @@ include /etc/chrony/chrony.conf
 
 [ptp4l.conf]
 tx_timestamp_timeout 100
+clock_servo linreg
 
 [chronyd]
 path /usr/sbin/chronyd
