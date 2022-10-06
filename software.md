@@ -187,7 +187,9 @@ Check that the current date is correct:
 date
 ```
 
-## PTP grandmaster setup
+## Minimal test setup
+
+This section describes a minimal setup suitable for testing purposes.
 
 Install Linux PTP
 
@@ -195,7 +197,7 @@ Install Linux PTP
 sudo apt install linuxptp
 ```
 
-This enables the timemaster service, which we don't want, so disable it:
+This enables the timemaster service, which we don't want at this point, so disable it:
 
 ```
 sudo systemctl disable timemaster.service
@@ -213,6 +215,13 @@ tx_timestamp_timeout 100
 [eth0]
 ```
 
+Set the PHC clock time from the system time:
+
+```
+sudo ./testptp -s
+```
+(This shouldn't be necessary, but I get `nmea: unable to find utc time in leap second table` errors from `ts2phc` otherwise.)
+
 Run `ts2phc` to synchronize the PTP hardware clock from the GPS:
 
 ```
@@ -225,6 +234,15 @@ Look at `ts2phc.log` to check everything is working:
 tail -f ts2phc.log
 ```
 
+The number following `master offset` should be small in magnitude (certainly less than 100).  Leave it running for a while.
+Then make sure you are seeing consistently small offsets.
+
+```
+awk '/master offset/ { if (($5 > 0 ? $5 : -$5) > 99) print $5 }' ts2phc.log
+```
+
+will print out offsets of 100ns or more. There should only be a few of those at the start while ts2phc is settling.
+
 When that's working, you can then start the PTP daemon
 
 ```
@@ -232,8 +250,6 @@ sudo ptp4l -f ptp.config -2 -m -q
 ```
 
 The `-2` specifies the Ethernet (Layer 2) transport.
-
-## PTP slave
 
 You can run a slave just by running ptp4l adding `-s` to the options used on the master.
 
@@ -258,3 +274,115 @@ to stop generating pulses.
 The `-w` argument gives the width of the pulse in nanoseconds; the maximum value, which is
 also the default, is 4095, meaning just over 4 microseconds.
 
+## NTP/PTP production setup
+
+This section is how to set things up robustly for production, using PTP in parallel with NTP.
+
+There are several different possible approaches to setting up the server.
+
+### Server side dual PPS
+
+This recipe assumes you have two PPS's input signals:
+
+1. GPIO pin 18 (available through `/dev/pps0`), used by gpsd
+2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc
+
+This approach uses gpsd rather thean ts2phc to process the GPS's NMEA output.
+
+Install gpsd.
+
+```
+sudo apt install gpsd
+```
+
+In `/etc/default/gpsd`, set
+
+```
+DEVICES="/dev/ttyAMA0"
+GPSD_OPTIONS="-n"
+```
+
+Install chrony.
+
+```
+sudo apt install chrony
+```
+
+Add `/etc/chrony/sources.d/pool.sources` with
+
+```
+pool th.pool.ntp.org iburst
+```
+
+where `th` is your two-character country code.
+Comment out the `pool` line from `/etc/chrony/chrony.conf`.
+
+Add `/etc/chrony/conf.d/gps.conf` with:
+
+```
+refclock SHM 0 refid NMEA noselect offset 0.4 delay 0.2
+refclock SHM 1 refid PPS precision 1e-7 lock NMEA
+```
+
+Add `/etc/chrony/conf.d/allow.conf` with the line:
+
+```
+allow
+```
+
+Use `ts2phc` with the `-s generic` rather than `-s nmea`. This will get the time of day from the system clock.
+
+```
+sudo ts2phc -f ptp.config -s generic -m -q -l 7 >ts2phc.log &
+```
+
+TODO: manage start/stop with systemd 
+
+### Client side
+
+We can use the timemaster service to manage this (which gets installed with linuxptp).
+
+Install linuxptp and chrony:
+```
+apt install linuxptp chrony
+```
+
+Change `/etc/linuxptp/timemaster.conf` to the following
+```
+# Configuration file for timemaster
+
+[ntp_server 10.56.65.10]
+minpoll 4
+maxpoll 4
+
+[ptp_domain 0]
+interfaces eth0
+ptp4l_option network_transport L2
+delay 1e-8
+
+[timemaster]
+ntp_program chronyd
+
+[chrony.conf]
+include /etc/chrony/chrony.conf
+
+[ptp4l.conf]
+tx_timestamp_timeout 100
+
+[chronyd]
+path /usr/sbin/chronyd
+
+[phc2sys]
+path /usr/sbin/phc2sys
+
+[ptp4l]
+path /usr/sbin/ptp4l
+```
+
+where `192.168.0.10` is the address of the NTP server, and uncomment the `ptp_domain` section.
+
+If you disabled timemaster earlier, then reenable it:
+
+```
+sudo systemctl enable timemaster.service
+```
