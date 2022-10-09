@@ -146,7 +146,7 @@ stands. But 12mm stands work with the official IO board and Waveshare case (whic
 
 I like the magnetic ones better. They attach very firmly and can be easily removed when needed.  I have used magnetic ones that are 12mm high, which I purchased [here](https://th.cytron.io/p-m3-pcb-stand-with-magnet-female-13x12mm). I have some [shorter ones](https://www.aliexpress.com/item/32858048503.html) on order. I am currently using a support that combines a 10x3mm magnet with a countersunk M3 hole ([AliExpress}(https://www.aliexpress.com/item/1005002932284493.htm)), a M2.5 4mm countersunk screw, a M2.5 5mm nylon spacer, and a M2.5 4mm nylon pan head screw. (I found that an M3 countersunk screw wasn't completely flush.)
 
-![image](https://user-images.githubusercontent.com/499966/192184772-14e5f688-ee55-45ed-ab7f-d67dc5e1db10.png)
+![image](https://user-images.githubusercontent.com/499966/194740152-2782eff4-5990-4798-9cb2-7234b29dc3fe.png)
 
 #### Time4Pi Module
 
