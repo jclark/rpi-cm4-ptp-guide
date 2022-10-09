@@ -282,7 +282,7 @@ There are several different possible approaches to setting up the server.
 
 ### Server side dual PPS
 
-This recipe assumes you have two PPS's input signals:
+This recipe assumes you have two PPS input signals:
 
 1. GPIO pin 18 (available through `/dev/pps0`), used by gpsd
 2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc
@@ -330,13 +330,31 @@ Add `/etc/chrony/conf.d/allow.conf` with the line:
 allow
 ```
 
+Create /etc/linuxptp/ptp4l.conf with the following:
+
+```
+[global]
+# work around bug/limitation in CM4 hardware
+tx_timestamp_timeout 100
+# ethernet transport
+network_transport L2
+```
+Then
+
+```
+sudo systemctl enable ptp4l@eth0
+sudo systemctl start ptp4l@eth0
+```
+
+
 Use `ts2phc` with the `-s generic` rather than `-s nmea`. This will get the time of day from the system clock.
 
 ```
 sudo ts2phc -f ptp.config -s generic -m -q -l 7 >ts2phc.log &
 ```
 
-TODO: manage start/stop with systemd 
+TODO: manage ts2phc with systemd 
+
 
 ### Client side
 
