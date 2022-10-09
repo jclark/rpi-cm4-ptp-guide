@@ -263,12 +263,14 @@ This section is how to set things up robustly for production, using PTP in paral
 
 There are several different possible approaches to setting up the server.
 
-### Server side dual PPS
+### Server side dual PPS with gpsd
 
 This recipe assumes you have two PPS input signals:
 
 1. GPIO pin 18 (available through `/dev/pps0`), used by gpsd
 2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc
+
+U-blox timing modules have two time pulse outputs, and these are exposed by some boards, in particular the ones in the telecom form factor.
 
 This approach uses gpsd rather thean ts2phc to process the GPS's NMEA output.
 
@@ -329,7 +331,6 @@ sudo systemctl enable ptp4l@eth0
 sudo systemctl start ptp4l@eth0
 ```
 
-
 Use `ts2phc` with the `-s generic` rather than `-s nmea`. This will get the time of day from the system clock.
 
 ```
@@ -338,6 +339,14 @@ sudo ts2phc -f ptp.config -s generic -m -q -l 7 >ts2phc.log &
 
 TODO: manage ts2phc with systemd 
 
+### Server side without gpsd
+
+You can use `ts2phc -s nmea` (as in the test setup) to adjust the PHC using the NMEA and PPS output from the GPS.
+
+You can then use chrony with `refclock PHC` to synchronize the system clock from the PHC.
+
+TODO: explain this in more detail
+Q: On the client side, it's better to sychronize the system clock from the PHC by using `phc2sys -E ntpshm` and then using chrony with `refclock SHM`, because this ensures that chrony will not use the refclock if PTP has lost synchronization. Does this apply on the server side also?
 
 ### Client side
 
