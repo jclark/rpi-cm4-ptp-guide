@@ -1,6 +1,6 @@
 # Hardware needed to use CM4's PTP support
 
-This section discusses possible hard solutions satisfying the following constraints.
+This section discusses possible hardware solutions satisfying the following constraints.
 
 * The Pulse Per Second (PPS) signal is connected to the CM4 NIC.
 * Everything is nicely contained in a case.
