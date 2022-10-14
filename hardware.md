@@ -16,7 +16,7 @@ The case depends on the carrier board, so we will discuss those together.
 
 ## Carrier board and case
 
-The most restrictive constraint on the carrier board is that it needs to expose the ethernet sync pin on CM4. There are actually two pins, which are called SYNC_OUT and SYNC_IN.  But actually SYNC_OUT does both input and output, and is the one that matters.
+The most restrictive constraint on the carrier board is that it needs to expose the ethernet sync pin on CM4. There are two sync pins, called SYNC_OUT and SYNC_IN. But actually SYNC_OUT does both input and output, and is the one that matters.
 
 All the boards includes a battery-powered Real Time Clock (RTC), which is useful.  You will need to buy a CR2032 battery for it, unless you get the Edatec case, which comes with a battery.
 
@@ -125,18 +125,23 @@ A board in this form factor needs two cables to connect it:
 * a cable that plugs into the antenna connector on the board and attaches to the antenna hold in the case: this needs a SMB female (plug) to SMA female bulkhead pigtail; ideal length is about 15cm; and straight works better than right-angled
 * a cable to connect from the pins on the board to the pins on the IO board: you can buy a 20cm cable consisting of a strip of 40 wires, with one end having 2.54mm Dupont 1-pin female connectors and the other end having 2.0mm 2-pin female Dupont connectors [AliExpress](https://www.aliexpress.com/item/32872192805.html), [AdaFruit](https://www.adafruit.com/product/1919), [eBay](https://www.ebay.com/itm/253963096627)
 
-| u-blox pin no | u-blox pin name | header | header pin no | header pin name | Description |
+The pins need to be connected as follows:
+
+| GPS pin no | u-blox pin name | IO header | header pin no | header pin name | description |
 | --- | --- | --- | --- | --- | --- |
 | 1 | VCC_ANT | HAT | 2 | 5V | Antenna power |
 | 2 | VCC | HAT | 1 | 3V3 | Operating power for GPS |
 | 3 | TXD | HAT | 10 | UART0_RXD | GPS to CM4 |
-| 4 | RST | HAT | ?? | | Reset |
+| 4 | RST | HAT |  | | Reset - not connected |
 | 5 | RXD | HAT | 8 | UART0_TXD | CM4 to GPS |
 | 6 | TP1 | J2 | 9 | SYNC_OUT | Time pulse |
 | 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 |
 | 8 | GND | HAT | 6 or 14 | GND | Ground |
 
-We also need to mount the board within the case. This can be done by using the holes in the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 or M2.5 holes There are two kinds available:
+The Time Pulse 2 signal on pin 7 is not connected on some older boards. Pin 1 supplies
+power to the antenna; the precise range of allowed voltages depends on the board. All boards appear to accept 5V.
+
+We also need to mount the board within the case. This can be done by using the holes in the board to attach the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 or M2.5 holes There are two kinds available:
 
 * nylon PCB standoff with an adhesive base and a post that pushes through the PCB hole
 * a metal stand with a magnetic base and a post threaded to accept an M3 screw; you can find these on AliExpress by searching for "M3 magnetic screw" (they seem to be mostly designed for used with LED light fittings)
