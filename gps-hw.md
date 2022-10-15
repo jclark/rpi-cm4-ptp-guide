@@ -1,58 +1,10 @@
-# Hardware needed to use CM4's PTP support
+# GPS receiver
 
-This section discusses possible hardware solutions satisfying the following constraints.
+This discusses solutions for connecting a GPS receiver solutions that satisfy the following constraints.
 
 * The Pulse Per Second (PPS) signal is connected to the CM4 NIC.
 * Everything is nicely contained in a case.
 * No DIY (no tools needed other than a screwdriver: no soldering, no crimping, no 3D printing)
-
-Apart from the CM4 itself, the components needed are:
-
-* Carrier board for the CM4
-* Case for the carrier board and CM4 module
-* GPS module
-
-The case depends on the carrier board, so we will discuss those together.
-
-## Carrier board and case
-
-The most restrictive constraint on the carrier board is that it needs to expose the ethernet sync pin on CM4. There are two sync pins, called SYNC_OUT and SYNC_IN. But actually SYNC_OUT does both input and output, and is the one that matters.
-
-All the boards includes a battery-powered Real Time Clock (RTC), which is useful.  You will need to buy a CR2032 battery for it, unless you get the Edatec case, which comes with a battery.
-
-### Official Raspberry Pi CM4 IO board
-
-The obvious choice is the [IO Board](https://www.raspberrypi.com/products/compute-module-4-io-board/) from the Raspberry Pi Foundation, which costs about $50. This is a good choice, if it's available.
-
-There are two suitable cases for this board:
-
-* [Waveshare case](https://www.waveshare.com/product/cm4-io-board-case-a.htm). There appear to be two versions of this. The newer version has a GPIO adapter that makes the 40-pin GPIO header available at the side. The older version does does.  This adapter gets would get in the way of an internal GPS unit; if it's not used, then there would be a hole in the side of the case.
-* [Edatec case](https://www.edatec.cn/en/Product/Accessories/2021/0322/101.html)
-
-The Waveshare case has a significantly better fan than the Edatec case: it's 40mm fan and has PWM support, which makes the controller on the IO board. The Edatec case has a 25mm fan, which lacks PWM support.
-
-The Waveshare case is also a few millimeters taller than the Edatec case, which makes it easier to fit an internal GPS unit.
-
-The Edatec case comes with a wifi antenna - but this isn't very useful, since we will be using the antenna hole on the case
-for either the GPS antenna or a PPS signal.
-
-### Waveshare boards
-
-Waveshare make two boards that expose the sync pins. Each of these has its own case. You can buy the board without the case, but not vice-versa, so it makes to buy the board and case together.
-
-* [PoE board and case](https://www.waveshare.com/product/cm4-io-poe-box-a.htm)
-* [PoE board and case (Type B)](https://www.waveshare.com/product/cm4-io-poe-box-b.htm)
-
-I have the first of these. Compared to the official IO board, it
-
-- does not provide a PCIe slot
-- provides 4 USB 3.0 ports
-- can be powered over PoE
-- supports a wide-range of DC input voltages
-
-The board fits snugly in the case with no spare space on any side, which makes it a little bit more difficult to fit an internal unit in.  It's a good choice if you are using an external GPS. The extra USB ports are more useful than the PCIe slot for this application.
-
-## GPS connection
 
 The cases all have a hole that is designed to work with the [official antenna kit](https://www.raspberrypi.com/products/compute-module-4-antenna-kit/), which uses an SMA female bulkhead connector.
 The CM4 SYNC_OUT pin can be connected in two ways:
@@ -62,9 +14,9 @@ The CM4 SYNC_OUT pin can be connected in two ways:
    * the SMA connector on the case can be connected to a device to measure the PPS signal
 * internal: a GPS module can be mounted in the case containing the CM4, with the PPS pin connected to the SYNC_OUT pin and the TX/RX pins connected to the GPIO header
 
-### External
+## External
 
-#### SMA connector for SYNC_OUT
+### SMA connector for SYNC_OUT
 
 There are two ways to expose the SYNC_OUT signal using an SMA connector on the case:
 
@@ -75,7 +27,7 @@ We then need a external GPS receiver than can provide
 - a serial connection through USB, and
 - a PPS signal through the SMA connector
 
-#### GPS disciplined oscillator
+### GPS disciplined oscillator
 
 There are a number of GPS disciplined oscillators available. One inexpensive Chinese model is the BG7TBL, which is widely available on AliExpress and eBay. This provides
 
@@ -84,7 +36,7 @@ There are a number of GPS disciplined oscillators available. One inexpensive Chi
 
 The version I bought ([AliExpress](https://www.aliexpress.com/item/4001022596521.html)) is based on a u-blox M8030 chip.
 
-#### USB GPS module
+### USB GPS module
 
 (I haven't tried this.)
 
@@ -95,9 +47,9 @@ The version I bought ([AliExpress](https://www.aliexpress.com/item/4001022596521
 
 Downside is that it's expensive.
 
-### Internal
+## Internal
 
-#### Telecom form-factor
+### Telecom form-factor
 
 There are a variety of boards available that use a form-factor originally designed for use in the telecom industry in cellular base stations. This form factor has
 
@@ -153,12 +105,10 @@ I like the magnetic ones better. They attach very firmly and can be easily remov
 
 ![image](https://user-images.githubusercontent.com/499966/194740152-2782eff4-5990-4798-9cb2-7234b29dc3fe.png)
 
-#### Time4Pi Module
+### Time4Pi Module
 
 This is a [purpose built module](https://store.timebeat.app/products/gnss-raspberry-pi-cm4-module) from Timebeat designed for use with the CM4.
 
 There is also some [information](https://github.com/opencomputeproject/Time-Appliance-Project/tree/master/RPi-Timing/Time4Pi) in the Time Appliance Project of the Open Compute Project (initiated by Facebook).
 
 I don't know if there is a case that will work with this.
-
-
