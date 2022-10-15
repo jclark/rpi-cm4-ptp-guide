@@ -9,6 +9,10 @@ Install Raspbian Lite 64-bit.
 If your CM4 has eMMC, follow these [instructions](https://www.raspberrypi.com/documentation/computers/compute-module.html#flashing-the-compute-module-emmc).
 When using the Raspberry Pi Imager, select `Raspberry Pi OS (other)` and then  `Raspberry Pi OS Lite (64-bit)`.
 
+TODO: installation without eMMC
+
+TODO: What is the minimum amount of RAM for 64-bit to be a better choice than 32-bit? Not sure if 1Gb RAM would work better with a 32-bit OS. 
+
 ## OS configuration
 
 If you want to do this using SSH from your main machine, then
