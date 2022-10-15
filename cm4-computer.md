@@ -1,17 +1,22 @@
 # CM4-based computer
 
-This page discusses the parts needed to create a CM4-based computer: 
+A CM4-based computer needs
 
 * CM4
 * Carrier board for the CM4
 * Case for the carrier board and CM4 module
 * Power supply
 
-The case depends on the carrier board, so we will discuss those together.
+The CM4 has been hard to buy for retail customers during 2022, unless you pay significantly above the recommended retail price. The CM4 comes in many different configurations. Any configuration should work for our purposes
 
-The most restrictive constraint on the carrier board is that it needs to expose the ethernet sync pin on CM4. There are two sync pins, called SYNC_OUT and SYNC_IN. But actually SYNC_OUT does both input and output, and is the one that matters.
+- RAM - 1Gb RAM should be enough, since we will not be installing a full desktop environment (I haven't tested less then 4Gb)
+- eMMC storage - all the carrier boards have a micro SD card slot, so eMMC storage can be used but is not essential
+- wifi - we won't be using wifi, because the antenna connector on the case is used for the GPS, but it doesn't hurt to have it
 
-All the boards includes a battery-powered Real Time Clock (RTC), which is useful.  You will need to buy a CR2032 battery for it, unless you get the Edatec case, which comes with a battery.
+There are many carrier boards available for the CM4, but we need one that
+gives access to the ethernet sync pins on the CM4, and there are only a few of those. There are two sync pins, called SYNC_OUT and SYNC_IN. But actually SYNC_OUT does both input and output, and is the one that matters. The choice of case depends on the carrier board.
+
+All the boards discussed below include a battery-powered Real Time Clock (RTC), which is useful. You will need to buy a CR2032 battery for it, unless you get the Edatec case, which comes with a battery.
 
 ## Official Raspberry Pi CM4 IO board
 
@@ -28,6 +33,8 @@ The Waveshare case is also a few millimeters taller than the Edatec case, which 
 
 The Edatec case comes with a wifi antenna - but this isn't very useful, since we will be using the antenna hole on the case
 for either the GPS antenna or a PPS signal.
+
+You will also need a 12V DC power supply with a 5.5x2.1mm barrel connector: 2A is plenty since we are not using the PCIe slot.
 
 ## Waveshare boards
 
