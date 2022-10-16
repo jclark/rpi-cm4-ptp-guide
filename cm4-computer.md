@@ -2,12 +2,16 @@
 
 A CM4-based computer needs
 
-* CM4
+* CM4 (or CM4Lite)
 * Carrier board for the CM4
 * Case for the carrier board and CM4 module
+* microSD card (only if you are using a CM4Lite, which does not include eMMC storage)
+* CR2032 coin cell battery for RTC 
 * Power supply
 
-The CM4 has been hard to buy for retail customers during 2022, unless you pay significantly above the recommended retail price. The CM4 comes in many different configurations. Any configuration should work for our purposes
+The CM4 has been hard to buy for retail customers during 2022, unless you pay significantly above the recommended retail price. The [rpilocator](https://rpilocator.com/) site can help you find one.
+
+The CM4 comes in many different configurations. Any configuration should work for our purposes
 
 - RAM - 1Gb RAM should be enough, since we will not be installing a full desktop environment (I haven't tested less then 4Gb)
 - eMMC storage - all the carrier boards have a micro SD card slot, so eMMC storage can be used but is not essential
@@ -31,7 +35,7 @@ The Waveshare case has a significantly better fan than the Edatec case: it's 40m
 
 The Waveshare case is also a few millimeters taller than the Edatec case, which makes it easier to fit an internal GPS unit.
 
-The Edatec case comes with a wifi antenna - but this isn't very useful, since we will be using the antenna hole on the case
+The Edatec case comes with a Wifi antenna - but this isn't very useful, since we will be using the antenna hole on the case
 for either the GPS antenna or a PPS signal.
 
 You will also need a 12V DC power supply with a 5.5x2.1mm barrel connector: 2A is plenty since we are not using the PCIe slot.
