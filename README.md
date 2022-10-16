@@ -1,6 +1,8 @@
 # Guide to using the hardware PTP support in the Raspberry Pi CM4
 
-The Raspberry Pi Compute Module 4 (CM4) has hardware support for the Precision Time Protocol (PTP).
+*This is still a work-in-progress. Suggestions for improvements are very welcome and can be made by creating issues.*
+
+The Raspberry Pi Compute Module 4 (CM4) has hardware support for the Precision Time Protocol (PTP). This repository is a guide to how to use this to provide an accurate source of time within your local network.
 
 Although the CM4 does not have an Ethernet jack, it does have an Ethernet PHY, the Broadcom [BCM54210PE](https://www.broadcom.com/products/ethernet-connectivity/phy-and-poe/copper/gigabit/bcm54210), which has support for PTP. Linux kernel support for this was added recently (2022), as discussed in https://github.com/raspberrypi/linux/issues/4151. This support has now been merged into the mainline Linux kernel.
 
