@@ -37,9 +37,18 @@ Another possibility is to use gpsd's [ubxtool](https://gpsd.gitlab.io/gpsd/ubxto
 sudo apt install gpsd python3-gps
 ```
 
-Then prevernt gpsd from starting automatically (otherwise it will intefere with `ts2phc` later):
+Then prevent gpsd from starting automatically (otherwise it will intefere with `ts2phc` later):
 
 ```
 systemctl stop gpsd.socket gpsd.service
 systemctl disable gpsd.socket gpsd.service
 ```
+
+Note that gpsd will put the GPS module into a mode where it communicates using the binary UBX protocol rather than NMEA, which will cause
+problems for other tools that expect the GPS module to be using NMEA. You can fix this by doing
+
+```
+gpsctl --nmea
+```
+
+before stopping gpsd.
