@@ -59,8 +59,11 @@ tx_timestamp_timeout 100
 Set the PHC clock time from the system time:
 
 ```
-sudo ./testptp -s
+sudo sudo phc_ctl eth0 "set;" adj 37
 ```
+
+The `adj 37` is because the PHC uses the TAI timescale, which is 37 seconds ahead of UTC.
+
 (This shouldn't be necessary, but I get `nmea: unable to find utc time in leap second table` errors from `ts2phc` otherwise.)
 
 Run `ts2phc` to synchronize the PTP hardware clock from the GPS:
@@ -87,15 +90,13 @@ will print out offsets of 100ns or more. There should only be a few of those at 
 When that's working, you can then start the PTP daemon
 
 ```
-sudo ptp4l -f ptp.config -2 -m -q
+sudo ptp4l -f ptp.config -m -q
 ```
-
-The `-2` specifies the Ethernet (Layer 2) transport.
 
 You can run a slave just by running ptp4l adding `-s` to the options used on the master.
 
 ```
-sudo ptp4l -f ptp.config -2 -m -q
+sudo ptp4l -f ptp.config -m -q
 ```
 
 ## PTP/NTP production setup
@@ -134,14 +135,15 @@ Install chrony.
 sudo apt install chrony
 ```
 
-Add `/etc/chrony/sources.d/pool.sources` with
+Comment out the `pool` line from `/etc/chrony/chrony.conf` and instead
+add `/etc/chrony/sources.d/pool.sources` with
 
 ```
 pool th.pool.ntp.org iburst
 ```
 
 where `th` is your two-character country code.
-Comment out the `pool` line from `/etc/chrony/chrony.conf`.
+
 
 Add `/etc/chrony/conf.d/gps.conf` with:
 
@@ -162,8 +164,6 @@ Create /etc/linuxptp/ptp4l.conf with the following:
 [global]
 # work around bug/limitation in CM4 hardware
 tx_timestamp_timeout 100
-# ethernet transport
-network_transport L2
 ```
 Then
 
@@ -172,19 +172,126 @@ sudo systemctl enable ptp4l@eth0
 sudo systemctl start ptp4l@eth0
 ```
 
-Use `ts2phc` with the `-s generic` rather than `-s nmea`. This will get the time of day from the system clock.
+Create `/etc/linuxptp/ts2phc.conf` with the following:
 
 ```
-sudo ts2phc -f ptp.config -s generic -m -q -l 7 >ts2phc.log &
+[global]
+leapfile /usr/share/zoneinfo/leap-seconds.list
+tx_timestamp_timeout 100
 ```
 
-TODO: manage ts2phc with systemd 
+Create `/etc/systemd/system/ts2phc@.service` with the following
+
+```
+[Unit]
+Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp signal
+Documentation=man:ts2phc
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/ts2phc -f /etc/linuxptp/ts2phc.conf -s generic -c %I
+
+[Install]
+WantedBy=multi-user.target
+``` 
+
+This uses `ts2phc` with the `-s generic` option, which will get the time of day from the system clock.
+
+Then tell systemd about the new service:
+
+```
+sudo systemctl daemon-reload
+```
+
+Then start the ts2phc service
+
+```
+sudo systemctl start ts2phc@eth0
+```
+
+TODO: get the right dependencies with systemd
 
 ### Server side without gpsd
 
-You can use `ts2phc -s nmea` (as in the test setup) to adjust the PHC using the NMEA and PPS output from the GPS.
+This uses `ts2phc` to handle the GPS NMEA output.
 
-You can then use chrony with `refclock PHC` to synchronize the system clock from the PHC.
+Create `/etc/linuxptp/ts2phc.conf` with the following:
+
+```
+[global]
+ts2phc.nmea_serialport /dev/ttyAMA0
+ts2phc.pulsewidth 100000000
+leapfile /usr/share/zoneinfo/leap-seconds.list
+tx_timestamp_timeout 100
+```
+
+Create `/etc/systemd/system/ts2phc@.service` with the following
+
+```
+[Unit]
+Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp signal
+Documentation=man:ts2phc
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/ts2phc -f /etc/linuxptp/ts2phc.conf -s nmea -c %I
+
+[Install]
+WantedBy=multi-user.target
+``` 
+
+Then tell systemd about the new service:
+
+```
+sudo systemctl daemon-reload
+```
+
+Then start the ts2phc service
+
+```
+sudo systemctl start ts2phc@eth0
+```
+
+Create /etc/linuxptp/ptp4l.conf with the following:
+
+```
+[global]
+# work around bug/limitation in CM4 hardware
+tx_timestamp_timeout 100
+```
+Then
+
+```
+sudo systemctl enable ptp4l@eth0
+sudo systemctl start ptp4l@eth0
+```
+
+Install chrony.
+
+```
+sudo apt install chrony
+```
+
+Add `/etc/chrony/sources.d/pool.sources` with
+
+```
+pool th.pool.ntp.org iburst
+```
+
+where `th` is your two-character country code.
+Comment out the `pool` line from `/etc/chrony/chrony.conf`.
+
+Add `/etc/chrony/conf.d/allow.conf` with the line:
+
+```
+allow
+```
+
+Add `/etc/chrony/conf.d/phc.conf` with:
+
+```
+refclock PHC /dev/ptp0 dpoll -2 offset -37 precision 1e-7
+```
 
 TODO: explain this in more detail
 Q: On the client side, it's better to sychronize the system clock from the PHC by using `phc2sys -E ntpshm` and then using chrony with `refclock SHM`, because this ensures that chrony will not use the refclock if PTP has lost synchronization. Does this apply on the server side also?
