@@ -28,13 +28,15 @@ Then to configure the client open an Administrator PowerShell and do the followi
 
 1. [Configure](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPFirewall.txt) the firewall to open the necessary ports
 
-2. Add some [registry keys](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPClientConfig.txt). Also you to enable MulticastTx `/t REG_DWORD /v MulticastTxEnabled /d 1`.
+2. Add some [registry keys](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPClientConfig.txt). Also enable MulticastTx `reg add HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\PtpClient /t REG_DWORD /v MulticastTxEnabled /d 1`.
 
 3. On Windows 11, you can now use `w32time /ptp_monitor /duration:10` to check that you are receiving PTP packets correctly. If this doesn't work, then PTP won't work. Unfortunately, there seems to be a bug that stops PTP working with some drivers. (It works on one of my network adapters but not the others). Other people have had a similar [issue](https://github.com/microsoft/SDN/issues/438). I haven't found a workaround other than to use another adapter.
 
 4. Now restart the time service. Using `stop-service w32time` and then `start-service w32time`.
 
-5. Now use `w32time /query /status /verbose` to see if everything's working. Also use Event Viewer to look at  `Applications and Services > Microsoft > Windows > Time-Service-PTP-Provider > PTP-Operational`.
+5. Now use `w32time /query /status /verbose` to see if everything's working. You can also use Event Viewer to look at  `Applications and Services > Microsoft > Windows > Time-Service-PTP-Provider > PTP-Operational`.
+
+Also set the Windows Time service Startup Type to Automatic.
 
 I have not found many Windows drivers with support for hardware timestamps. The Intel E1R driver used for I210, I211, and I350 has [support](https://www.intel.com/content/www/us/en/support/articles/000033862/ethernet-products.html).
 
