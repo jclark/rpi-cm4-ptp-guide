@@ -197,23 +197,41 @@ WantedBy=multi-user.target
 
 This uses `ts2phc` with the `-s generic` option, which will get the time of day from the system clock.
 
-Then tell systemd about the new service:
+Create `/etc/systemd/system/ptp4l-master@.service` with the following:
+
+```
+[Unit]
+Description=Precision Time Protocol (PTP) grandmaster service for %I
+Documentation=man:ptp4l
+After=sys-subsystem-net-devices-%i.device
+After=ts2phc@%i.service
+Wants=ts2phc@%i.service
+Conflicts=ptp4l@%i.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/ptp4l -f /etc/linuxptp/ptp4l.conf --masterOnly 1 -i %I
+
+[Install]
+WantedBy=multi-user.target
+```
+Then tell systemd about the new services:
 
 ```
 sudo systemctl daemon-reload
 ```
 
-Then start the ts2phc service
+Then start the ptp4l-master service
 
 ```
-sudo systemctl start ts2phc@eth0
+sudo systemctl start ptp4l-master@eth0
 ```
-
-TODO: get the right dependencies with systemd
 
 ### Server side without gpsd
 
-This uses `ts2phc` to handle the GPS NMEA output.
+This uses `ts2phc` to handle the GPS NMEA output and then synchronizes chrony to the PHC.
+
+**This doesn't work well with current kernel support (5.15.61-v8+) since getting time from the PHC interferes with ts2phc getting timestamp events.**
 
 Create `/etc/linuxptp/ts2phc.conf` with the following:
 
