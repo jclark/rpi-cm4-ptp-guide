@@ -101,18 +101,25 @@ sudo ptp4l -f ptp.config -m -q
 
 ## PTP/NTP production setup
 
-This section is how to set things up robustly for production, using PTP in parallel with NTP.
+This section is about how to set things up robustly for production, using PTP in parallel with NTP.
 
-There are several different possible approaches to setting up the server.
+There are several different possible approaches to setting up the server. In kernel 5.15.61-v8+, the support for the CM4 NIC appears to have the limitation that getting time from the PHC interferes with ts2phc getting timestamp events. To make things work reliably, we therefore avoid reading the PHC on the server. Istead, in to get accurate time for NTP, we connect PPS input signals in two places:
+
+1. GPIO pin 18 (available through `/dev/pps0`), used by chrony to control the system clock
+2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc to control the PHC
+
+U-blox timing modules starting with LEA-6T have two time pulse outputs, and these are exposed by some boards, in particular the ones in the telecom form factor.
+
+Below we describe two different approaches for using this setup.
+
+If you don't have a GPS with two time pulse outputs, you can either
+
+- solder or otherwise improvise a way to connect the one PPS output to two pins, or
+- connect a PPS input to just the SYNC_IN (and then use the 2nd approach); then run an NTP server on a separate machine which uses PTP to synchronize with the CM4
+
+If this limitation is removed, then we can instead connect the PPS input to just the SYNC_OUT pin, and synchronize chrony from the PHC. 
 
 ### Server side dual PPS with gpsd
-
-This recipe assumes you have two PPS input signals:
-
-1. GPIO pin 18 (available through `/dev/pps0`), used by gpsd
-2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc
-
-U-blox timing modules have two time pulse outputs, and these are exposed by some boards, in particular the ones in the telecom form factor.
 
 This approach uses gpsd rather thean ts2phc to process the GPS's NMEA output.
 
@@ -164,6 +171,8 @@ Create /etc/linuxptp/ptp4l.conf with the following:
 [global]
 # work around bug/limitation in CM4 hardware
 tx_timestamp_timeout 100
+clockClass 6
+clockAccuracy 0x20
 ```
 Then
 
@@ -186,6 +195,8 @@ Create `/etc/systemd/system/ts2phc@.service` with the following
 [Unit]
 Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp signal
 Documentation=man:ts2phc
+After=sys-subsystem-net-devices-%i.device
+After=time-sync.target
 
 [Service]
 Type=simple
@@ -229,9 +240,7 @@ sudo systemctl start ptp4l-master@eth0
 
 ### Server side without gpsd
 
-This uses `ts2phc` to handle the GPS NMEA output and then synchronizes chrony to the PHC.
-
-**This doesn't work well with current kernel support (5.15.61-v8+) since getting time from the PHC interferes with ts2phc getting timestamp events.**
+This uses `ts2phc` to handle the GPS NMEA output and then uses chrony with a PPS refclock.
 
 Create `/etc/linuxptp/ts2phc.conf` with the following:
 
@@ -305,14 +314,13 @@ Add `/etc/chrony/conf.d/allow.conf` with the line:
 allow
 ```
 
-Add `/etc/chrony/conf.d/phc.conf` with:
+Add `/etc/chrony/conf.d/gps.conf` with:
 
 ```
-refclock PHC /dev/ptp0 dpoll -2 offset -37 precision 1e-7
+refclock PPS /dev/pps0 precision 1e-7
 ```
 
-TODO: explain this in more detail
-Q: On the client side, it's better to sychronize the system clock from the PHC by using `phc2sys -E ntpshm` and then using chrony with `refclock SHM`, because this ensures that chrony will not use the refclock if PTP has lost synchronization. Does this apply on the server side also?
+TODO: Get systemd dependencies right. Test this approach more.
 
 ### Client side
 
