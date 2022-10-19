@@ -1,5 +1,9 @@
 # Configure time synchronization
 
+This page describes how to set things up yourself, using open source software.
+
+If this isn't your idea of fun, you might want to try [Timebeat](https://timebeat.app/). It is a commercial synchronization solution, but offers a free download. The people behind it were instrumental in implementing the kernel support for the PHC in the CM4's Ethernet PHY. 
+
 ## Verify GPS connection
 
 Download and compile `testptp` program:
