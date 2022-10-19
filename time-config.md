@@ -97,10 +97,10 @@ When that's working, you can then start the PTP daemon
 sudo ptp4l -f ptp.config -m -q
 ```
 
-You can run a slave just by running ptp4l adding `-s` to the options used on the master.
+You can run a slave on another machine just by running ptp4l adding `-s` to the options used on the master.
 
 ```
-sudo ptp4l -f ptp.config -m -q
+sudo ptp4l -f ptp.config -m -q -s
 ```
 
 ## PTP/NTP production setup
