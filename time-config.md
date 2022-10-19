@@ -121,9 +121,11 @@ If you don't have a GPS with two time pulse outputs, you can either
 - solder or otherwise improvise a way to connect the one PPS output to two pins, or
 - connect a PPS input to just the SYNC_IN (and then use the 2nd approach); then run an NTP server on a separate machine which uses PTP to synchronize with the CM4
 
-If this limitation is removed, then we can instead connect the PPS input to just the SYNC_OUT pin, and synchronize chrony from the PHC. 
+If this limitation is removed, then we can instead connect the PPS input to just the SYNC_OUT pin, and synchronize chrony from the PHC.
 
-### Server side dual PPS with gpsd
+This section assumes you have already installed linuxptp and disabled the timemaster service as described above.
+
+### Server with gpsd
 
 This approach uses gpsd rather thean ts2phc to process the GPS's NMEA output.
 
@@ -242,7 +244,7 @@ Then start the ptp4l-master service
 sudo systemctl start ptp4l-master@eth0
 ```
 
-### Server side without gpsd
+### Server without gpsd
 
 This uses `ts2phc` to handle the GPS NMEA output and then uses chrony with a PPS refclock.
 
@@ -326,7 +328,7 @@ refclock PPS /dev/pps0 precision 1e-7
 
 TODO: Get systemd dependencies right. Test this approach more.
 
-### Client side
+### Client on CM4
 
 We can use the timemaster service to manage this (which gets installed with linuxptp).
 
