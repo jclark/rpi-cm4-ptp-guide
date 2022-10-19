@@ -87,11 +87,10 @@ The pins need to be connected as follows:
 | 4 | RST | HAT |  | | Reset - not connected |
 | 5 | RXD | HAT | 8 | UART0_TXD | CM4 to GPS |
 | 6 | TP1 | J2 | 9 | SYNC_OUT | Time pulse |
-| 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 |
+| 7 | TP2 | HAT | 12 | GPIO18 | Time pulse 2 - only on RCB-F9T |
 | 8 | GND | HAT | 6 or 14 | GND | Ground |
 
-The Time Pulse 2 signal on pin 7 is not connected on some older boards. Pin 1 supplies
-power to the antenna; the precise range of allowed voltages depends on the board. All boards appear to accept 5V.
+Pin 1 supplies power to the antenna; the precise range of allowed voltages depends on the board. All boards appear to accept a range of 3.3-5V.
 
 We also need to mount the board within the case. This can be done by using the holes in the board to attach the board to the inside top of the case. It fits best over the area next to the GPIO header, which is designed to be used for a Raspbery Pi Hat, facing down, with the antenna connector facing inwards. To do this we need 4 PCB mounts suitable for M3 or M2.5 holes There are two kinds available:
 
