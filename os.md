@@ -110,6 +110,7 @@ sudo rpi-update
 ```
 
 and then reboot to update to a bleeding edge kernel.
+(I recommend not doing `rpi-update`, unless you have a problem with your kernel.)
 
 Check the RTC
 
@@ -122,3 +123,17 @@ Check that the current date is correct:
 ```
 date
 ```
+
+Check support for the fan controller. Do
+
+```
+ls /sys/class/thermal
+```
+
+You should see:
+
+```
+cooling_device0  thermal_zone0
+```
+
+
