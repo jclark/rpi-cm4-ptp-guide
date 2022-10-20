@@ -49,6 +49,14 @@ Downside is that it's expensive.
 
 ## Internal
 
+### Timebeat CM4 module
+
+This is a [purpose built module](https://store.timebeat.app/products/gnss-raspberry-pi-cm4-module) from Timebeat designed for use with the CM4. There aren't a lot of details on the Web page, but there is some [information](https://github.com/opencomputeproject/Time-Appliance-Project/tree/master/RPi-Timing/Time4CM4/Baseboard) for a slightly different version in the Time Appliance Project of the Open Compute Project (initiated by Facebook).
+
+This has a unique form factor. It is a board that is interposed between the CM4 and the carrier board. This allows it to connect the CM4 pin for SYNC_OUT to LEA-M8F PPS out, and the LEA-M8F TX/RX into the CM4 UART TX/RX. This gives the simplest possible installation, with no jumper wires required. 
+
+The LEA-M8F version, in particular, looks to me like the best solution for professional use. The LEA-M8F has some unique capabilities for holdover. The CM4 module allows the holdover capabilities to be dramatically enhanced by adding an SiT5711/5721; these are high performance OCXOs, in a small form-factor, with low power consumption, using MEMS technology.
+
 ### Telecom form-factor
 
 There are a variety of boards available that use a form-factor originally designed for use in the telecom industry in cellular base stations. This form factor has
@@ -104,10 +112,4 @@ I like the magnetic ones better. They attach very firmly and can be easily remov
 
 ![image](https://user-images.githubusercontent.com/499966/194740152-2782eff4-5990-4798-9cb2-7234b29dc3fe.png)
 
-### Time4Pi Module
 
-This is a [purpose built module](https://store.timebeat.app/products/gnss-raspberry-pi-cm4-module) from Timebeat designed for use with the CM4.
-
-There is also some [information](https://github.com/opencomputeproject/Time-Appliance-Project/tree/master/RPi-Timing/Time4Pi) in the Time Appliance Project of the Open Compute Project (initiated by Facebook).
-
-I don't know if there is a case that will work with this.
