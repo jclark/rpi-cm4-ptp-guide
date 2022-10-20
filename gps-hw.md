@@ -114,3 +114,14 @@ I like the magnetic ones better. They attach very firmly and can be easily remov
 
 ![image](https://user-images.githubusercontent.com/499966/196852504-f2f5c5d3-2563-40eb-bf34-1ff9bd247e5b.png)
 
+### Mini double-sided form factor
+
+On eBay and AliExpress there are many boards available that look like this.
+
+![image](https://user-images.githubusercontent.com/499966/196853721-5315eba8-4fab-42ce-a54d-d6c02dc5e005.png)
+![image](https://user-images.githubusercontent.com/499966/196853749-36751c30-d23c-4ace-a4c3-310d63a8d710.png)
+
+Most of these pretend to be u-blox modules, but aren't. The ones I have all use ATGM modules.  So I think it's better to use one that honestly says what it is. I got one from the [Wavgat](https://www.aliexpress.com/item/1005004402839841.html) store and one from the [Quescan](https://www.aliexpress.com/item/1005004219674527.html) store.
+
+
+
