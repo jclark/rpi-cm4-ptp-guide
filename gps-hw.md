@@ -66,7 +66,7 @@ On eBay and AliExpress there are many boards available that look like this. They
 
 Most of the ones being sold pretend to be u-blox modules, but aren't. The ones I have all use modules from [Zhongke Microelectronic](https://www.icofchina.com/).  So I think it's better to use one that honestly says what it is. This [ATGM332D](https://www.aliexpress.com/item/1005004402839841.html) from the Wavgat store worked well for me.
 
-These can be mounted inside a case easily by using a single M2.5 post. Then you can wire it up with Dupont jumpers, and a SMA-IPEX pigtail.
+These can be mounted inside a case easily by using a single M2.5 standoff in the rear left hole of the IO board. Then you can wire it up with Dupont jumpers, and a SMA-IPEX pigtail.
 
 ![image](https://user-images.githubusercontent.com/499966/196886374-44272133-6a1d-4186-9a4b-4c521b167b88.png)
 
