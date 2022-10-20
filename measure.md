@@ -23,5 +23,5 @@ If you have an oscilloscope, you can of course use that. Bear in mind that the P
 
 If you do not possess any suitable measuring equipment, the cheapest way to see the pulse is to use [sigrok](https://sigrok.org/wiki/Main_Page) with a cheap [Cypress FX2-based logic analyzer](https://sigrok.org/wiki/VKTECH_saleae_clone). These are available for about $10 on AliExpress: search for "USB 24MHz 8 channel logic analyzer".
 
-The [TAPRC TICC](https://tapr.org/product/tapr-ticc/) looks like a good option for doing much more precise measurements, at a relatively affordable price.
+The [TAPR TICC](https://tapr.org/product/tapr-ticc/) looks like a good option for doing much more precise measurements, at a relatively affordable price.
 
