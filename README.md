@@ -14,7 +14,7 @@ This goal of this repository is to be a guide to taking advantage of this. The g
 
 * [parts needed to create a CM4-based computer](cm4-computer.md)
 * [how to install and configure the operating system](os.md)
-* [options for connecting a GPS receiver](gps-hw.md)
+* [GPS receiver hardware options](gps-hw.md)
 * [how to  the configure the GPS receiver](gps-config.md)
 * [how to configure time synchronization](time-config.md)
 * [inexpensive network switches with PTP support](switches.md)
