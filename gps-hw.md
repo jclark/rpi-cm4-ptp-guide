@@ -53,7 +53,7 @@ Downside is that it's expensive.
 
 This is a [purpose built module](https://store.timebeat.app/products/gnss-raspberry-pi-cm4-module) from Timebeat designed for use with the CM4. There aren't a lot of details on the Web page, but there is some [information](https://github.com/opencomputeproject/Time-Appliance-Project/tree/master/RPi-Timing/Time4CM4/Baseboard) for a slightly different version in the Time Appliance Project of the Open Compute Project (initiated by Facebook).
 
-This has a unique form factor. It is a board that is interposed between the CM4 and the carrier board. This allows it to connect the CM4 pin for SYNC_OUT to LEA-M8F PPS out, and the LEA-M8F TX/RX into the CM4 UART TX/RX. This gives the simplest possible installation, with no jumper wires required. 
+This has a unique form factor. It is a board that is interposed between the CM4 and the carrier board. This allows it to connect the CM4 pin for SYNC_OUT to LEA-M8F PPS out, and the LEA-M8F TX/RX into the CM4 UART TX/RX pins. This gives the simplest possible installation, with no jumper wires required. It also opens up the possibility of using carrier boards that do not expose the SYNC_OUT pin, but this is limited by the protrusion on the left for the SIT modules.
 
 The LEA-M8F version, in particular, looks to me like the best solution for professional use. The LEA-M8F has some unique capabilities for holdover. The CM4 module allows the holdover capabilities to be dramatically enhanced by adding an SiT5711/5721; these are high performance OCXOs, in a small form-factor, with low power consumption, using MEMS technology.
 
