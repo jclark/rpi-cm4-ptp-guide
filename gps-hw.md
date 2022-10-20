@@ -68,6 +68,8 @@ Most of the ones being sold pretend to be u-blox modules, but aren't. The ones I
 
 These can be mounted inside a case easily by using a single M2.5 post. Then you can wire it up with Dupont jumpers, and a SMA-IPEX pigtail.
 
+![image](https://user-images.githubusercontent.com/499966/196886374-44272133-6a1d-4186-9a4b-4c521b167b88.png)
+
 ### Telecom form-factor
 
 There are a variety of boards available that use a form-factor originally designed for use in the telecom industry in cellular base stations. This form factor has
