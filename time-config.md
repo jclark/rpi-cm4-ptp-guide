@@ -107,25 +107,19 @@ sudo ptp4l -f ptp.config -m -q -s
 
 This section is about how to set things up robustly for production, using PTP in parallel with NTP.
 
-There are several different possible approaches to setting up the server. In kernel 5.15.61-v8+, the support for the CM4 NIC appears to have the limitation that getting time from the PHC interferes with ts2phc getting timestamp events. To make things work reliably, we therefore avoid reading the PHC on the server. Istead, in to get accurate time for NTP, we connect PPS input signals in two places:
+There are several different possible approaches to setting up the server. In kernel 5.15.61-v8+, the support for the CM4 NIC appears to have the limitation that getting time from the PHC interferes with ts2phc getting timestamp events. To make things work reliably, we therefore need to avoid reading the PHC on the server.
+
+This section assumes you have already installed linuxptp and disabled the timemaster service as described above.
+
+### Server with two PPS signals and gpsd
+
+**This is the approach I am currently using, but it's not really cost-effective.**
+The RCB-F9T exposes two PPS signals, which we connect in two places:
 
 1. GPIO pin 18 (available through `/dev/pps0`), used by chrony to control the system clock
 2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc to control the PHC
 
-U-blox timing modules starting with LEA-6T have two time pulse outputs, and these are exposed by some boards, in particular the ones in the telecom form factor.
-
-Below we describe two different approaches for using this setup.
-
-If you don't have a GPS with two time pulse outputs, you can either
-
-- solder or otherwise improvise a way to connect the one PPS output to two pins, or
-- connect a PPS input to just the SYNC_IN (and then use the 2nd approach); then run an NTP server on a separate machine which uses PTP to synchronize with the CM4
-
-If this limitation is removed, then we can instead connect the PPS input to just the SYNC_OUT pin, and synchronize chrony from the PHC.
-
-This section assumes you have already installed linuxptp and disabled the timemaster service as described above.
-
-### Server with gpsd
+TODO: for other GPS receivers, is there an easy way to connect the single PPS output to both of these pins?
 
 This approach uses gpsd rather thean ts2phc to process the GPS's NMEA output.
 
@@ -246,7 +240,7 @@ sudo systemctl start ptp4l-master@eth0
 
 ### Server without gpsd
 
-This uses `ts2phc` to handle the GPS NMEA output and then uses chrony with a PPS refclock.
+This uses `ts2phc -s nmea` to handle the GPS NMEA output.
 
 Create `/etc/linuxptp/ts2phc.conf` with the following:
 
@@ -320,11 +314,13 @@ Add `/etc/chrony/conf.d/allow.conf` with the line:
 allow
 ```
 
-Add `/etc/chrony/conf.d/gps.conf` with:
+The remaining problem is how to provide a refclock to chrony. If you have a separate PPS connected to the GPIO header, then you can use that as a PPS input with chrony. Add `/etc/chrony/conf.d/gps.conf` with:
 
 ```
 refclock PPS /dev/pps0 precision 1e-7
 ```
+
+The other possibility is to use a PHC refclock with a low dpoll, but I am not sure how reliable this will be.
 
 TODO: Get systemd dependencies right. Test this approach more.
 
