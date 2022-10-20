@@ -57,6 +57,17 @@ This has a unique form factor. It is a board that is interposed between the CM4 
 
 The LEA-M8F version, in particular, looks to me like the best solution for professional use. The LEA-M8F has some unique capabilities for holdover. The CM4 module allows the holdover capabilities to be dramatically enhanced by adding an SiT5711/5721; these are high performance OCXOs, in a small form-factor, with low power consumption, using MEMS technology.
 
+### Mini double-sided form factor
+
+On eBay and AliExpress there are many boards available that look like this. They seem to be intended for the Arduino market. They cost about $10.
+
+![image](https://user-images.githubusercontent.com/499966/196853721-5315eba8-4fab-42ce-a54d-d6c02dc5e005.png)
+![image](https://user-images.githubusercontent.com/499966/196853749-36751c30-d23c-4ace-a4c3-310d63a8d710.png)
+
+Most of the ones being sold pretend to be u-blox modules, but aren't. The ones I have all use modules from [Zhongke Microelectronic](https://www.icofchina.com/).  So I think it's better to use one that honestly says what it is. This [ATGM332D](https://www.aliexpress.com/item/1005004402839841.html) from the Wavgat store worked well for me.
+
+These can be mounted inside a case easily by using a single M2.5 post. Then you can wire it up with Dupont jumpers, and a SMA-IPEX pigtail.
+
 ### Telecom form-factor
 
 There are a variety of boards available that use a form-factor originally designed for use in the telecom industry in cellular base stations. This form factor has
@@ -114,14 +125,8 @@ I like the magnetic ones better. They attach very firmly and can be easily remov
 
 ![image](https://user-images.githubusercontent.com/499966/196852504-f2f5c5d3-2563-40eb-bf34-1ff9bd247e5b.png)
 
-### Mini double-sided form factor
 
-On eBay and AliExpress there are many boards available that look like this.
 
-![image](https://user-images.githubusercontent.com/499966/196853721-5315eba8-4fab-42ce-a54d-d6c02dc5e005.png)
-![image](https://user-images.githubusercontent.com/499966/196853749-36751c30-d23c-4ace-a4c3-310d63a8d710.png)
-
-Most of these pretend to be u-blox modules, but aren't. The ones I have all use ATGM modules.  So I think it's better to use one that honestly says what it is. I got one from the [Wavgat](https://www.aliexpress.com/item/1005004402839841.html) store and one from the [Quescan](https://www.aliexpress.com/item/1005004219674527.html) store.
 
 
 
