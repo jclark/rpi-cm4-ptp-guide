@@ -326,7 +326,7 @@ TODO: Get systemd dependencies right. Test this approach more.
 
 ### Client on CM4
 
-We can use the timemaster service to manage this (which gets installed with linuxptp).
+We can manage this using the timemaster service, which is part of linuxptp.
 
 Install linuxptp and chrony:
 ```
