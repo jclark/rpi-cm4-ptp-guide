@@ -1,10 +1,11 @@
 # CM4 OS installation and configuration
 
-We will be using Raspbian.
+These instructions are for the Raspberry Pi OS Lite. Raspberry Pi OS used to be called Raspbian.
+We are using the version based on Debian 11 (Bullseye), since that is current at the time of writing (late 2022). We are using Raspberry Pi OS, because we depend on kernel support that has not yet available in other distributions. We are using the Lite version, since we do not need or want a desktop environment for this application. We are also using the 64-bit version, since this takes best advantage of the CM4 hardware (particularly with 8Gb RAM).
 
 ## OS installation
 
-Install Raspbian Lite 64-bit.
+Install Raspberry Pi OS Lite 64-bit.
 
 If your CM4 has eMMC, follow these [instructions](https://www.raspberrypi.com/documentation/computers/compute-module.html#flashing-the-compute-module-emmc).
 When using the Raspberry Pi Imager, select `Raspberry Pi OS (other)` and then  `Raspberry Pi OS Lite (64-bit)`.
