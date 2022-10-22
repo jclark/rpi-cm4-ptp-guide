@@ -173,6 +173,7 @@ Create /etc/linuxptp/ptp4l.conf with the following:
 tx_timestamp_timeout 100
 clockClass 6
 clockAccuracy 0x20
+masterOnly 1
 ```
 Then
 
@@ -197,6 +198,7 @@ Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp si
 Documentation=man:ts2phc
 After=sys-subsystem-net-devices-%i.device
 After=time-sync.target
+Before=ptp4l@%i.service
 
 [Service]
 Type=simple
@@ -208,34 +210,19 @@ WantedBy=multi-user.target
 
 This uses `ts2phc` with the `-s generic` option, which will get the time of day from the system clock.
 
-Create `/etc/systemd/system/ptp4l-master@.service` with the following:
-
-```
-[Unit]
-Description=Precision Time Protocol (PTP) grandmaster service for %I
-Documentation=man:ptp4l
-After=sys-subsystem-net-devices-%i.device
-After=ts2phc@%i.service
-Wants=ts2phc@%i.service
-Conflicts=ptp4l@%i.service
-
-[Service]
-Type=simple
-ExecStart=/usr/sbin/ptp4l -f /etc/linuxptp/ptp4l.conf --masterOnly 1 -i %I
-
-[Install]
-WantedBy=multi-user.target
-```
 Then tell systemd about the new services:
 
 ```
 sudo systemctl daemon-reload
 ```
 
-Then start the ptp4l-master service
+Then enable and start the ts2phc service
 
 ```
-sudo systemctl start ptp4l-master@eth0
+sudo systemctl enable ts2phc@eth0
+sudo systemctl enable ptp4l@eth0
+sudo systemctl start ts2phc@eth0
+sudo systemctl enable ts2phc@eth0
 ```
 
 ### Server without gpsd
