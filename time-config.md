@@ -103,21 +103,123 @@ You can run a slave on another machine just by running ptp4l adding `-s` to the 
 sudo ptp4l -f ptp.config -m -q -s
 ```
 
-## PTP/NTP production setup
+## PTP server
 
-This section is about how to set things up robustly for production, using PTP in parallel with NTP.
+This sets up a PTP server using `ts2phc -s nmea` to handle the GPS NMEA output.
 
-There are several different possible approaches to setting up the server. In kernel 5.15.61-v8+, the support for the CM4 NIC appears to have the limitation that getting time from the PHC interferes with ts2phc getting timestamp events. To make things work reliably, we therefore need to avoid reading the PHC on the server.
+This assumes you have already installed linuxptp and disabled the timemaster service as described above.
 
-This section assumes you have already installed linuxptp and disabled the timemaster service as described above.
+Create `/etc/linuxptp/ts2phc.conf` with the following:
 
-### Server with two PPS signals and gpsd
+```
+[global]
+ts2phc.nmea_serialport /dev/ttyAMA0
+ts2phc.pulsewidth 100000000
+leapfile /usr/share/zoneinfo/leap-seconds.list
+tx_timestamp_timeout 100
+# Uncomment the next line to get detailed logs
+#logging_level 7
+```
 
-**This is the approach I am currently using, but it's not really cost-effective.**
-The RCB-F9T exposes two PPS signals, which we connect in two places:
+Create `/etc/systemd/system/ts2phc@.service` with the following
+
+```
+[Unit]
+Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp signal
+Documentation=man:ts2phc
+After=sys-subsystem-net-devices-%i.device
+Requires=sys-subsystem-net-devices-%i.device
+
+After=time-sync.target
+Before=ptp4l@%i.service
+
+[Service]
+Type=simple
+# We use /dev/ptp0 to avoid problem with eth0 not being attached in time
+ExecStartPre=/usr/sbin/phc_ctl /dev/ptp0 "set;" adj 37
+ExecStart=/usr/sbin/ts2phc -f /etc/linuxptp/ts2phc.conf -s nmea -c %I
+
+[Install]
+WantedBy=multi-user.target
+``` 
+
+Then tell systemd about the new service:
+
+```
+sudo systemctl daemon-reload
+```
+
+Then enable and start the ts2phc service
+
+```
+sudo systemctl enable ts2phc@eth0
+sudo systemctl start ts2phc@eth0
+```
+
+After a minute or so, you can check the PHC, by doing
+
+```
+sudo phc_ctl eth0 cmp
+```
+
+This should report an offset close to to -37s (i.e. -37000000000 ns).
+
+If you have enabled logging_level 7, then you can see detailed logs in `/var/log/user.log`:
+
+```
+Oct 22 12:08:26 rpi ts2phc: [182024.331] nmea sentence: GPRMC,050826.00,A,1343.91497,N,10038.69720,E,0.000,,221022,,,A,V
+Oct 22 12:08:27 rpi ts2phc: [182025.228] nmea delay: 150159254 ns
+Oct 22 12:08:27 rpi ts2phc: [182025.228] eth0 extts index 0 at 1666415343.999999987 corr 0 src 1666415344.897189013 diff -13
+Oct 22 12:08:27 rpi ts2phc: [182025.229] eth0 master offset        -13 s2 freq    +912
+```
+
+Note that the time from the GPMRC sentence "050826.00" meaning 05:08:26.00 UTC matches the log time "12:08:25", since
+my local time is UTC+7.
+
+Modify /etc/linuxptp/ptp4l.conf so it contains the following (you can leave the other lines as is or delete them)
+
+```
+[global]
+# work around bug/limitation in CM4 hardware
+tx_timestamp_timeout 100
+# 6 means synchronized to primary reference time source (e.g. GPS) and using PTP timescale
+clockClass 6
+# Meaning of accuracy values
+# 0x20 25ns
+# 0x21 100ns
+# 0x22 250ns
+# 0x23 1us
+# 0x24 2.5us
+# 0x25 10us
+clockAccuracy 0x20
+```
+Then
+
+```
+sudo systemctl enable ptp4l@eth0
+sudo systemctl start ptp4l@eth0
+```
+
+In kernel 5.15.61-v8+, the support for the CM4 NIC appears to have the limitation that getting time from the PHC interferes with ts2phc getting timestamp events. To make things work reliably, we therefore need to avoid reading the PHC on the server. We accordingly:
+
+- don't run phc2sys
+- don't run an NTP server (just rely on `systemd-timesyncd`) on this machine
+
+You should run your NTP server on a separate machine that is sychronized using PTP to this machine.
+You can use the PTP client section below for this.
+
+## PTP and NTP server
+
+This section is about how to set things using PTP server and NTP server on the same machine.
+
+To avoid reading the PHC, this needs PPS inputs to be connected in two places.
 
 1. GPIO pin 18 (available through `/dev/pps0`), used by chrony to control the system clock
 2. the SYNC_OUT pin (available through `/dev/ptp0`), used by ts2phc to control the PHC
+
+The RCB-F9T exposes two PPS signals which we can then connect to this pins.
+
+**This is the approach I am currently using, but the RCB-F9T is really overkill for this.**
 
 TODO: for other GPS receivers, is there an easy way to connect the single PPS output to both of these pins?
 
@@ -225,93 +327,9 @@ sudo systemctl start ts2phc@eth0
 sudo systemctl enable ts2phc@eth0
 ```
 
-### Server without gpsd
+## PTP client with NTP on CM4
 
-This uses `ts2phc -s nmea` to handle the GPS NMEA output.
-
-Create `/etc/linuxptp/ts2phc.conf` with the following:
-
-```
-[global]
-ts2phc.nmea_serialport /dev/ttyAMA0
-ts2phc.pulsewidth 100000000
-leapfile /usr/share/zoneinfo/leap-seconds.list
-tx_timestamp_timeout 100
-```
-
-Create `/etc/systemd/system/ts2phc@.service` with the following
-
-```
-[Unit]
-Description=Synchronize PTP hardware clock (PHC) of %I to external time stamp signal
-Documentation=man:ts2phc
-
-[Service]
-Type=simple
-ExecStart=/usr/sbin/ts2phc -f /etc/linuxptp/ts2phc.conf -s nmea -c %I
-
-[Install]
-WantedBy=multi-user.target
-``` 
-
-Then tell systemd about the new service:
-
-```
-sudo systemctl daemon-reload
-```
-
-Then start the ts2phc service
-
-```
-sudo systemctl start ts2phc@eth0
-```
-
-Create /etc/linuxptp/ptp4l.conf with the following:
-
-```
-[global]
-# work around bug/limitation in CM4 hardware
-tx_timestamp_timeout 100
-```
-Then
-
-```
-sudo systemctl enable ptp4l@eth0
-sudo systemctl start ptp4l@eth0
-```
-
-Install chrony.
-
-```
-sudo apt install chrony
-```
-
-Add `/etc/chrony/sources.d/pool.sources` with
-
-```
-pool th.pool.ntp.org iburst
-```
-
-where `th` is your two-character country code.
-Comment out the `pool` line from `/etc/chrony/chrony.conf`.
-
-Add `/etc/chrony/conf.d/allow.conf` with the line:
-
-```
-allow
-```
-
-The remaining problem is how to provide a refclock to chrony. If you have a separate PPS connected to the GPIO header, then you can use that as a PPS input with chrony. Add `/etc/chrony/conf.d/gps.conf` with:
-
-```
-refclock PPS /dev/pps0 precision 1e-7
-```
-
-The other possibility is to use a PHC refclock with a low dpoll, but I am not sure how reliable this will be.
-
-TODO: Get systemd dependencies right. Test this approach more.
-
-### Client on CM4
+This runs PTP as a client on a CM4 together with an NTP server that is synced from PTP. 
 
 We can manage this using the timemaster service, which is part of linuxptp.
 
@@ -345,6 +363,9 @@ clock_servo linreg
 
 [chronyd]
 path /usr/sbin/chronyd
+makestep 1 3
+# Uncomment the next line to allow this to be used as a server
+# allow
 
 [phc2sys]
 path /usr/sbin/phc2sys
