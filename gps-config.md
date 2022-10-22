@@ -30,10 +30,10 @@ Then create a new file (or replace existing file) `/etc/ser2net.yaml` containing
 ---
 connection: &con0
     accepter: tcp,2002
-    enable: on
-    connector: serialdev,/dev/ttyAMA0,9600n81,local
     options:
         kickolduser: true
+    enable: on
+    connector: serialdev,/dev/ttyAMA0,9600n81,local
 ```
 
 In the above, you will need to change 9600 to whatever your GPS module expects.
