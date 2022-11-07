@@ -4,7 +4,7 @@ Windows 10 v1809 includes a PTP client. This has been enhanced in Windows 11. Th
 
 There is a [Validation Guide](https://github.com/microsoft/W32Time/tree/master/Precision%20Time%20Protocol/docs) from Microsoft, which explains in detail how to enable it.
 
-The client supports only the UDP transport and two-step mode, which matches the default for Linux PTP. However, it requires the `currentOffsetUtcValid` flags  to be 1 in the grandmaster settings.  You can set this with `pmc` on the Raspberry Pi. I use the following shell script:
+The client supports only the UDP transport and two-step mode, which matches the default for Linux PTP. However, it requires the `currentOffsetUtcValid` flags  to be 1 in the grandmaster settings. (Without this, my Windows machine was very precisely synchronized to be 37 seconds off.) You can set this with `pmc` on the Raspberry Pi. I use the following shell script:
 
 ```
 #!/bin/sh
