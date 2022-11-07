@@ -21,6 +21,16 @@ If you want to do this using SSH from your main machine, then
 * run `raspi-config` to enable SSH (under Interfacing)
 * find the current IP address using `ifconfig`
 
+Kernel support for PTP on the CM4 is broken in one kernel version. So we need
+to prevent that from being installed by creating a file `/etc/apt/preferences`
+before upgrading.
+
+```
+Package: src:raspberrypi-firmware
+Pin: version 1:1.20221028-1
+Pin-Priority: -1
+```
+
 Update packages
 
 ```
@@ -64,22 +74,15 @@ You probably want a static IP address. Edit the section of `/etc/dhcpcd.conf` st
 `Example static IP configuration`.
 
 Use raspi-config to set
-* wifi country (under System Options)
+* wifi country (under System Options > Wireless LAN)
 * hostname (under System Options)
 
 Reboot.
 
 ## Verify OS setup
 
-Check the check the kernel version using
 
-```
-uname -r
-```
-
-This should be at least `5.15.61-v8+`.
-
-Check that you have ethernet PTP hardware support
+Check that your kernel includes the necessary have ethernet PTP hardware support
 
 ```
 ethtool -T eth0
@@ -104,14 +107,27 @@ Hardware Receive Filter Modes:
         ptpv2-event
 ```
 
-If the `ethtool` output doesn't look right, or the kernel version is too low, you can run
+If you don't see the hardware-transmit/-receive/-raw-clock lines, then
+you don't have the right kernel version. Look at your version using:
+
+```
+uname -r
+```
+
+If this is a later version than `5.15.61-v8+`, you can try downgrading to a version
+that works:
+
+```
+wget -r -l1 --no-parent -A.20220830-1_arm64.deb http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/
+sudo dpkg -i archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/*.20220830-1_arm64.deb
+```
+
+Alternatively, you could try updating to a bleeting-edge kernel by doing:
 
 ```
 sudo rpi-update
 ```
 
-and then reboot to update to a bleeding edge kernel.
-(I recommend not doing `rpi-update`, unless you have a problem with your kernel.)
 
 Check the RTC
 
@@ -136,5 +152,3 @@ You should see:
 ```
 cooling_device0  thermal_zone0
 ```
-
-
