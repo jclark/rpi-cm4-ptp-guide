@@ -21,13 +21,14 @@ If you want to do this using SSH from your main machine, then
 * run `raspi-config` to enable SSH (under Interfacing)
 * find the current IP address using `ifconfig`
 
-Kernel support for PTP on the CM4 is broken in one kernel version. So we need
-to prevent that from being installed by creating a file `/etc/apt/preferences`
+Kernel support for PTP on the CM4 is broken in some kernel versions. So we need
+to prevent them from being installed by creating a file `/etc/apt/preferences`
 before upgrading.
 
 ```
 Package: src:raspberrypi-firmware
 Pin: version 1:1.20221028-1
+Pin: version 1:1.20221104-1
 Pin-Priority: -1
 ```
 
