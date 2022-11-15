@@ -28,7 +28,7 @@ Then to configure the client open an Administrator PowerShell and do the followi
 
 1. [Configure](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPFirewall.txt) the firewall to open the necessary ports
 
-2. Add some [registry keys](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPClientConfig.txt). Also enable MulticastTx `reg add HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\PtpClient /t REG_DWORD /v MulticastTxEnabled /d 1`.
+2. Add some [registry keys](https://github.com/microsoft/W32Time/blob/master/Precision%20Time%20Protocol/Windows%20Configuration%20Helpers/PTPClientConfig.txt). Also enable MulticastTx `reg add HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\PtpClient /t REG_DWORD /v EnableMulticastTx /d 1`.
 
 3. On Windows 11, you can now use `w32tm /ptp_monitor /duration:10` to check that you are receiving PTP packets correctly. If this doesn't work, then PTP won't work.
 
