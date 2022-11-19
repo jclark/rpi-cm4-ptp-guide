@@ -1,0 +1,16 @@
+# Configurable parameters for the GM
+EXTTS_IFACE=eth0
+# Meaning of accuracy values
+# 0x20 25ns
+# 0x21 100ns
+# 0x22 250ns
+# 0x23 1us
+# 0x24 2.5us
+# 0x25 10us
+CLOCK_ACCURACY=0x23
+SERIAL_PORT=/dev/ttyAMA0
+LOG_LEVEL=7
+TX_TIMESTAMP_TIMEOUT=100
+UTC_OFFSET=37
+N_SAMPLES=1
+SAMPLE_RATE=0.07

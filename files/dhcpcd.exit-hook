@@ -1,0 +1,11 @@
+. /etc/default/ptp4l-gm
+if [ "$interface" = "$EXTTS_IFACE" ]; then
+	case "$reason" in
+		CARRIER)
+			systemctl start ptp4l-gm phc2shm
+			;;
+		NOCARRIER)
+			systemctl stop ts2phc
+			;;
+	esac
+fi

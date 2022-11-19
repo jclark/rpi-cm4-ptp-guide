@@ -1,0 +1,17 @@
+[Unit]
+Description=Precision Time Protocol (PTP) grandmaster service
+Documentation=man:ptp4l
+# We start this from a dhcpcd hook
+#After=sys-subsystem-net-devices-%i.device
+Wants=ts2phc.service
+Requires=ts2phc.service
+
+[Service]
+# Using exec so that is actually executed before the ExecStartPost
+Type=exec
+EnvironmentFile=/etc/default/ptp4l-gm
+ExecStart=/usr/sbin/ptp4l -i $EXTTS_IFACE -l $LOG_LEVEL --tx_timestamp_timeout $TX_TIMESTAMP_TIMEOUT
+ExecStartPost=/bin/bash /usr/local/sbin/ptp4l-gm-set.sh
+
+[Install]
+WantedBy=multi-user.target

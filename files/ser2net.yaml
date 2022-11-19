@@ -1,0 +1,6 @@
+---
+connection: &con0
+    accepter: tcp,2006
+    enable: on
+    connector: serialdev,/dev/ttyAMA0,9600n81,local
+

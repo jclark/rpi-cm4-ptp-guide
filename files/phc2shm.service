@@ -1,0 +1,13 @@
+[Unit]
+Description=Output samples of PTP hardware clock (PHC) to NTP-compatible shared memory segment
+Documentation=man:phc2sys
+Requires=ts2phc
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/ptp4l-gm
+ExecStart=/usr/sbin/phc2sys -s $EXTTS_IFACE -E ntpshm -O -${UTC_OFFSET} -N $N_SAMPLES -R $SAMPLE_RATE -l $LOG_LEVEL
+
+[Install]
+WantedBy=multi-user.target
+

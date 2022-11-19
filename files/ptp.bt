@@ -1,0 +1,30 @@
+// bpftrace script
+
+#include <linux/ptp_clock.h>
+#include <linux/ptp_clock_kernel.h>
+
+kprobe:ptp_clock_event
+{
+	$last_ts = @ts;
+	@ts =  ((struct ptp_clock_event *)arg1)->timestamp;
+	printf("ptp_clock_event sys=%lu, phc=%lu\n", nsecs, @ts);
+	if ($last_ts != 0) {
+		$expect = $last_ts + 1000000000;
+		$diff = $expect > @ts ? $expect - @ts : @ts - $expect;
+		if ($diff > 100000000) {
+			printf("%lu: timestamp off from expected by %lu ms\n", nsecs, $diff/1000000);
+		}
+	}
+}
+
+kprobe:ptp_ioctl
+{
+
+	if (arg1 == 0xc4c03d09) {
+		printf("PTP_SYS_OFFSET_EXTENDED n_samples=%d, sys=%lu, pid=%d\n", ((struct ptp_sys_offset_extended *)arg2)->n_samples, nsecs, pid);
+	}
+	else {
+		printf("PTP ioctl 0x%x, pid=%d\n", arg1, pid);
+	}
+}
+
