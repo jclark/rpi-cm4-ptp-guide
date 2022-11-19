@@ -1,5 +1,7 @@
 # Configurable parameters for the GM
+# network interface to which PPS signal is connected
 EXTTS_IFACE=eth0
+# Accuracy of GPS clock
 # Meaning of accuracy values
 # 0x20 25ns
 # 0x21 100ns
@@ -8,9 +10,17 @@ EXTTS_IFACE=eth0
 # 0x24 2.5us
 # 0x25 10us
 CLOCK_ACCURACY=0x23
+# serial port to which GPS is connected
 SERIAL_PORT=/dev/ttyAMA0
+# -l option
 LOG_LEVEL=7
+# works around CM4 hardware/driver issue
 TX_TIMESTAMP_TIMEOUT=100
+# number of seconds that UTC is currently behind TAI
 UTC_OFFSET=37
+# -N option for phc2sys
 N_SAMPLES=1
+# -R option for phc2sys
 SAMPLE_RATE=0.07
+# step_threshold for ts2phc
+STEP_THRESHOLD=0.9
