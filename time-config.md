@@ -63,7 +63,7 @@ tx_timestamp_timeout 100
 Set the PHC clock time from the system time:
 
 ```
-sudo sudo phc_ctl eth0 "set;" adj 37
+sudo phc_ctl eth0 "set;" adj 37
 ```
 
 The `adj 37` is because the PHC uses the TAI timescale, which is 37 seconds ahead of UTC.
