@@ -23,4 +23,7 @@ N_SAMPLES=1
 # -R option for phc2sys
 SAMPLE_RATE=0.07
 # step_threshold for ts2phc
-STEP_THRESHOLD=0.9
+STEP_THRESHOLD=0.1
+# Servo used by ts2phc to synchronize PHC from PPS
+# Can be linreg or pi 
+CLOCK_SERVO=pi
