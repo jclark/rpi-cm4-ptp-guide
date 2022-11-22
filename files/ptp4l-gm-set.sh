@@ -12,5 +12,5 @@
                 ptpTimescale            1
                 timeTraceable           1
                 frequencyTraceable      0
-                timeSource              0xa0
+                timeSource              0x20
 "
