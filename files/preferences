@@ -1,0 +1,4 @@
+Package: src:raspberrypi-firmware
+Pin: version 1:1.20221028-1
+Pin: version 1:1.20221104-1
+Pin-Priority: -1
