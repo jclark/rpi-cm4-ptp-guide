@@ -1,0 +1,37 @@
+Format: 1.8
+Date: Sun, 20 Nov 2022 20:52:15 +0700
+Source: linuxptp
+Binary: linuxptp linuxptp-dbgsym
+Architecture: source arm64
+Version: 3.1.1-4jclark1
+Distribution: unstable
+Urgency: medium
+Maintainer: Debian Multimedia Maintainers <debian-multimedia@lists.debian.org>
+Changed-By: James Clark <jjc@jclark.com>
+Description:
+ linuxptp   - Precision Time Protocol (PTP, IEEE1588) implementation for Linux
+Changes:
+ linuxptp (3.1.1-4jclark1) unstable; urgency=medium
+ .
+   * Local package
+   * ts2phc: Fix uninitialized variable in nmea_scan_rmc
+   * ts2phc: Add serial baudrate option
+   * ts2phc: Update default lstab expiry date
+Checksums-Sha1:
+ 6dd84939c56610815629da82799d1a7f4841a7ad 1174 linuxptp_3.1.1-4jclark1.dsc
+ 20f14a5b3ab6bd2f401d68f0a222f15cbecf73d4 7912 linuxptp_3.1.1-4jclark1.debian.tar.xz
+ eeb692aff3187d3870ee11c04e6aba938dd2539a 724628 linuxptp-dbgsym_3.1.1-4jclark1_arm64.deb
+ f9d7429f000be524fd976ec7139c541bcbe6ce5c 5425 linuxptp_3.1.1-4jclark1_arm64.buildinfo
+ 517bc457a94b2670ac48a0546de688e8115fbb2c 170740 linuxptp_3.1.1-4jclark1_arm64.deb
+Checksums-Sha256:
+ af2bab2c830dfa007ed9bc5a38ecaf65ba1990c93cbe8b12f6106708a4a016fe 1174 linuxptp_3.1.1-4jclark1.dsc
+ 1e6e5344b5d7d96bb5d03d77e36b449bd8a8330abe3678d8a75b35b968746403 7912 linuxptp_3.1.1-4jclark1.debian.tar.xz
+ 6de5f18454877115e9192de0c41a971d58cf1cfcf5efaaf2716ce377cfac13e5 724628 linuxptp-dbgsym_3.1.1-4jclark1_arm64.deb
+ e6f005d6ec3849a51f48043224acd13faad6d00738cb0812e0c7373899aa6963 5425 linuxptp_3.1.1-4jclark1_arm64.buildinfo
+ ac78add1a0c8f3acff81b9e5397d7d752436f16439b24465be3a61c26f125ed4 170740 linuxptp_3.1.1-4jclark1_arm64.deb
+Files:
+ 1203f88ec2b424ed2895cea86c10faea 1174 utils optional linuxptp_3.1.1-4jclark1.dsc
+ 25399de900e1d7df7ace3d2f4c95b3bb 7912 utils optional linuxptp_3.1.1-4jclark1.debian.tar.xz
+ 7e5906f4b67efa38c08973160e7e57f1 724628 debug optional linuxptp-dbgsym_3.1.1-4jclark1_arm64.deb
+ bafd65810b48688adbea938c7ef8804c 5425 utils optional linuxptp_3.1.1-4jclark1_arm64.buildinfo
+ e172326a097e781c6f0b81976128a6dc 170740 utils optional linuxptp_3.1.1-4jclark1_arm64.deb

@@ -1,0 +1,29 @@
+From 27bc9d52fa12b78abe0b3b73e162693938fbf498 Mon Sep 17 00:00:00 2001
+From: Yangbo Lu <yangbo.lu@nxp.com>
+Date: Mon, 26 Jul 2021 17:58:08 +0800
+Subject: [PATCH] lstab: update expiration to 28 December 2021
+
+Bring the built in leap second table up to date through IERS Bulletin C62.
+No new leap seconds have been scheduled for this year.
+
+Signed-off-by: Yangbo Lu <yangbo.lu@nxp.com>
+---
+ lstab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lstab.c b/lstab.c
+index 0d6a427..8971aaf 100644
+--- a/lstab.c
++++ b/lstab.c
+@@ -48,7 +48,7 @@ struct lstab {
+ 	int length;
+ };
+ 
+-static const uint64_t expiration_date_ntp = 3833827200ULL; /* 28 June 2021 */
++static const uint64_t expiration_date_ntp = 3849638400ULL; /* 28 December 2021 */
+ 
+ static const uint64_t offset_table[N_LEAPS * 2] = {
+ 	2272060800ULL,	10,	/* 1 Jan 1972 */
+-- 
+2.30.2
+

@@ -1,0 +1,119 @@
+From 47c9a2d35d567e7f4e87d2c01872fa1cce3c20b2 Mon Sep 17 00:00:00 2001
+From: Lars Munch <lars@segv.dk>
+Date: Fri, 14 May 2021 13:33:44 +0200
+Subject: [PATCH] ts2phc: Add serial baudrate option
+
+Add serial baudrate configuration option. Default to 9600 bps.
+
+Signed-off-by: Lars Munch <lars@segv.dk>
+---
+ config.c             |  1 +
+ ts2phc.8             | 23 ++++++++++++-----------
+ ts2phc_nmea_master.c | 10 +++++-----
+ 3 files changed, 18 insertions(+), 16 deletions(-)
+
+diff --git a/config.c b/config.c
+index 4472d3d..760b395 100644
+--- a/config.c
++++ b/config.c
+@@ -316,6 +316,7 @@ struct config_item config_tab[] = {
+ 	PORT_ITEM_INT("ts2phc.extts_correction", 0, INT_MIN, INT_MAX),
+ 	PORT_ITEM_ENU("ts2phc.extts_polarity", PTP_RISING_EDGE, extts_polarity_enu),
+ 	PORT_ITEM_INT("ts2phc.master", 0, 0, 1),
++	PORT_ITEM_INT("ts2phc.nmea_baudrate", 9600, 300, INT_MAX),
+ 	GLOB_ITEM_STR("ts2phc.nmea_remote_host", ""),
+ 	GLOB_ITEM_STR("ts2phc.nmea_remote_port", ""),
+ 	GLOB_ITEM_STR("ts2phc.nmea_serialport", "/dev/ttyS0"),
+diff --git a/ts2phc.8 b/ts2phc.8
+index 99067c5..690c462 100644
+--- a/ts2phc.8
++++ b/ts2phc.8
+@@ -146,19 +146,20 @@ set to 0.0, the servo will never step the clock except on start.
+ The default is 0.0.
+ .TP
+ .B ts2phc.nmea_remote_host, ts2phc.nmea_remote_port
+-Specifies the serial port character device providing ToD information
+-when using the "nmea" PPS signal source.  Note that if these two
+-options are both specified, then the given remote connection will be
+-used in preference to the configured serial port.
+-These options default to the empty string, that is, not specified.
+-.TP
+-.B ts2phc.nmea_serialport
+-Specifies the serial port character device providing ToD information
+-when using the "nmea" PPS signal source.  Note that if the options,
+-ts2phc.nmea_remote_host and ts2phc.nmea_remote_port, are both
++Specifies the remote host providing ToD information when using the
++"nmea" PPS signal source.  Note that if these two options are both
+ specified, then the given remote connection will be used in preference
+ to the configured serial port.
+-The default is "/dev/ttyS0".
++These options default to the empty string, that is, not specified.
++.TP
++.B ts2phc.nmea_serialport, ts2phc.nmea_baudrate
++Specifies the serial port and baudrate in bps for character device
++providing ToD information when using the "nmea" PPS signal source. Note
++that if the options, ts2phc.nmea_remote_host and
++ts2phc.nmea_remote_port, are both specified, then the given remote
++connection will be used in preference to the configured serial port.
++The default serial port is "/dev/ttyS0".
++The default baudrate is 9600 bps.
+ .TP
+ .B ts2phc.pulsewidth
+ The expected pulse width of the external PPS signal in nanoseconds.
+diff --git a/ts2phc_nmea_master.c b/ts2phc_nmea_master.c
+index 2fc460d..a383429 100644
+--- a/ts2phc_nmea_master.c
++++ b/ts2phc_nmea_master.c
+@@ -23,7 +23,6 @@
+ #include "ts2phc_nmea_master.h"
+ #include "util.h"
+ 
+-#define BAUD		9600
+ #define MAX_RMC_AGE	5000000000ULL
+ #define NMEA_TMO	2000 /*milliseconds*/
+ 
+@@ -45,7 +44,7 @@ struct ts2phc_nmea_master {
+ };
+ 
+ static int open_nmea_connection(const char *host, const char *port,
+-				const char *serialport)
++				const char *serialport, int baud)
+ {
+ 	int fd;
+ 
+@@ -56,7 +55,7 @@ static int open_nmea_connection(const char *host, const char *port,
+ 		}
+ 		return fd;
+ 	}
+-	fd = serial_open(serialport, BAUD, 0, 0);
++	fd = serial_open(serialport, baud, 0, 0);
+ 	if (fd == -1) {
+ 		pr_err("failed to open nmea source %s", serialport);
+ 	}
+@@ -70,7 +69,7 @@ static void *monitor_nmea_status(void *arg)
+ 	char *host, input[256], *port, *ptr, *uart;
+ 	struct ts2phc_nmea_master *master = arg;
+ 	struct timespec rxtime, tmo = { 2, 0 };
+-	int cnt, num, parsed;
++	int cnt, num, parsed, baud;
+ 	struct nmea_rmc rmc;
+ 	struct timex ntx;
+ 
+@@ -81,12 +80,13 @@ static void *monitor_nmea_status(void *arg)
+ 	host = config_get_string(master->config, NULL, "ts2phc.nmea_remote_host");
+ 	port = config_get_string(master->config, NULL, "ts2phc.nmea_remote_port");
+ 	uart = config_get_string(master->config, NULL, "ts2phc.nmea_serialport");
++	baud = config_get_int(master->config, NULL, "ts2phc.nmea_baudrate");
+ 	memset(&ntx, 0, sizeof(ntx));
+ 	ntx.modes = ADJ_NANO;
+ 
+ 	while (is_running()) {
+ 		if (pfd.fd == -1) {
+-			pfd.fd = open_nmea_connection(host, port, uart);
++			pfd.fd = open_nmea_connection(host, port, uart, baud);
+ 			if (pfd.fd == -1) {
+ 				clock_nanosleep(CLOCK_MONOTONIC, 0, &tmo, NULL);
+ 				continue;
+-- 
+2.30.2
+

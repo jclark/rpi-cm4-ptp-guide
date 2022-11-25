@@ -1,0 +1,32 @@
+From 63fc1ef4fd5e5fc45dd4de3bf27920bb109a4357 Mon Sep 17 00:00:00 2001
+From: Lars Munch <lars@segv.dk>
+Date: Fri, 14 May 2021 13:33:41 +0200
+Subject: [PATCH] ts2phc: Fix uninitialized variable in nmea_scan_rmc
+
+tm_isdst needs to be initialized to make sure mktime does not fail
+on recent versions of glibc
+
+See:
+https://bugzilla.redhat.com/show_bug.cgi?id=1653340
+https://sourceware.org/bugzilla/show_bug.cgi?id=24630
+
+Signed-off-by: Lars Munch <lars@segv.dk>
+---
+ nmea.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/nmea.c b/nmea.c
+index dc865d0..44c7c01 100644
+--- a/nmea.c
++++ b/nmea.c
+@@ -157,6 +157,7 @@ static int nmea_scan_rmc(struct nmea_parser *np, struct nmea_rmc *result)
+ 	}
+ 	tm.tm_year += 100;
+ 	tm.tm_mon--;
++	tm.tm_isdst = 0;
+ 	result->ts.tv_sec = mktime(&tm);
+ 	result->ts.tv_nsec = msec * 1000000UL;
+ 	result->fix_valid = status == 'A' ? true : false;
+-- 
+2.30.2
+

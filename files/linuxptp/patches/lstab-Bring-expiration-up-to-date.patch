@@ -1,0 +1,33 @@
+From 415b4628ecd2bf8b7de95c564e43bb0092047543 Mon Sep 17 00:00:00 2001
+From: Nikhil Gupta <nikhil.gupta@nxp.com>
+Date: Sat, 16 Jan 2021 22:21:34 +0530
+Subject: [PATCH] lstab: Bring expiration up to date.
+
+    Bring the built in leap second table up to date through IERS Bulletin C61.
+    No new leap seconds have been scheduled for this year.
+    Setting the expiration date to 28-Jun-2021 till further notice.
+
+[RC - s/C59/C61/ in description. ]
+
+Signed-off-by: Nikhil Gupta <nikhil.gupta@nxp.com>
+Reviewed-by: Poonam Aggrwal <poonam.aggrwal@nxp.com>
+---
+ lstab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lstab.c b/lstab.c
+index 391a6b9..e6e7ad2 100644
+--- a/lstab.c
++++ b/lstab.c
+@@ -48,7 +48,7 @@ struct lstab {
+ 	int length;
+ };
+ 
+-static const uint64_t expiration_date_ntp = 3818102400ULL; /* 28 December 2020 */
++static const uint64_t expiration_date_ntp = 3833827200ULL; /* 28 June 2021 */
+ 
+ static const uint64_t offset_table[N_LEAPS * 2] = {
+ 	2272060800ULL,	10,	/* 1 Jan 1972 */
+-- 
+2.30.2
+

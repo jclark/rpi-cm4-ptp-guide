@@ -1,0 +1,33 @@
+From e8843611954c8c43bfe78249164daeeae95e9739 Mon Sep 17 00:00:00 2001
+From: Maciek Machnikowski <maciek@machnikowski.net>
+Date: Mon, 17 Oct 2022 19:54:14 +0200
+Subject: [PATCH] ts2phc: Update default lstab expiry date
+
+Update leap second table expiry date to 28 June 2023 based on
+the latest leap-seconds.list from IETF
+https://www.ietf.org/timezones/data/leap-seconds.list
+
+This fixes the need to give leapfile when running ts2phc with
+the NMEA source.
+
+Signed-off-by: Maciek Machnikowski <maciek@machnikowski.net>
+---
+ lstab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lstab.c b/lstab.c
+index 8971aaf..72c02e8 100644
+--- a/lstab.c
++++ b/lstab.c
+@@ -48,7 +48,7 @@ struct lstab {
+ 	int length;
+ };
+ 
+-static const uint64_t expiration_date_ntp = 3849638400ULL; /* 28 December 2021 */
++static const uint64_t expiration_date_ntp = 3896899200ULL; /* 28 June 2023 */
+ 
+ static const uint64_t offset_table[N_LEAPS * 2] = {
+ 	2272060800ULL,	10,	/* 1 Jan 1972 */
+-- 
+2.30.2
+

@@ -1,0 +1,5 @@
+ts2phc-Fix-uninitialized-variable-in-nmea_scan_rmc.patch
+ts2phc-Add-serial-baudrate-option.patch
+lstab-Bring-expiration-up-to-date.patch
+lstab-update-expiration-to-28-December-2021.patch
+ts2phc-Update-default-lstab-expiry-date.patch

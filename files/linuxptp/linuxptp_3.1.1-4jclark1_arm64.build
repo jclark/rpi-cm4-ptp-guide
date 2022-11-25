@@ -1,0 +1,471 @@
+ dpkg-buildpackage -us -uc -ui
+dpkg-buildpackage: info: source package linuxptp
+dpkg-buildpackage: info: source version 3.1.1-4jclark1
+dpkg-buildpackage: info: source distribution unstable
+dpkg-buildpackage: info: source changed by James Clark <jjc@jclark.com>
+ dpkg-source --before-build .
+dpkg-buildpackage: info: host architecture arm64
+ fakeroot debian/rules clean
+dh clean
+   dh_auto_clean
+	make -j4 distclean
+make[1]: Entering directory '/home/jjc/src/linuxptp-3.1.1'
+rm -f bmc.o clock.o clockadj.o clockcheck.o config.o designated_fsm.o e2e_tc.o fault.o filter.o mave.o mmedian.o fsm.o hash.o interface.o monitor.o msg.o phc.o port.o port_signaling.o pqueue.o print.o ptp4l.o p2p_tc.o rtnl.o linreg.o ntpshm.o nullf.o pi.o servo.o sk.o stats.o tc.o raw.o transport.o udp.o udp6.o uds.o telecom.o tlv.o tsproc.o unicast_client.o unicast_fsm.o unicast_service.o util.o version.o hwstamp_ctl.o nsm.o phc2sys.o phc_ctl.o pmc.o pmc_common.o sysoff.o timemaster.o ts2phc.o lstab.o nmea.o serial.o sock.o ts2phc_generic_master.o ts2phc_master.o ts2phc_phc_master.o ts2phc_nmea_master.o ts2phc_slave.o bmc.d clock.d clockadj.d clockcheck.d config.d designated_fsm.d e2e_tc.d fault.d filter.d mave.d mmedian.d fsm.d hash.d interface.d monitor.d msg.d phc.d port.d port_signaling.d pqueue.d print.d ptp4l.d p2p_tc.d rtnl.d linreg.d ntpshm.d nullf.d pi.d servo.d sk.d stats.d tc.d raw.d transport.d udp.d udp6.d uds.d telecom.d tlv.d tsproc.d unicast_client.d unicast_fsm.d unicast_service.d util.d version.d hwstamp_ctl.d nsm.d phc2sys.d phc_ctl.d pmc.d pmc_common.d sysoff.d timemaster.d ts2phc.d lstab.d nmea.d serial.d sock.d ts2phc_generic_master.d ts2phc_master.d ts2phc_phc_master.d ts2phc_nmea_master.d ts2phc_slave.d ptp4l hwstamp_ctl nsm phc2sys phc_ctl pmc timemaster ts2phc
+rm -f .version
+make[1]: Leaving directory '/home/jjc/src/linuxptp-3.1.1'
+   dh_clean
+	rm -f debian/debhelper-build-stamp
+	rm -rf debian/.debhelper/
+	rm -f debian/linuxptp.debhelper.log
+	rm -f -- debian/linuxptp.substvars debian/linuxptp.postrm.debhelper debian/files
+	rm -fr -- debian/linuxptp/ debian/tmp/
+	find .  \( \( \
+		\( -path .\*/.git -o -path .\*/.svn -o -path .\*/.bzr -o -path .\*/.hg -o -path .\*/CVS -o -path .\*/.pc -o -path .\*/_darcs \) -prune -o -type f -a \
+	        \( -name '#*#' -o -name '.*~' -o -name '*~' -o -name DEADJOE \
+		 -o -name '*.orig' -o -name '*.rej' -o -name '*.bak' \
+		 -o -name '.*.orig' -o -name .*.rej -o -name '.SUMS' \
+		 -o -name TAGS -o \( -path '*/.deps/*' -a -name '*.P' \) \
+		\) -exec rm -f {} + \) -o \
+		\( -type d -a -name autom4te.cache -prune -exec rm -rf {} + \) \)
+ dpkg-source -b .
+dpkg-source: info: using source format '3.0 (quilt)'
+dpkg-source: info: building linuxptp using existing ./linuxptp_3.1.1.orig.tar.gz
+dpkg-source: info: using patch list from debian/patches/series
+dpkg-source: info: building linuxptp in linuxptp_3.1.1-4jclark1.debian.tar.xz
+dpkg-source: info: building linuxptp in linuxptp_3.1.1-4jclark1.dsc
+ debian/rules build
+dh build
+   dh_update_autotools_config
+   dh_autoreconf
+   dh_auto_configure
+	install -d /home/jjc/src/linuxptp-3.1.1/debian/.debhelper/generated/_source/home
+   dh_auto_build
+	make -j4 "INSTALL=install --strip-program=true"
+make[1]: Entering directory '/home/jjc/src/linuxptp-3.1.1'
+DEPEND ts2phc_slave.c
+DEPEND ts2phc_nmea_master.c
+DEPEND ts2phc_phc_master.c
+DEPEND ts2phc_master.c
+DEPEND ts2phc_generic_master.c
+DEPEND sock.c
+DEPEND serial.c
+DEPEND nmea.c
+DEPEND lstab.c
+DEPEND ts2phc.c
+DEPEND timemaster.c
+DEPEND sysoff.c
+DEPEND pmc_common.c
+DEPEND pmc.c
+DEPEND phc_ctl.c
+DEPEND phc2sys.c
+DEPEND nsm.c
+DEPEND hwstamp_ctl.c
+DEPEND version.c
+DEPEND util.c
+DEPEND unicast_service.c
+DEPEND unicast_fsm.c
+DEPEND unicast_client.c
+DEPEND tsproc.c
+DEPEND tlv.c
+DEPEND telecom.c
+DEPEND uds.c
+DEPEND udp6.c
+DEPEND udp.c
+DEPEND transport.c
+DEPEND raw.c
+DEPEND tc.c
+DEPEND stats.c
+DEPEND sk.c
+DEPEND servo.c
+DEPEND pi.c
+DEPEND nullf.c
+DEPEND ntpshm.c
+DEPEND linreg.c
+DEPEND rtnl.c
+DEPEND p2p_tc.c
+DEPEND ptp4l.c
+DEPEND print.c
+DEPEND pqueue.c
+DEPEND port_signaling.c
+DEPEND port.c
+DEPEND phc.c
+DEPEND msg.c
+DEPEND monitor.c
+DEPEND interface.c
+DEPEND hash.c
+DEPEND fsm.c
+DEPEND mmedian.c
+DEPEND mave.c
+DEPEND filter.c
+DEPEND fault.c
+DEPEND designated_fsm.c
+DEPEND e2e_tc.c
+DEPEND config.c
+DEPEND clockcheck.c
+DEPEND clockadj.c
+DEPEND clock.c
+DEPEND bmc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ptp4l.o ptp4l.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o bmc.o bmc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o clock.o clock.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o clockadj.o clockadj.c
+clock.c: In function ‘clock_management_fill_response’:
+clock.c:450:48: warning: taking address of packed member of ‘struct subscribe_events_np’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  450 |   clock_get_subscription(c, req, sen->bitmask, &sen->duration);
+      |                                                ^~~~~~~~~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o clockcheck.o clockcheck.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o config.o config.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o designated_fsm.o designated_fsm.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o e2e_tc.o e2e_tc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o fault.o fault.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o filter.o filter.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o mave.o mave.c
+config.c: In function ‘config_create’:
+config.c:900:38: warning: ‘%s’ directive output may be truncated writing up to 8879 bytes into a region of size 33 [-Wformat-truncation=]
+  900 |   snprintf(buf, sizeof(buf), "global.%s", ci->label);
+      |                                      ^~
+In file included from /usr/include/stdio.h:867,
+                 from config.c:23:
+/usr/include/aarch64-linux-gnu/bits/stdio2.h:67:10: note: ‘__builtin___snprintf_chk’ output between 8 and 8887 bytes into a destination of size 40
+   67 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   68 |        __bos (__s), __fmt, __va_arg_pack ());
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+config.c:349:33: warning: ‘%s’ directive output may be truncated writing up to 8879 bytes into a region of size 133 [-Wformat-truncation=]
+  349 |  snprintf(buf, sizeof(buf), "%s.%s", section, name);
+      |                                 ^~
+In file included from /usr/include/stdio.h:867,
+                 from config.c:23:
+/usr/include/aarch64-linux-gnu/bits/stdio2.h:67:10: note: ‘__builtin___snprintf_chk’ output between 8 and 8887 bytes into a destination of size 140
+   67 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   68 |        __bos (__s), __fmt, __va_arg_pack ());
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o mmedian.o mmedian.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o fsm.o fsm.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o hash.o hash.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o interface.o interface.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o monitor.o monitor.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o msg.o msg.c
+msg.c: In function ‘msg_allocate’:
+msg.c:271:8: warning: taking address of packed member of ‘struct message_storage’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  271 |    m = &s->msg;
+      |        ^~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o phc.o phc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o port.o port.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o port_signaling.o port_signaling.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o pqueue.o pqueue.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o print.o print.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o p2p_tc.o p2p_tc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o rtnl.o rtnl.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o linreg.o linreg.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ntpshm.o ntpshm.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o nullf.o nullf.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o pi.o pi.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o servo.o servo.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o sk.o sk.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o stats.o stats.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o tc.o tc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o raw.o raw.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o transport.o transport.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o udp.o udp.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o udp6.o udp6.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o uds.o uds.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o telecom.o telecom.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o tlv.o tlv.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o tsproc.o tsproc.c
+tlv.c: In function ‘mgt_post_recv’:
+tlv.c:161:16: warning: taking address of packed member of ‘struct PhysicalAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  161 |   u16 = flip16(&cd->physicalAddress->length);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c:175:10: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  175 |   flip16(&cd->protocolAddress->networkProtocol);
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c:176:16: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  176 |   u16 = flip16(&cd->protocolAddress->addressLength);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘mgt_pre_send’:
+tlv.c:369:11: warning: taking address of packed member of ‘struct PhysicalAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  369 |    flip16(&cd->physicalAddress->length);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c:370:11: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  370 |    flip16(&cd->protocolAddress->networkProtocol);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c:371:11: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  371 |    flip16(&cd->protocolAddress->addressLength);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘nsm_resp_post_recv’:
+tlv.c:502:23: warning: taking address of packed member of ‘struct currentDS’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  502 |  net2host64_unaligned(&cds->offsetFromMaster);
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+tlv.c:503:23: warning: taking address of packed member of ‘struct currentDS’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  503 |  net2host64_unaligned(&cds->meanPathDelay);
+      |                       ^~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘nsm_resp_pre_send’:
+tlv.c:538:23: warning: taking address of packed member of ‘struct currentDS’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  538 |  host2net64_unaligned(&cds->offsetFromMaster);
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+tlv.c:539:23: warning: taking address of packed member of ‘struct currentDS’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  539 |  host2net64_unaligned(&cds->meanPathDelay);
+      |                       ^~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘slave_delay_timing_data_post_revc’:
+tlv.c:615:24: warning: taking address of packed member of ‘struct slave_delay_timing_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  615 |   net2host64_unaligned(&record->totalCorrectionField);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘slave_delay_timing_data_pre_send’:
+tlv.c:639:24: warning: taking address of packed member of ‘struct slave_delay_timing_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  639 |   host2net64_unaligned(&record->totalCorrectionField);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘slave_rx_sync_timing_data_post_revc’:
+tlv.c:664:24: warning: taking address of packed member of ‘struct slave_rx_sync_timing_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  664 |   net2host64_unaligned(&record->totalCorrectionField);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tlv.c: In function ‘slave_rx_sync_timing_data_pre_send’:
+tlv.c:689:24: warning: taking address of packed member of ‘struct slave_rx_sync_timing_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  689 |   host2net64_unaligned(&record->totalCorrectionField);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o unicast_client.o unicast_client.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o unicast_fsm.o unicast_fsm.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o unicast_service.o unicast_service.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o util.o util.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o hwstamp_ctl.o hwstamp_ctl.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o nsm.o nsm.c
+util.c: In function ‘portaddr2str’:
+util.c:177:18: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  177 |  switch (align16(&addr->networkProtocol)) {
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+util.c:179:15: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  179 |   if (align16(&addr->addressLength) == 4
+      |               ^~~~~~~~~~~~~~~~~~~~
+util.c:184:15: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  184 |   if (align16(&addr->addressLength) == 16
+      |               ^~~~~~~~~~~~~~~~~~~~
+util.c:189:38: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  189 |  bin2str_impl(addr->address, align16(&addr->addressLength), buf, sizeof(buf));
+      |                                      ^~~~~~~~~~~~~~~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o phc2sys.o phc2sys.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o pmc_common.o pmc_common.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o sysoff.o sysoff.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o phc_ctl.o phc_ctl.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o pmc.o pmc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o timemaster.o timemaster.c
+pmc.c: In function ‘pmc_show’:
+pmc.c:204:13: warning: taking address of packed member of ‘struct PhysicalAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  204 |     align16(&cd->physicalAddress->length)),
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pmc.c:205:12: warning: taking address of packed member of ‘struct PortAddress’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  205 |    align16(&cd->protocolAddress->networkProtocol),
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc.o ts2phc.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o lstab.o lstab.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o nmea.o nmea.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o serial.o serial.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o sock.o sock.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc_generic_master.o ts2phc_generic_master.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc_master.o ts2phc_master.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc_phc_master.o ts2phc_phc_master.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc_nmea_master.o ts2phc_nmea_master.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o ts2phc_slave.o ts2phc_slave.c
+gcc -Wall -DVER=3.1.1  -D_GNU_SOURCE -DHAVE_CLOCK_ADJTIME -DHAVE_POSIX_SPAWN -DHAVE_ONESTEP_SYNC -DHAVE_ONESTEP_P2P  -g -O2 -ffile-prefix-map=/home/jjc/src/linuxptp-3.1.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c -o version.o version.c
+gcc -Wl,-z,relro -Wl,-z,now  ptp4l.o bmc.o clock.o clockadj.o clockcheck.o config.o designated_fsm.o e2e_tc.o fault.o filter.o mave.o mmedian.o fsm.o hash.o interface.o monitor.o msg.o phc.o port.o port_signaling.o pqueue.o print.o p2p_tc.o rtnl.o linreg.o ntpshm.o nullf.o pi.o servo.o sk.o stats.o tc.o raw.o transport.o udp.o udp6.o uds.o telecom.o tlv.o tsproc.o unicast_client.o unicast_fsm.o unicast_service.o util.o version.o  -lm -lrt -pthread  -o ptp4l
+gcc -Wl,-z,relro -Wl,-z,now  hwstamp_ctl.o version.o  -lm -lrt -pthread  -o hwstamp_ctl
+gcc -Wl,-z,relro -Wl,-z,now  nsm.o config.o filter.o mave.o mmedian.o hash.o interface.o msg.o phc.o print.o rtnl.o sk.o raw.o transport.o udp.o udp6.o uds.o tlv.o tsproc.o util.o version.o  -lm -lrt -pthread  -o nsm
+gcc -Wl,-z,relro -Wl,-z,now  phc2sys.o clockadj.o clockcheck.o config.o hash.o interface.o msg.o phc.o pmc_common.o print.o linreg.o ntpshm.o nullf.o pi.o servo.o sk.o stats.o sysoff.o tlv.o raw.o transport.o udp.o udp6.o uds.o util.o version.o  -lm -lrt -pthread  -o phc2sys
+gcc -Wl,-z,relro -Wl,-z,now  phc_ctl.o phc.o sk.o util.o clockadj.o sysoff.o print.o version.o  -lm -lrt -pthread  -o phc_ctl
+gcc -Wl,-z,relro -Wl,-z,now  pmc.o config.o hash.o interface.o msg.o phc.o pmc_common.o print.o sk.o tlv.o raw.o transport.o udp.o udp6.o uds.o util.o version.o  -lm -lrt -pthread  -o pmc
+gcc -Wl,-z,relro -Wl,-z,now  timemaster.o phc.o print.o rtnl.o sk.o util.o version.o  -lm -lrt -pthread  -o timemaster
+gcc -Wl,-z,relro -Wl,-z,now  ts2phc.o config.o clockadj.o hash.o interface.o phc.o print.o linreg.o ntpshm.o nullf.o pi.o servo.o sk.o lstab.o nmea.o serial.o sock.o ts2phc_generic_master.o ts2phc_master.o ts2phc_phc_master.o ts2phc_nmea_master.o ts2phc_slave.o util.o version.o  -lm -lrt -pthread  -o ts2phc
+make[1]: Leaving directory '/home/jjc/src/linuxptp-3.1.1'
+   dh_auto_test
+	rm -fr -- /tmp/dh-xdg-rundir-IWbZCE5f
+   create-stamp debian/debhelper-build-stamp
+ fakeroot debian/rules binary
+dh binary
+   dh_testroot
+   dh_prep
+	rm -f -- debian/linuxptp.substvars
+	rm -fr -- debian/.debhelper/generated/linuxptp/ debian/linuxptp/ debian/tmp/
+   debian/rules override_dh_auto_install
+make[1]: Entering directory '/home/jjc/src/linuxptp-3.1.1'
+dh_auto_install -- prefix=/usr mandir=/usr/share/man
+	install -d /home/jjc/src/linuxptp-3.1.1/debian/linuxptp
+	make -j4 install DESTDIR=/home/jjc/src/linuxptp-3.1.1/debian/linuxptp AM_UPDATE_INFO_DIR=no "INSTALL=install --strip-program=true" prefix=/usr mandir=/usr/share/man
+make[2]: Entering directory '/home/jjc/src/linuxptp-3.1.1'
+install -p -m 755 -d /home/jjc/src/linuxptp-3.1.1/debian/linuxptp/usr/sbin /home/jjc/src/linuxptp-3.1.1/debian/linuxptp/usr/share/man/man8
+install ptp4l hwstamp_ctl nsm phc2sys phc_ctl pmc timemaster ts2phc /home/jjc/src/linuxptp-3.1.1/debian/linuxptp/usr/sbin
+for x in ptp4l.8 hwstamp_ctl.8 nsm.8 phc2sys.8 phc_ctl.8 pmc.8 timemaster.8 ts2phc.8; do \
+	[ -f $x ] && install -p -m 644 -t /home/jjc/src/linuxptp-3.1.1/debian/linuxptp/usr/share/man/man8 $x ; \
+done
+make[2]: Leaving directory '/home/jjc/src/linuxptp-3.1.1'
+make[1]: Leaving directory '/home/jjc/src/linuxptp-3.1.1'
+   dh_install
+	install -d debian/linuxptp//etc/linuxptp/
+	cp --reflink=auto -a ./debian/timemaster.conf ./debian/tmp/dh-exec.AcgiFl7V/etc/linuxptp/ptp4l.conf debian/linuxptp//etc/linuxptp//
+	install -d debian/.debhelper/generated/linuxptp
+   dh_installdocs
+	install -d debian/linuxptp/usr/share/doc/linuxptp
+	cp --reflink=auto -a ./README.org debian/linuxptp/usr/share/doc/linuxptp
+	cd './configs/..' && find 'configs' \( -type f -or -type l \) -and ! -empty -print0 | LC_ALL=C sort -z | xargs -0 -I {} cp --reflink=auto --parents -dp {} /home/jjc/src/linuxptp-3.1.1/debian/linuxptp/usr/share/doc/linuxptp
+	chown -R 0:0 debian/linuxptp/usr/share/doc
+	chmod -R u\+rw,go=rX debian/linuxptp/usr/share/doc
+	install -p -m0644 debian/README.Debian debian/linuxptp/usr/share/doc/linuxptp/README.Debian
+	install -p -m0644 debian/copyright debian/linuxptp/usr/share/doc/linuxptp/copyright
+   dh_installchangelogs
+	install -p -m0644 debian/changelog debian/linuxptp/usr/share/doc/linuxptp/changelog.Debian
+   dh_installman
+	man-recode --to-code UTF-8 --suffix .dh-new debian/linuxptp/usr/share/man/man8/hwstamp_ctl.8 debian/linuxptp/usr/share/man/man8/nsm.8
+	man-recode --to-code UTF-8 --suffix .dh-new debian/linuxptp/usr/share/man/man8/phc2sys.8 debian/linuxptp/usr/share/man/man8/phc_ctl.8
+	man-recode --to-code UTF-8 --suffix .dh-new debian/linuxptp/usr/share/man/man8/pmc.8 debian/linuxptp/usr/share/man/man8/ptp4l.8
+	man-recode --to-code UTF-8 --suffix .dh-new debian/linuxptp/usr/share/man/man8/timemaster.8 debian/linuxptp/usr/share/man/man8/ts2phc.8
+	mv debian/linuxptp/usr/share/man/man8/phc2sys.8.dh-new debian/linuxptp/usr/share/man/man8/phc2sys.8
+	mv debian/linuxptp/usr/share/man/man8/phc_ctl.8.dh-new debian/linuxptp/usr/share/man/man8/phc_ctl.8
+	chmod 0644 -- debian/linuxptp/usr/share/man/man8/phc2sys.8 debian/linuxptp/usr/share/man/man8/phc_ctl.8
+	mv debian/linuxptp/usr/share/man/man8/hwstamp_ctl.8.dh-new debian/linuxptp/usr/share/man/man8/hwstamp_ctl.8
+	mv debian/linuxptp/usr/share/man/man8/nsm.8.dh-new debian/linuxptp/usr/share/man/man8/nsm.8
+	chmod 0644 -- debian/linuxptp/usr/share/man/man8/hwstamp_ctl.8 debian/linuxptp/usr/share/man/man8/nsm.8
+	mv debian/linuxptp/usr/share/man/man8/pmc.8.dh-new debian/linuxptp/usr/share/man/man8/pmc.8
+	mv debian/linuxptp/usr/share/man/man8/ptp4l.8.dh-new debian/linuxptp/usr/share/man/man8/ptp4l.8
+	chmod 0644 -- debian/linuxptp/usr/share/man/man8/pmc.8 debian/linuxptp/usr/share/man/man8/ptp4l.8
+	mv debian/linuxptp/usr/share/man/man8/timemaster.8.dh-new debian/linuxptp/usr/share/man/man8/timemaster.8
+	mv debian/linuxptp/usr/share/man/man8/ts2phc.8.dh-new debian/linuxptp/usr/share/man/man8/ts2phc.8
+	chmod 0644 -- debian/linuxptp/usr/share/man/man8/timemaster.8 debian/linuxptp/usr/share/man/man8/ts2phc.8
+	rm -f debian/linuxptp.debhelper.log
+   debian/rules override_dh_installsystemd
+make[1]: Entering directory '/home/jjc/src/linuxptp-3.1.1'
+dh_installsystemd --no-enable --no-start --name=ptp4l@
+	install -d debian/linuxptp/lib/systemd/system
+	install -p -m0644 debian/linuxptp.ptp4l\@.service debian/linuxptp/lib/systemd/system/ptp4l\@.service
+dh_installsystemd --no-enable --no-start --name=phc2sys@
+	install -p -m0644 debian/linuxptp.phc2sys\@.service debian/linuxptp/lib/systemd/system/phc2sys\@.service
+dh_installsystemd --no-enable --no-start --name=timemaster
+	install -p -m0644 debian/linuxptp.timemaster.service debian/linuxptp/lib/systemd/system/timemaster.service
+	[META] Append autosnippet "postinst-systemd-dont-enable" to postinst [debian/.debhelper/generated/linuxptp/postinst.service]
+	[META] Append autosnippet "postrm-systemd" to postrm [debian/linuxptp.postrm.debhelper]
+	[META] Prepend autosnippet "postrm-systemd-reload-only" to postrm [debian/linuxptp.postrm.debhelper.new]
+	mv debian/linuxptp.postrm.debhelper.new debian/linuxptp.postrm.debhelper
+make[1]: Leaving directory '/home/jjc/src/linuxptp-3.1.1'
+   dh_perl
+   dh_link
+   dh_strip_nondeterminism
+   dh_compress
+	cd debian/linuxptp
+	chmod a-x usr/share/doc/linuxptp/README.org usr/share/doc/linuxptp/changelog.Debian usr/share/man/man8/hwstamp_ctl.8 usr/share/man/man8/nsm.8 usr/share/man/man8/phc2sys.8 usr/share/man/man8/phc_ctl.8 usr/share/man/man8/pmc.8 usr/share/man/man8/ptp4l.8 usr/share/man/man8/timemaster.8 usr/share/man/man8/ts2phc.8
+	gzip -9nf usr/share/doc/linuxptp/README.org usr/share/doc/linuxptp/changelog.Debian usr/share/man/man8/hwstamp_ctl.8 usr/share/man/man8/nsm.8 usr/share/man/man8/phc2sys.8 usr/share/man/man8/phc_ctl.8 usr/share/man/man8/pmc.8 usr/share/man/man8/ptp4l.8 usr/share/man/man8/timemaster.8 usr/share/man/man8/ts2phc.8
+	cd '/home/jjc/src/linuxptp-3.1.1'
+   dh_fixperms
+	find debian/linuxptp -true -print0 2>/dev/null | xargs -0r chown --no-dereference 0:0
+	find debian/linuxptp ! -type l -a -true -a -true -print0 2>/dev/null | xargs -0r chmod go=rX,u+rw,a-s
+	find debian/linuxptp/usr/share/doc -type f -a -true -a ! -regex 'debian/linuxptp/usr/share/doc/[^/]*/examples/.*' -print0 2>/dev/null | xargs -0r chmod 0644
+	find debian/linuxptp/usr/share/doc -type d -a -true -a -true -print0 2>/dev/null | xargs -0r chmod 0755
+	find debian/linuxptp/usr/share/man -type f -a -true -a -true -print0 2>/dev/null | xargs -0r chmod 0644
+	find debian/linuxptp -type f \( -name '*.so.*' -o -name '*.so' -o -name '*.la' -o -name '*.a' -o -name '*.js' -o -name '*.css' -o -name '*.scss' -o -name '*.sass' -o -name '*.jpeg' -o -name '*.jpg' -o -name '*.png' -o -name '*.gif' -o -name '*.cmxs' -o -name '*.node' \) -a -true -a -true -print0 2>/dev/null | xargs -0r chmod 0644
+	find debian/linuxptp/usr/sbin -type f -a -true -a -true -print0 2>/dev/null | xargs -0r chmod a+x
+   dh_missing
+   dh_dwz -a
+	install -d debian/linuxptp/usr/lib/debug/.dwz/aarch64-linux-gnu
+	dwz -mdebian/linuxptp/usr/lib/debug/.dwz/aarch64-linux-gnu/linuxptp.debug -M/usr/lib/debug/.dwz/aarch64-linux-gnu/linuxptp.debug -- debian/linuxptp/usr/sbin/hwstamp_ctl debian/linuxptp/usr/sbin/nsm debian/linuxptp/usr/sbin/phc2sys debian/linuxptp/usr/sbin/phc_ctl debian/linuxptp/usr/sbin/pmc debian/linuxptp/usr/sbin/ptp4l debian/linuxptp/usr/sbin/timemaster debian/linuxptp/usr/sbin/ts2phc
+	objcopy --compress-debug-sections debian/linuxptp/usr/lib/debug/.dwz/aarch64-linux-gnu/linuxptp.debug
+   dh_strip -a
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/20
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/ts2phc debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/20/455c77163a6237c385f668804561333ce97a63.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/20/455c77163a6237c385f668804561333ce97a63.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/20/455c77163a6237c385f668804561333ce97a63.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/ts2phc
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/20/455c77163a6237c385f668804561333ce97a63.debug debian/linuxptp/usr/sbin/ts2phc
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/5b
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/hwstamp_ctl debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/5b/2ee65338c14d3fe468f2c97ee4a4ca83e67c16.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/5b/2ee65338c14d3fe468f2c97ee4a4ca83e67c16.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/5b/2ee65338c14d3fe468f2c97ee4a4ca83e67c16.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/hwstamp_ctl
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/5b/2ee65338c14d3fe468f2c97ee4a4ca83e67c16.debug debian/linuxptp/usr/sbin/hwstamp_ctl
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/1e
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/phc_ctl debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/1e/8de3155ccbc8c33f66771bb8579be568071e0a.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/1e/8de3155ccbc8c33f66771bb8579be568071e0a.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/1e/8de3155ccbc8c33f66771bb8579be568071e0a.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/phc_ctl
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/1e/8de3155ccbc8c33f66771bb8579be568071e0a.debug debian/linuxptp/usr/sbin/phc_ctl
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/bf
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/ptp4l debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/bf/c0b23539342cd584b53beb407d629b4a459b1e.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/bf/c0b23539342cd584b53beb407d629b4a459b1e.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/bf/c0b23539342cd584b53beb407d629b4a459b1e.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/ptp4l
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/bf/c0b23539342cd584b53beb407d629b4a459b1e.debug debian/linuxptp/usr/sbin/ptp4l
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/ea
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/pmc debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/ea/c70f428f6121feced6656ccbc69825e4c4b7bb.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/ea/c70f428f6121feced6656ccbc69825e4c4b7bb.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/ea/c70f428f6121feced6656ccbc69825e4c4b7bb.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/pmc
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/ea/c70f428f6121feced6656ccbc69825e4c4b7bb.debug debian/linuxptp/usr/sbin/pmc
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/8f
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/timemaster debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/8f/f170d155c159f7640a4b3a5d5ec39529b1af18.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/8f/f170d155c159f7640a4b3a5d5ec39529b1af18.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/8f/f170d155c159f7640a4b3a5d5ec39529b1af18.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/timemaster
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/8f/f170d155c159f7640a4b3a5d5ec39529b1af18.debug debian/linuxptp/usr/sbin/timemaster
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/86
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/nsm debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/86/b3f6ed7fbb3540edaab5809832e5d1f3bd00a5.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/86/b3f6ed7fbb3540edaab5809832e5d1f3bd00a5.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/86/b3f6ed7fbb3540edaab5809832e5d1f3bd00a5.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/nsm
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/86/b3f6ed7fbb3540edaab5809832e5d1f3bd00a5.debug debian/linuxptp/usr/sbin/nsm
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/60
+	objcopy --only-keep-debug --compress-debug-sections debian/linuxptp/usr/sbin/phc2sys debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/60/8b8689e130d4e43bc9f904ecfc3d9414487d49.debug
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/60/8b8689e130d4e43bc9f904ecfc3d9414487d49.debug
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/60/8b8689e130d4e43bc9f904ecfc3d9414487d49.debug
+	strip --remove-section=.comment --remove-section=.note debian/linuxptp/usr/sbin/phc2sys
+	objcopy --add-gnu-debuglink debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.build-id/60/8b8689e130d4e43bc9f904ecfc3d9414487d49.debug debian/linuxptp/usr/sbin/phc2sys
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.dwz
+	cp --reflink=auto -a debian/linuxptp/usr/lib/debug/.dwz/aarch64-linux-gnu debian/.debhelper/linuxptp/dbgsym-root/usr/lib/debug/.dwz
+	rm -fr debian/linuxptp/usr/lib/debug/.dwz
+	rmdir -p --ignore-fail-on-non-empty debian/linuxptp/usr/lib/debug
+	install -d debian/.debhelper/linuxptp/dbgsym-root/usr/share/doc
+	ln -s linuxptp debian/.debhelper/linuxptp/dbgsym-root/usr/share/doc/linuxptp-dbgsym
+   dh_makeshlibs -a
+	rm -f debian/linuxptp/DEBIAN/shlibs
+   dh_shlibdeps -a
+	install -d debian/linuxptp/DEBIAN
+	dpkg-shlibdeps -Tdebian/linuxptp.substvars debian/linuxptp/usr/sbin/ts2phc debian/linuxptp/usr/sbin/hwstamp_ctl debian/linuxptp/usr/sbin/phc_ctl debian/linuxptp/usr/sbin/ptp4l debian/linuxptp/usr/sbin/pmc debian/linuxptp/usr/sbin/timemaster debian/linuxptp/usr/sbin/nsm debian/linuxptp/usr/sbin/phc2sys
+   dh_installdeb
+	printf '#!/bin/sh\nset -e\n' > debian/linuxptp/DEBIAN/postinst
+	cat debian/.debhelper/generated/linuxptp/postinst.service >> debian/linuxptp/DEBIAN/postinst
+	chmod 0755 -- debian/linuxptp/DEBIAN/postinst
+	chown 0:0 -- debian/linuxptp/DEBIAN/postinst
+	printf '#!/bin/sh\nset -e\n' > debian/linuxptp/DEBIAN/postrm
+	cat debian/linuxptp.postrm.debhelper >> debian/linuxptp/DEBIAN/postrm
+	chmod 0755 -- debian/linuxptp/DEBIAN/postrm
+	chown 0:0 -- debian/linuxptp/DEBIAN/postrm
+	find debian/linuxptp/etc -type f -printf '/etc/%P
+' | LC_ALL=C sort >> debian/linuxptp/DEBIAN/conffiles
+	chmod 0644 -- debian/linuxptp/DEBIAN/conffiles
+	chown 0:0 -- debian/linuxptp/DEBIAN/conffiles
+   dh_gencontrol
+	echo misc:Depends= >> debian/linuxptp.substvars
+	echo misc:Pre-Depends= >> debian/linuxptp.substvars
+	install -d debian/.debhelper/linuxptp/dbgsym-root/DEBIAN
+	dpkg-gencontrol -plinuxptp -ldebian/changelog -Tdebian/linuxptp.substvars -Pdebian/.debhelper/linuxptp/dbgsym-root -UPre-Depends -URecommends -USuggests -UEnhances -UProvides -UEssential -UConflicts -DPriority=optional -UHomepage -UImportant -UBuilt-Using -DAuto-Built-Package=debug-symbols -UProtected -DPackage=linuxptp-dbgsym "-DDepends=linuxptp (= \${binary:Version})" "-DDescription=debug symbols for linuxptp" "-DBuild-Ids=1e8de3155ccbc8c33f66771bb8579be568071e0a 20455c77163a6237c385f668804561333ce97a63 5b2ee65338c14d3fe468f2c97ee4a4ca83e67c16 608b8689e130d4e43bc9f904ecfc3d9414487d49 86b3f6ed7fbb3540edaab5809832e5d1f3bd00a5 8ff170d155c159f7640a4b3a5d5ec39529b1af18 bfc0b23539342cd584b53beb407d629b4a459b1e eac70f428f6121feced6656ccbc69825e4c4b7bb" -DSection=debug -UMulti-Arch -UReplaces -UBreaks
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/DEBIAN/control
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/DEBIAN/control
+	dpkg-gencontrol -plinuxptp -ldebian/changelog -Tdebian/linuxptp.substvars -Pdebian/linuxptp
+	chmod 0644 -- debian/linuxptp/DEBIAN/control
+	chown 0:0 -- debian/linuxptp/DEBIAN/control
+   dh_md5sums
+	cd debian/linuxptp >/dev/null && xargs -r0 md5sum | perl -pe 'if (s@^\\@@) { s/\\\\/\\/g; }' > DEBIAN/md5sums
+	chmod 0644 -- debian/linuxptp/DEBIAN/md5sums
+	chown 0:0 -- debian/linuxptp/DEBIAN/md5sums
+	cd debian/.debhelper/linuxptp/dbgsym-root >/dev/null && xargs -r0 md5sum | perl -pe 'if (s@^\\@@) { s/\\\\/\\/g; }' > DEBIAN/md5sums
+	chmod 0644 -- debian/.debhelper/linuxptp/dbgsym-root/DEBIAN/md5sums
+	chown 0:0 -- debian/.debhelper/linuxptp/dbgsym-root/DEBIAN/md5sums
+   dh_builddeb
+	dpkg-deb --build debian/linuxptp ..
+	dpkg-deb --build debian/.debhelper/linuxptp/dbgsym-root ..
+dpkg-deb: building package 'linuxptp-dbgsym' in '../linuxptp-dbgsym_3.1.1-4jclark1_arm64.deb'.
+dpkg-deb: building package 'linuxptp' in '../linuxptp_3.1.1-4jclark1_arm64.deb'.
+ dpkg-genbuildinfo
+ dpkg-genchanges  >../linuxptp_3.1.1-4jclark1_arm64.changes
+dpkg-genchanges: info: not including original source code in upload
+ dpkg-source --after-build .
+dpkg-buildpackage: info: binary and diff upload (original source NOT included)
+Now running lintian linuxptp_3.1.1-4jclark1_arm64.changes ...
+W: linuxptp: groff-message usr/share/man/man8/ptp4l.8.gz 764: warning: macro 'servo_num_offset_values'' not defined
+W: linuxptp source: newer-standards-version 4.6.0 (current is 4.5.1)
+Finished running lintian.
