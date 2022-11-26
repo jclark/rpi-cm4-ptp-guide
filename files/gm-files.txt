@@ -3,5 +3,6 @@
 /etc/systemd/system/ptp4l-gm.service
 /etc/systemd/system/phc2shm.service
 /etc/chrony/conf.d/shm-refclock.conf
+/etc/chrony/conf.d/allow.conf
 /usr/local/sbin/ptp4l-gm-set.sh
 /etc/dhcpcd.exit-hook
