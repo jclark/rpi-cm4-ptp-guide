@@ -10,7 +10,7 @@ Requires=ts2phc.service
 # Using exec so that is actually executed before the ExecStartPost
 Type=exec
 EnvironmentFile=/etc/default/ptp4l-gm
-ExecStart=/usr/sbin/ptp4l -i $EXTTS_IFACE -l $LOG_LEVEL --tx_timestamp_timeout $TX_TIMESTAMP_TIMEOUT
+ExecStart=/usr/sbin/ptp4l --masterOnly 1 -i $EXTTS_IFACE -l $LOG_LEVEL --tx_timestamp_timeout $TX_TIMESTAMP_TIMEOUT
 ExecStartPost=/bin/bash /usr/local/sbin/ptp4l-gm-set.sh
 
 [Install]
