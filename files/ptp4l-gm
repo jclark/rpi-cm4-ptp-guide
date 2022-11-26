@@ -12,8 +12,9 @@ EXTTS_IFACE=eth0
 CLOCK_ACCURACY=0x23
 # serial port to which GPS is connected
 SERIAL_PORT=/dev/ttyAMA0
-# -l option
-LOG_LEVEL=7
+# -l option; default is 6
+# use 7 for debug info
+LOG_LEVEL=6
 # works around CM4 hardware/driver issue
 TX_TIMESTAMP_TIMEOUT=100
 # number of seconds that UTC is currently behind TAI
