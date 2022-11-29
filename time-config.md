@@ -27,10 +27,10 @@ The ethernet needs to be plugged in for PTP hardware clock to work.
 Check serial connection to GPS
 
 ```
-cat </dev/ttyAMA0
+(stty 9600 -echo -icrnl; cat) </dev/ttyAMA0
 ```
 
-This should show some NMEA sentences.
+This should show some NMEA sentences (lines starting with `$`).
 
 ## Minimal PTP test setup
 
