@@ -199,43 +199,7 @@ Install linuxptp and chrony:
 apt install linuxptp chrony
 ```
 
-Change `/etc/linuxptp/timemaster.conf` to the following
-```
-# Configuration file for timemaster
-
-[ntp_server 192.168.0.10]
-minpoll 4
-maxpoll 4
-
-[ptp_domain 0]
-interfaces eth0
-ptp4l_option network_transport L2
-delay 1e-8
-
-[timemaster]
-ntp_program chronyd
-
-[chrony.conf]
-include /etc/chrony/chrony.conf
-
-[ptp4l.conf]
-tx_timestamp_timeout 100
-clock_servo linreg
-
-[chronyd]
-path /usr/sbin/chronyd
-makestep 1 3
-# Uncomment the next line to allow this to be used as a server
-# allow
-
-[phc2sys]
-path /usr/sbin/phc2sys
-
-[ptp4l]
-path /usr/sbin/ptp4l
-```
-
-where `192.168.0.10` is the address of the NTP server.
+Copy [timemaster.conf](files/timemaster.conf) to `/etc/linuxptp/` and then change `192.168.0.10` in the ntp_server line to the address of your NTP server.
 
 Then enable the timemaster service:
 
@@ -243,4 +207,17 @@ Then enable the timemaster service:
 sudo systemctl enable timemaster.service
 ```
 
+You may get the following error on startup from ptp4l:
 
+```
+interface 'eth0' does not support requested timestamping
+```
+
+You can avoid this by copying [phc@.service](files/phc%40.service) to `/etc/systemd/system/` and then do
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable phc@eth0.service
+```
+
+This service makes sure the PHC is ready before ptp4l runs.
