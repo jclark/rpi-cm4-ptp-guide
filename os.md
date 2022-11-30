@@ -123,7 +123,7 @@ wget -r -l1 --no-parent -A.20220830-1_arm64.deb http://archive.raspberrypi.org/d
 sudo dpkg -i archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/*.20220830-1_arm64.deb
 ```
 
-Alternatively, you could try updating to a bleeting-edge kernel by doing:
+Alternatively, you could try updating to a bleeding-edge kernel by doing:
 
 ```
 sudo rpi-update
