@@ -25,7 +25,7 @@ This goal of this repository is to be a guide to taking advantage of this. The g
 
 This shows the results from using a TAPR TICC in interval mode with two CM4 PTP slaves 
 
-- both slaves synchronized to a CM4 master using a U-blox RCB-F9T connected with a roof-mounted, dual-frequency antenna
+- both slaves synchronized to a CM4 master using a U-blox RCB-F9T connected to a roof-mounted, dual-frequency antenna
 - E2E, UDP IPv4 multicast (i.e. linuxptp default)
 - all three machines connected to a FS IES3110-series switch (configured as transparent, one-step)
 
