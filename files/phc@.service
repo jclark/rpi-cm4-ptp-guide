@@ -1,0 +1,15 @@
+[Unit]
+Description=Ensure PTP hardware clock (PHC) of %I is ready
+Documentation=man:phc_ctl
+After=sys-subsystem-net-devices-%i.device
+Before=ptp4l@%i.service
+Before=timemaster.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/phc_ctl -Q %I
+RemainAfterExit=yes
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
