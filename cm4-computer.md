@@ -26,10 +26,11 @@ All the boards discussed below include a battery-powered Real Time Clock (RTC), 
 
 The obvious choice is the [IO Board](https://www.raspberrypi.com/products/compute-module-4-io-board/) from the Raspberry Pi Foundation, which costs about $50. This is a good choice, if it's available.
 
-There are two suitable cases for this board:
+There are three suitable cases for this board:
 
 * [Waveshare case](https://www.waveshare.com/product/cm4-io-board-case-a.htm). There appear to be two versions of this. The newer version has a GPIO adapter that makes the 40-pin GPIO header available at the side. The older version does does.  This adapter gets would get in the way of an internal GPS unit; if it's not used, then there would be a hole in the side of the case.
 * [Edatec case](https://www.edatec.cn/en/Product/Accessories/2021/0322/101.html)
+* [Acrylic case](https://www.aliexpress.com/item/1005002085299389.html)
 
 The Waveshare case has a significantly better fan than the Edatec case: it's 40mm fan and has PWM support, which makes the controller on the IO board. The Edatec case has a 25mm fan, which lacks PWM support.
 
@@ -37,6 +38,8 @@ The Waveshare case is also a few millimeters taller than the Edatec case, which 
 
 The Edatec case comes with a Wifi antenna - but this isn't very useful, since we will be using the antenna hole on the case
 for either the GPS antenna or a PPS signal.
+
+The acrylic case is cheap, but there's no way to fit a GPS inside it. I find it convenient for experimenting.
 
 You will also need a 12V DC power supply with a 5.5x2.1mm barrel connector: 2A is plenty since we are not using the PCIe slot.
 
