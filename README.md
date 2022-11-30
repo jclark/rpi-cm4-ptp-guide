@@ -18,7 +18,7 @@ This goal of this repository is to be a guide to taking advantage of this. The g
 * [how to  the configure the GPS receiver](gps-config.md)
 * [how to configure time synchronization](time-config.md)
 * [inexpensive network switches with PTP support](switches.md)
-* [how to use the PTP client on Windows 10 with this](ptp-windows.md)
+* [how to use the PTP client on Windows 10/11 with this](ptp-windows.md)
 * [how to measure time synchronization](measure.md)
 
 ## References
