@@ -2,6 +2,9 @@
 
 You can use PTP with normal network switches, but a switch with PTP support will improve the accuracy. There are plenty of expensive enterprise switches with PTP support. Inexpensive switches are less common.
 
+I would recommend the FS switches, specifically the IES3110-8TF-R, although I haven't yet tested it as much
+as the IES3110-8TF.
+
 ## FS
 
 FS have the IES3110 series. I own two of them:
