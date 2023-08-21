@@ -4,12 +4,22 @@ You can use PTP with normal network switches, but a switch with PTP support will
 
 ## FS
 
-FS have the IES3110 series. I have the [IES3110-8TF](https://www.fs.com/products/138510.html), which has 8 x 1Gb RJ45 ports and 2 x 2.5Gb SFP ports, and costs $279. There is a cheaper model: the [IES3110-8TF-R](https://www.fs.com/products/148180.html) has 1Gb SFP ports and costs $159, but is out of stock until Jan 2023. There are also more expensive variants with PoE support and/or more ports.
+FS have the IES3110 series. I own two of them:
 
-It's designed for industrial use. There's no fan (which is nice), but it doesn't come with a power supply or even an DC input jack (just a terminal block). I attached a DC power female pigtail and then used a spare 12V DC power supply.
+* [IES3110-8TF](https://www.fs.com/products/138510.html), with a list price of US$279 ([Web UI manual](https://resource.fs.com/mall/file/user_manual/ies3110-8tf-and-ies3110-8tf-p-switches-configuration-guide.pdf), [CLI manual](https://resource.fs.com/mall/file/user_manual/ies3110-series-switches-cli-reference-guide.pdf))
+* [IES3110-8TF-R](https://www.fs.com/products/148180.html), with a list price of US$159 ([Web UI manual](https://resource.fs.com/mall/doc/20230626110916xmfm0h.pdf), [CLI manual](https://resource.fs.com/mall/doc/20230424145026qmzzpt.pdf))
 
-The PTP support has to be enabled by adding a PTP clock from the PTP page in the Web UI, which is under Switching. You have to make sure that the clock uses the same transport you have configured for Linux PTP. For example, with the Linux PTP UDPv4 network transport, you have to choose the IPv4Multi protocol. I have been using a device type of E2e transp (i.e. transparent clock), which works with the default E2E delay mechanism of Linux PTP. The [manual](https://resource.fs.com/mall/file/user_manual/ies3110-8tf-and-ies3110-8tf-p-switches-configuration-guide.pdf) has the details.
+They both have 8 x 1Gb RJ45 ports and 2 x SFP ports. The major spec difference is that the SFP ports are 2.5Gb in the IES3110-8TF model and 1Gb in IES3110-8TF-R. However, the two models have significantly different firmware (and
+distinct manuals). Most importantly for our purposes, the IES3110-8TF-R model has more complete PTP support, which allows the switch to work either as a transparent clock or a boundary clock, whereas the IES3110-8TF can only work as a transparent clock.
 
-## Motu
+There are other models in the IES3110 series:
+* the IES3110-8TF has a variant with PoE support, the IES3110-8TF-P, and also models with more ports; these all share the same manual
+* the IES3110-8TF-R has a variant with PoE support, the IES3110-8TFP-R; these both share the same manual.
 
-[Motu AVB Switch](https://motu.com/en-us/products/avb/avb-switch/) which has 5 ports and is $395 on [Amazon](https://www.amazon.com/MOTU-AVB-Switch-5-Port-Bridging/dp/B00M8IA7AU).
+These switches are designed for industrial use. There's no fan (which is nice), but they don't come with a power supply or even an DC input jack (just a terminal block). I attached a DC power female pigtail and then used a spare 12V DC power supply.
+
+The PTP support has to be enabled by adding a PTP clock from the PTP page in the Web UI, which is under Switching in the IES3110-8TF, and under Advanced Configure in the IES3110-8TF-R. You have to make sure that the clock uses the same transport you have configured for Linux PTP. For example, with the Linux PTP UDPv4 network transport, you have to choose the IPv4Multi protocol. I have been using a device type of E2e transp (i.e. transparent clock), which works with the default E2E delay mechanism of Linux PTP.
+
+## MOTU
+
+[MOTU AVB Switch](https://motu.com/en-us/products/avb/avb-switch/) has 5 ports and is $395 on [Amazon](https://www.amazon.com/MOTU-AVB-Switch-5-Port-Bridging/dp/B00M8IA7AU). However, it is designed specifically for Audio Video Bridging (AVB), and is not a general-purpose PTP switch.
