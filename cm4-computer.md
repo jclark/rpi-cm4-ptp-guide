@@ -28,11 +28,11 @@ The obvious choice is the [IO Board](https://www.raspberrypi.com/products/comput
 
 There are three suitable cases for this board:
 
-* [Waveshare case](https://www.waveshare.com/product/cm4-io-board-case-a.htm). There appear to be two versions of this. The newer version has a GPIO adapter that makes the 40-pin GPIO header available at the side. The older version does does.  This adapter gets would get in the way of an internal GPS unit; if it's not used, then there would be a hole in the side of the case.
+* [Waveshare case](https://www.waveshare.com/product/cm4-io-board-case-a.htm). There appear to be two versions of this. The newer version has a GPIO adapter that makes the 40-pin GPIO header available at the side. The older version does does.  This adapter would get in the way of an internal GPS unit; if it's not used, then there would be a hole in the side of the case.
 * [Edatec case](https://www.edatec.cn/en/Product/Accessories/2021/0322/101.html)
 * [Acrylic case](https://www.aliexpress.com/item/1005002085299389.html)
 
-The Waveshare case has a significantly better fan than the Edatec case: it's 40mm fan and has PWM support, which makes the controller on the IO board. The Edatec case has a 25mm fan, which lacks PWM support.
+The Waveshare case has a significantly better fan than the Edatec case: it's 40mm fan and has PWM support, which matches the controller on the IO board. The Edatec case has a 25mm fan, which lacks PWM support.
 
 The Waveshare case is also a few millimeters taller than the Edatec case, which makes it easier to fit an internal GPS unit.
 
