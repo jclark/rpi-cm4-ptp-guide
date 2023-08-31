@@ -21,17 +21,6 @@ If you want to do this using SSH from your main machine, then
 * run `raspi-config` to enable SSH (under Interfacing)
 * find the current IP address using `ifconfig`
 
-Kernel support for PTP on the CM4 is broken in some kernel versions. So we need
-to prevent them from being installed by creating a file `/etc/apt/preferences`
-before upgrading.
-
-```
-Package: src:raspberrypi-firmware
-Pin: version 1:1.20221028-1
-Pin: version 1:1.20221104-1
-Pin-Priority: -1
-```
-
 Update packages
 
 ```
@@ -82,7 +71,6 @@ Reboot.
 
 ## Verify OS setup
 
-
 Check that your kernel includes the necessary have ethernet PTP hardware support
 
 ```
@@ -108,27 +96,8 @@ Hardware Receive Filter Modes:
         ptpv2-event
 ```
 
-If you don't see the hardware-transmit/-receive/-raw-clock lines, then
-you don't have the right kernel version. Look at your version using:
-
-```
-uname -r
-```
-
-If this is a later version than `5.15.61-v8+`, you can try downgrading to a version
-that works:
-
-```
-wget -r -l1 --no-parent -A.20220830-1_arm64.deb http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/
-sudo dpkg -i archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/*.20220830-1_arm64.deb
-```
-
-Alternatively, you could try updating to a bleeding-edge kernel by doing:
-
-```
-sudo rpi-update
-```
-
+Note that `PTP Hardware Clock: 0` means that this interface uses `/dev/ptp0` as
+its hardware clock.
 
 Check the RTC
 
