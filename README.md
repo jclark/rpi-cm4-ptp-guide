@@ -8,7 +8,7 @@ Although the CM4 does not have an Ethernet jack, it does have an Ethernet PHY, t
 
 The PTP support involves the Ethernet PHY having its own clock, called the PTP hardware clock (PHC), and being able to use this clock to timestamp incoming and outgoing network packets. This enables the CM4 to make use of PTP, but it is not by itself particularly exciting: similar functionality is available on many NICs. The exciting part is that the CM4 provides a pin that allows the PHC to be synchronized with an external pulse per second (PPS) signal. When this pin is connected to the PPS output of a GPS receiver, the CM4 can providech a highly accurate source of time for PTP within a local area network. (As far as I know, the only other inexpensive, easy way to to get this functionality is using an Intel i210-T1 PCIe card.) The CM4 can also generate a PPS signal from the PHC on this pin: this makes it possible to measure the accuracy of the PHC.
 
-There's a useful introductory [blog](https://www.jeffgeerling.com/blog/2022/ptp-and-ieee-1588-hardware-timestamping-on-raspberry-pi-cm4) from Jeef Geerling and also a [video](https://www.youtube.com/watch?v=RvnG-ywF6_s).
+There's a useful introductory [blog](https://www.jeffgeerling.com/blog/2022/ptp-and-ieee-1588-hardware-timestamping-on-raspberry-pi-cm4) from Jeff Geerling and also a [video](https://www.youtube.com/watch?v=RvnG-ywF6_s).
 
 This goal of this repository is to be a guide to taking advantage of this. The guide is split into the following sections:
 
