@@ -7,7 +7,7 @@ Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37.
 Fedora has some advantages, which I think give it the potential in the future to be a better platform than Raspberry Pi OS.
 
 * Fedora has a strong [upstream focus](https://docs.fedoraproject.org/en-US/package-maintainers/Staying_Close_to_Upstream_Projects/), particularly for the kernel.
-* RedHat has strong expertise PTP and NTP. In particular, the maintainer of [chrony](https://chrony-project.org/) (an NTP server) works for RedHat, so Fedora always has the latest version of chrony.
+* RedHat has strong expertise PTP and NTP. In particular, the maintainer of [chrony](https://chrony-project.org/) (an NTP implementation) works for RedHat, so Fedora always has the latest version of chrony.
 * Fedora includes [Cockpit](https://cockpit-project.org/), which is a very nice web interface for server administration.
 * Fedora has an IoT variant; this provides a [non-traditional immutable approach](https://docs.fedoraproject.org/en-US/iot/) to an OS, which could be a more robust approach when a CM4 is being used as a PTP or NTP appliance (although I haven't tried this yet).
 
@@ -22,7 +22,7 @@ The last point means that Raspberry Pi OS is the more convenient option for usin
 ## RAM and storage requirements
 
 CM4 RAM sizes range from 1Gb to 8Gb; eMMC sizes range from 8Gb to 32Gb.
-I tried Fedora Server 38 on a CM4 with 8Gb of RAM and an 8Gb eMMC. 8Gb eMMC is plenty for just running a NTP/PTP server.
+I tried Fedora Server 38 on a CM4 with 8Gb of RAM and an 8Gb eMMC. 8Gb eMMC is plenty for just running a NTP/PTP server. From a cursory look at `/proc/meminfo`: 8Gb RAM is more than is useful: 4Gb should be plenty; 2Gb should be OK; 1Gb would be tight.
 
 ## Installation and configuration overview
 
@@ -46,7 +46,7 @@ After the above process is complete, you use make use of the Cockpit web adminis
 
 Fedora has three editions that could potentially be used with the CM4: Workstation, Server and IoT. This guide uses the Server edition, which is comparable to Raspberry Pi OS Lite.
 
-To download, visit `https://getfedora.org/` on the desktop. Then
+To download, visit [getfedora.org](https://getfedora.org/) on the desktop. Then
 
 1. Follow the link to download Fedora Server
 2. Go to the section for `For ARM® aarch64 systems`
@@ -136,7 +136,7 @@ After `rpiboot`` exits, the CM4 should show up as a disk. You can run
 udisksctl status
 ```
 
-to find out which. The output should include a line like:
+to find out which disk. The output should include a line starting with `RPi` like this:
 
 ```
 RPi-MSD- 0001             0001      d9e799b6             sdc
@@ -219,13 +219,17 @@ Note that you shouldn't do the manual setup over ssh while the normal setup proc
 
 ## CM4-specific setup
 
-Fedora has some [documentation](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs) on this.
+Fedora has some [documentation on Raspberri Pi HATs](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs) that is also applicable to the CM4 with an IO board (even without additional HATs).
 
 TODO: The serial port explanation didn't seem consistent with what I had understood about the serial ports from the official Raspberry Pi [documentation](https://www.raspberrypi.com/documentation/computers/configuration.html#configuring-uarts).
 
+After making the changes in this section, I recommend shutting down (with `shutdown -h now`) and power cycling.
+
+TODO: Not sure if this is strictly necessary, but I had problems when I just rebooted without power cycling.
+
 ### Enable use of config.txt
 
-To enable use of config.txt, we have to make Fedora use the firmware device tree rather than the kernel device tree. 
+To enable use of `config.txt`, in a similar way to Raspberry Pi OS, we have to make Fedora use the firmware device tree rather than the kernel device tree. 
 
 First, remove the /boot/dtb symbolic link:
 
@@ -239,7 +243,8 @@ Next, create `/etc/u-boot.conf` with the line
 FirmwareDT=True
 ```
 
-TODO: I had some problems switching to use the firmware device tree. I think the solution is to power off, before rebooting. I also had problems switching back to use the kernel device tree.
+TODO: I had problems switching back to use the kernel device tree. Should be just a matter of
+restoring the `/boot/dtb` link and removing `/etc/u-boot.conf`, but that didn't appear to work for me.
 
 ### Modify config.txt
 
@@ -255,7 +260,7 @@ dtoverlay=i2c-fan,emc2301,i2c_csi_dsi
 dtoverlay=disable-bt
 ```
 
-The fan controller needs the emc2305 module. To load the module right away use
+The fan controller needs the `emc2305` module. To load the module right away use
 
 ```
 sudo modprobe emc2305
