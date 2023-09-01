@@ -38,7 +38,7 @@ We can split the installation process into the following stages:
 
 Fedora has good [documentation for installing on a SBC](https://docs.fedoraproject.org/en-US/fedora-server/installation/on-sbc/), but it doesn't address stage 2 for the CM4, which has internal eMMC storage (except in the CM4 Lite version).
 
-The normal Fedora approach for step 4 requires using an HDMI monitor and keyboard connected to the CM4 to do the initial setup, most importantly to setup a user account. You cannot just skip this, since the image does not allow ssh login without some configuration. However, it is possible to avoid this requirement if you really want to (in my case, I wanted to install a Fedora 39 nightly image, but HDMI output wasn't working properly). This requires that step 3 be done using the `arm-image-installer program`, which has options that can configure the image to allow you to ssh in as root. But `arm-image-installer` is available only on Fedora, which implies that you need to use a desktop computer that is running Fedora.
+The normal Fedora approach for step 4 requires using an HDMI monitor and keyboard connected to the CM4 to do the initial setup, most importantly to setup a user account. You cannot just skip this, since the image does not allow ssh login without some configuration for security reasons. However, it is possible to avoid this requirement if you really want to (in my case, I wanted to install a Fedora 39 nightly image, but HDMI output wasn't working properly). This requires that step 3 be done using the `arm-image-installer program`, which has options that can configure the image to allow you to ssh in as root. But `arm-image-installer` is available only on Fedora, which implies that you need to use a desktop computer that is running Fedora.
 
 ## Select and download the image
 
@@ -172,9 +172,9 @@ sudo arm-image-installer --target=rpi4 --image=Fedora-Server-38-1.6.aarch64.raw.
 ```
 You will need to adjust the command:
 * you will always need `--target=rpi4` for the CM4
-* the `--image` options specifies the image to write; it expects a compressed `.xz` image
-* the `--media` specifies the device name where you made the CM4 storage available in the previous stage
-* the `--addkey` is only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
+* the `--image` option specifies the image to write; it expects a compressed `.xz` image
+* the `--media` option specifies the device name where you made the CM4 storage available in the previous stage
+* the `--addkey` option is only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
 
 It takes about 25 minutes for arm-image-installer to write the image.
 
