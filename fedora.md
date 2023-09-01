@@ -4,12 +4,12 @@
 
 Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37. At the time of writing (September 2023) the current version is release 38. It's considerably less mature than Raspberry Pi OS, which is the offical OS for the Raspberry Pi.
 
-Fedora has some advantages, which mean that is has the potential in the future to be a better approach than Raspberry Pi OS.
+Fedora has some advantages, which I think give it the potential in the future to be a better platform than Raspberry Pi OS.
 
 * Fedora has a strong [upstream focus](https://docs.fedoraproject.org/en-US/package-maintainers/Staying_Close_to_Upstream_Projects/), particularly for the kernel.
 * RedHat has strong expertise PTP and NTP. In particular, the maintainer of [chrony](https://chrony-project.org/) (an NTP server) works for RedHat, so Fedora always has the latest version of chrony.
 * Fedora includes [Cockpit](https://cockpit-project.org/), which is a very nice web interface for server administration.
-* Fedora has an IoT variant; this provides a [non-traditional immutable approach](https://docs.fedoraproject.org/en-US/iot/) to an OS, which could be a more robust approach for using a CM4 is being used as a PTP or NTP appliance (I haven't tried this yet).
+* Fedora has an IoT variant; this provides a [non-traditional immutable approach](https://docs.fedoraproject.org/en-US/iot/) to an OS, which could be a more robust approach when a CM4 is being used as a PTP or NTP appliance (although I haven't tried this yet).
 
 Fedora currently has some disadvantages compared to Raspberry Pi OS
 
@@ -33,7 +33,7 @@ We can split the installation process into the following stages:
 
 Fedora has good [documentation for installing on a SBC](https://docs.fedoraproject.org/en-US/fedora-server/installation/on-sbc/), but it doesn't address stage 2 for the CM4, which has internal eMMC storage (except in the CM4 Lite version).
 
-The normal Fedora approach for step 4 requires using an HDMI monitor and keyboard connected to the CM4 to do the initial setup, most importantly to setup a user account. You cannot just skip this, since the image does not allow ssh login without some configuration. However, it is possible to avoid the requirement to use an HDMI monitor and keyboard, if it is inconvenient or not possible for you for some reason (in my case, I wanted to install a Fedora 39 nightly image, but HDMI output wasn't working properly). This requires that step 3 be done using the arm-image-installer program, which is available only on Fedora; the arm-image-installer program has options that can configure the image to allow you to ssh in as root. This then requires that you need to use a desktop computer that is running Fedora.
+The normal Fedora approach for step 4 requires using an HDMI monitor and keyboard connected to the CM4 to do the initial setup, most importantly to setup a user account. You cannot just skip this, since the image does not allow ssh login without some configuration. However, it is possible to avoid this requirement if you really want to (in my case, I wanted to install a Fedora 39 nightly image, but HDMI output wasn't working properly). This requires that step 3 be done using the `arm-image-installer program`, which has options that can configure the image to allow you to ssh in as root. But `arm-image-installer` is available only on Fedora, which implies that you need to use a desktop computer that is running Fedora.
 
 After the above process is complete, you use make use of the Cockpit web administration interface by connecting to port 9090 on the CM4.
 
@@ -43,7 +43,7 @@ Fedora has three editions that could potentially be used with the CM4: Workstati
 
 To download, visit `https://getfedora.org/` on the desktop. Then
 
-1. Follow the link to download Fedora server
+1. Follow the link to download Fedora Server
 2. Go to the section for `For ARM® aarch64 systems`
 3. Download the raw `raw.xz` image
 
