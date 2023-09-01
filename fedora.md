@@ -40,8 +40,6 @@ Fedora has good [documentation for installing on a SBC](https://docs.fedoraproje
 
 The normal Fedora approach for step 4 requires using an HDMI monitor and keyboard connected to the CM4 to do the initial setup, most importantly to setup a user account. You cannot just skip this, since the image does not allow ssh login without some configuration. However, it is possible to avoid this requirement if you really want to (in my case, I wanted to install a Fedora 39 nightly image, but HDMI output wasn't working properly). This requires that step 3 be done using the `arm-image-installer program`, which has options that can configure the image to allow you to ssh in as root. But `arm-image-installer` is available only on Fedora, which implies that you need to use a desktop computer that is running Fedora.
 
-After the above process is complete, you use make use of the Cockpit web administration interface by connecting to port 9090 on the CM4.
-
 ## Select and download the image
 
 Fedora has three editions that could potentially be used with the CM4: Workstation, Server and IoT. This guide uses the Server edition, which is comparable to Raspberry Pi OS Lite.
@@ -274,3 +272,15 @@ emc2305
 
 When the fan controller is recognized, you should see a file ` /sys/class/thermal/cooling_device0`. If you have a fan,
 the difference will be immediately audible.
+
+## Post installation
+
+Update packages
+
+```
+sudo dnf update
+```
+
+With Fedora 38, after updating everything, HDMI output no longer works.
+
+You can make use of the Cockpit web administration interface by connecting to port 9090 on the CM4.
