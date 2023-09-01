@@ -144,6 +144,7 @@ sudo dnf install arm-image-installer
 ```
 
 Now, run it. The command looks something like this:
+
 ```
 sudo arm-image-installer --target=rpi4 --image=Fedora-Server-38-1.6.aarch64.raw.xz   --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub --norootpass
 ```
@@ -151,7 +152,9 @@ You will need to adjust the command:
 * you will always need `--target=rpi4` for the CM4
 * the `--image` options specifies the image to write; it expects a compressed `.xz` image
 * the `--media` specifies the device name where you made the CM4 storage available in the previous stage
-* the `--addkey` and `--norootpass` options are only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4
+* the `--addkey` and `--norootpass` options are only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
+
+TODO: not clear if both `--addkey` and `--norootpass` options are necessary
 
 ### Windows desktop
 
@@ -185,7 +188,9 @@ TODO: NetworkManager setup (this can be done conveniently in Cockpit)
 
 ## CM4-specific setup
 
-Fedora has some [documentation](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs) on this. The serial port explanation didn't seem consistent with what I had understood about the serial ports from the official Raspberry Pi [documentation](https://www.raspberrypi.com/documentation/computers/configuration.html#configuring-uarts).
+Fedora has some [documentation](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs) on this.
+
+TODO: The serial port explanation didn't seem consistent with what I had understood about the serial ports from the official Raspberry Pi [documentation](https://www.raspberrypi.com/documentation/computers/configuration.html#configuring-uarts).
 
 ### Enable use of config.txt
 
