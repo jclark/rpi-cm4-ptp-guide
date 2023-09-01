@@ -19,6 +19,11 @@ Fedora currently has some disadvantages compared to Raspberry Pi OS
 
 The last point means that Raspberry Pi OS is the more convenient option for using PTP. But chrony can make use of the CM4's PTP hardware support for NTP; Fedora is a good basis for experimenting with that. There is a separate page for [chrony](chrony.md) configuration.
 
+## RAM and storage requirements
+
+CM4 RAM sizes range from 1Gb to 8Gb; eMMC sizes range from 8Gb to 32Gb.
+I tried Fedora Server 38 on a CM4 with 8Gb of RAM and an 8Gb eMMC. 8Gb eMMC is plenty for just running a NTP/PTP server.
+
 ## Installation and configuration overview
 
 The installation process needs a separate desktop computer, which can be Windows, Linux or Mac.
@@ -68,7 +73,7 @@ The steps other than step 2 depend on which desktop OS you are using. The detail
 
 1. Disconnect all cables from the CM4 IO board.
 2. Locate the J2 jumpers on the CM4 IO board. This is the 14-pin, 2 row set of pins located in the rear, center of the board. Connect the leftmost two pins, which are labelled `Fit jumper to disable eMMC Boot`. I use a female-female Dupont cable for this.
-3. Connect a USB port on your desktop to the Micro USB port on the CM4 IO board (to the right of the 2 USB A ports).
+3. Connect a USB port on your desktop to the Micro USB port on the CM4 IO board (to the right of the 2 USB A ports, labeled `SLAVE` on the Waveshare cases).
 4. Connect power to the CM4.
 
 Note that after writing the image and before booting from eMMC, you will need to remove the jumper disabling eMMC boot, as well as disconnecting the Micro USB cable.
@@ -106,6 +111,25 @@ Then, in the usbboot directory, do
 sudo ./rpiboot
 ```
 
+The output should look something like this:
+
+```
+RPIBOOT: build-date Aug 31 2023 version 20221215~105525 c4b12f85
+Waiting for BCM2835/6/7/2711...
+Loading embedded: bootcode4.bin
+Sending bootcode.bin
+Successful read 4 bytes
+Waiting for BCM2835/6/7/2711...
+Loading embedded: bootcode4.bin
+Second stage boot server
+Cannot open file config.txt
+Cannot open file pieeprom.sig
+Loading embedded: start4.elf
+File read: start4.elf
+Cannot open file fixup4.dat
+Second stage boot server done
+```
+
 After `rpiboot`` exits, the CM4 should show up as a disk. You can run
 
 ```
@@ -136,7 +160,7 @@ rather than building from source.
 
 ### Fedora desktop
 
-If you are using Fedora on your desktop, you can use `arm-image-installer`.
+If you are using Fedora on your desktop, you can use `arm-image-installer` to write the image.
 
 First, install it:
 ```
@@ -146,15 +170,15 @@ sudo dnf install arm-image-installer
 Now, run it. The command looks something like this:
 
 ```
-sudo arm-image-installer --target=rpi4 --image=Fedora-Server-38-1.6.aarch64.raw.xz   --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub --norootpass
+sudo arm-image-installer --target=rpi4 --image=Fedora-Server-38-1.6.aarch64.raw.xz   --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub
 ```
 You will need to adjust the command:
 * you will always need `--target=rpi4` for the CM4
 * the `--image` options specifies the image to write; it expects a compressed `.xz` image
 * the `--media` specifies the device name where you made the CM4 storage available in the previous stage
-* the `--addkey` and `--norootpass` options are only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
+* the `--addkey` is only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
 
-TODO: not clear if both `--addkey` and `--norootpass` options are necessary
+It takes about 25 minutes for arm-image-installer to write the image.
 
 ### Windows desktop
 
@@ -164,27 +188,34 @@ On Windows, [balenaEtcher](https://etcher.balena.io/) is convenient, because it 
 
 Before booting from eMMC for the first time, you obviously need to do either
 
-- remove the jumper that disabled eMMC boot (for a CM4 with internal eMMC)
+- remove the jumper that disabled eMMC boot (for a CM4 with internal eMMC), or
 - insert the SD card (for a CM4 without an internal eMMC)
 
 The offical Fedora documentation has a good description of the [normal setup](https://docs.fedoraproject.org/en-US/fedora-server/installation/on-sbc/#_basic_installation_and_configuration) process, which requires connecting an HDMI monitor or mouse.
+Note that the boot process will take a few minutes, and that during the process the screen will go blank for a while; be patient,
+and wait for the initial setup prompt to appear.
 
-If you have decided not to do that, then you need to have used the appropriate options with arm-image-installer when writing the image. You can then ssh in as root, and perform initial setup on the command-line as follows:
+If you have decided not to use the normal processs, then you need to have used the appropriate options with arm-image-installer when writing the image.
+You will need to figure out what IP address it got from DHCP; one method is to look at your DHCP server's log or lease file.
+You can then ssh in as root, and perform initial setup on the command-line as follows:
 
 ```
 # Set the time zone. I use this.
 timedatectl set-timezone Asia/Bangkok
-# Set the hostname. I give my computers cheese names.
+# Set the hostname. I name my computers after cheeses.
 hostnamectl set-hostname pecorino
+# Setup a static IPv4 address
+nmcli con mod "Wired connection 1" ipv4.method manual ipv4.address 192.168.1.15/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.254
 # We don't need to use the normal initial setup process.
 systemctl disable initial-setup
 # Add a user account. Here jjc is the user name.
 groupadd jjc
-useradd -g jjc -c "James Clark" -G wheel -m -u 1000 jjc
+useradd -g jjc -c "James Clark" -G wheel -m jjc
+# This will prompt to enter a password
 passwd jjc
 ```
 
-TODO: NetworkManager setup (this can be done conveniently in Cockpit)
+Note that you shouldn't do the manual setup over ssh while the normal setup process is working. 
 
 ## CM4-specific setup
 
@@ -224,12 +255,17 @@ dtoverlay=i2c-fan,emc2301,i2c_csi_dsi
 dtoverlay=disable-bt
 ```
 
-The fan controller needs the emc2305 module:
+The fan controller needs the emc2305 module. To load the module right away use
 
 ```
 sudo modprobe emc2305
 ```
 
-When the fan controller is recognized, you should see a file ` /sys/class/thermal/cooling_device0`
+To ensure the module is loaded on boot, create a file `/etc/modules-load.d/fan.conf` containing the line
 
-TODO: get the emc2305 module loaded automatically
+```
+emc2305
+```
+
+When the fan controller is recognized, you should see a file ` /sys/class/thermal/cooling_device0`. If you have a fan,
+the difference will be immediately audible.
