@@ -39,7 +39,7 @@ Now run
 chronyc sources
 ```
 
-It should should a line starting with `#* PHC0`. This means it has synced to the PTP hardware clock.
+It should should a line starting with `#* PHC0`. This means it has successfully synced to the PHC refclock.
 
 ## Using serial connection from GPS
 
