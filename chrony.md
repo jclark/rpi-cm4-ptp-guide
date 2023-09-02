@@ -45,8 +45,6 @@ It should should a line starting with `#* PHC0`. This means it has successfully 
 
 Approach is to use gpsd with a chrony SOCK refclock.
 
-TODO: uboot is trying to interpret serial output from the GPS as console input, which stops it booting
-
 ## Hardware timestamping
 
 TODO: use chrony's NTP-in-PTP feature.

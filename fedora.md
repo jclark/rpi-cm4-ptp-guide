@@ -244,18 +244,32 @@ FirmwareDT=True
 TODO: I had problems switching back to use the kernel device tree. Should be just a matter of
 restoring the `/boot/dtb` link and removing `/etc/u-boot.conf`, but that didn't appear to work for me.
 
-### Modify config.txt
+### Realtime clock
 
-Add this at the bottom of `/boot/efi/config.txt`:
+Add the following to the bottom of `/boot/efi/config.txt`:
 
 ```
-# Realtime clock
 dtoverlay=i2c-rtc,pcf85063a,i2c_csi_dsi
-# Fan controller
+```
+
+After rebooting, check the RTC
+
+```
+sudo hwclock --show
+```
+
+Also check that the current date is correct:
+
+```
+date
+```
+
+### Fan controller
+
+Add the following to the bottom of `/boot/efi/config.txt`:
+
+```
 dtoverlay=i2c-fan,emc2301,i2c_csi_dsi
-# Make the PL011 UART available on GPIO header pins 8 and 10 as /dev/ttyAMA0
-# This also disables Bluetooth
-dtoverlay=disable-bt
 ```
 
 The fan controller needs the `emc2305` module. To load the module right away use
@@ -275,6 +289,37 @@ the difference will be immediately audible.
 
 TODO: The emc2305 module is not autoloading because the emc2305 driver is missing an of_device_id table. Need
 to test a [patch](https://github.com/jclark/linux/commit/f951d73adebd5a69a603fd77e0a9cf8d60b75e48).
+
+### UART
+
+When using an GPS inside the IO board case, we will want to connect the GPS to one of the UARTs
+provided by the CM4.
+
+With Fedora, it is not convenient to use the UART that is connected to the TXD and RXD pins
+on the 40-pin header (pins 8 and 10). This is because U-Boot by default enables the serial console
+on that UART, which makes it try to interpret output from the GPS as keyboard input to U-boot.
+(Although in theory we could [make U-Boot not do this](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs#Deactivate_Serial_Console_entirely), keyboard input to U-Boot appears
+not to be working at the moment, so this would require a custom version of U-Boot.)
+
+Fortunately, the hardware provides other UARTs (numbers 2 through 5) that we can enable on other pins.
+UART number *n* will appear as `/dev/ttyAMA`*n*. UART 2 is used for other functions (eeprom reading and poe fan).
+So a sensible choice is UART 3. This can be enabled by adding the following to the bottom of `/boot/efi/config.txt`.
+
+```
+# UART configuration
+# Make UART3 TXD, RXD available on pins 7, 29 (GPIOs 4, 5) respectively
+# Device will be /dev/ttyAMA3
+dtoverlay=uart3
+```
+
+You can use UART 4 instead with the following:
+```
+# Make UART4 TXD, RXD available on pins 24, 21 (GPIOs 8, 9) respectively
+# Device will be /dev/ttyAMA4
+dtoverlay=uart4
+```
+
+I should emphasize that this means that an internal GPS needs to be wired up differently when using Fedora.
 
 ## Post installation
 
