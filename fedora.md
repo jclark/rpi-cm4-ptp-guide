@@ -229,7 +229,7 @@ TODO: Not sure if this is strictly necessary, but I had problems when I just reb
 
 To enable use of `config.txt`, in a similar way to Raspberry Pi OS, we have to make Fedora use the firmware device tree rather than the kernel device tree. 
 
-First, remove the /boot/dtb symbolic link:
+First, remove the `/boot/dtb` symbolic link:
 
 ```
 sudo rm /boot/dtb
@@ -272,6 +272,9 @@ emc2305
 
 When the fan controller is recognized, you should see a file ` /sys/class/thermal/cooling_device0`. If you have a fan,
 the difference will be immediately audible.
+
+TODO: The emc2305 module is not autoloading because the emc2305 driver is missing an of_device_id table. Need
+to test a [patch](https://github.com/jclark/linux/commit/f951d73adebd5a69a603fd77e0a9cf8d60b75e48).
 
 ## Post installation
 
