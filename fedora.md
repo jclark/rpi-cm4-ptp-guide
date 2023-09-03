@@ -324,7 +324,6 @@ using the `uart3` overlay.
 
 ![image](https://github.com/jclark/rpi-cm4-ptp-guide/assets/499966/cdef0aab-8628-43f4-baa5-4bc705612529)
 
-
 The wiring is as follows
 
 | Color | GPS pin | Jumpers | Pin # | Pin function |
@@ -335,6 +334,7 @@ The wiring is as follows
 | black | GND | HAT | 6 | Ground |
 | red | VCC | HAT | 4 | 5V power |
 
+(The GPS is a Quescan SR1612Z1, which costs about $10; it uses the ZongKhe Micro [AT6558](https://www.icofchina.com/d/file/xiazai/2016-12-05/b1be6f481cdf9d773b963ab30a2d11d8.pdf) chipset.)
 
 ## Post installation
 
