@@ -34,7 +34,7 @@ To use chrony as a server in your network, you will also need something like:
 allow 192.168.1.0/24
 ```
 
-You will also need to add firewall rules:
+On Fedora, you will also need to add firewall rules:
 
 ```
 sudo firewall-cmd --add-service ntp
@@ -76,7 +76,9 @@ Edit OPTIONS line in `/etc/sysyconfig/gpsd`:
 OPTIONS="-n /dev/ttyAMA3"
 ```
 
-GPSd is usually activate by a socket, but this isn't what we want. So:
+(This is using `/dev/ttyAMA3` because Fedora has issues with `/dev/ttyAMA0`. With Raspberry Pi OS, you could use `/dev/ttyAMA0`.)
+
+GPSd is usually activated by a socket, but this isn't what we want. So:
 
 ```
 sudo systemctl stop gpsd.socket
@@ -113,7 +115,7 @@ sudo systemctl restart chronyd
 
 ## Hardware timestamping
 
-The hardware on the CM4 cannot timestamp arbitrary packets: it can only timestamp PTP packers.
+The hardware on the CM4 cannot timestamp arbitrary packets: it can only timestamp PTP packets.
 This means we have to use [NTP-over-PTP](https://datatracker.ietf.org/doc/draft-ietf-ntp-over-ptp/) in order to use hardware timestamping.
 Reading the PTP hardware clock on the CM4 is unusually slow, so we need the
 the `hwtstimeout` directive, which was added in chrony version 4.4 (released in August 2023).
