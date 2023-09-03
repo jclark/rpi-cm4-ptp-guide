@@ -321,6 +321,8 @@ dtoverlay=uart4
 
 I should emphasize that this means that an internal GPS needs to be wired up differently when using Fedora.
 
+![image](https://github.com/jclark/rpi-cm4-ptp-guide/assets/499966/cdef0aab-8628-43f4-baa5-4bc705612529)
+
 ## Post installation
 
 Update packages
