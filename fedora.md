@@ -319,9 +319,22 @@ You can use UART 4 instead with the following:
 dtoverlay=uart4
 ```
 
-I should emphasize that this means that an internal GPS needs to be wired up differently when using Fedora.
+This means an internal GPS needs to be wired up differently when using Fedora. Here's an example assuming we are
+using the `uart3` overlay.
 
 ![image](https://github.com/jclark/rpi-cm4-ptp-guide/assets/499966/cdef0aab-8628-43f4-baa5-4bc705612529)
+
+
+The wiring is as follows
+
+| Color | GPS pin | Jumpers | Pin # | Pin function |
+| --- | --- | --- | --- | --- |
+| yellow | PPS | J2 | 9 | SYNC_OUT |
+| white | RX | HAT | 7 | GPIO 4, TXD3 |
+| green | TX | HAT | 29 | GPIO 5, RXD3 |
+| black | GND | HAT | 6 | Ground |
+| red | VCC | HAT | 4 | 5V power |
+
 
 ## Post installation
 
