@@ -23,8 +23,8 @@ This goal of this repository is to be a guide to taking advantage of this. The g
 * [how to use the PTP client on Windows 10/11 with this](ptp-windows.md)
 * [how to measure time synchronization](measure.md)
 
-It is also possible to setup NTP in a way that takes advantage of the PTP hardware support. This needs the
-the chrony NTP implementation. This needs chrony 4.4, which is included in Fedora but not yet in
+It is also possible to setup NTP in a way that takes advantage of the PTP hardware support. This needs
+the chrony NTP implementation, at least version 4.4, which is included in Fedora but not yet in
 Raspberry Pi OS, so I have written the guide for this using Fedora as the operating system:
 
 * [how to install and configure Fedora](fedora.md)
