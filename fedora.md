@@ -334,7 +334,7 @@ The wiring is as follows
 | black | GND | HAT | 6 | Ground |
 | red | VCC | HAT | 4 | 5V power |
 
-(The GPS is a Quescan SR1612Z1, which costs about $10; it uses the ZongKhe Micro [AT6558](https://www.icofchina.com/d/file/xiazai/2016-12-05/b1be6f481cdf9d773b963ab30a2d11d8.pdf) chipset.)
+The GPS in the photo is a Quescan SR1612Z1, which costs about $10; it uses the ZongKhe Micro [AT6558](https://www.icofchina.com/d/file/xiazai/2016-12-05/b1be6f481cdf9d773b963ab30a2d11d8.pdf) chipset; the default speed is 38400. For other options, see the [GPS hardware](gps-hw.md) page.
 
 ## Post installation
 
