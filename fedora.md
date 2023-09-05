@@ -15,7 +15,7 @@ Fedora currently has some disadvantages compared to Raspberry Pi OS
 
 * the documentation specific to the Raspberry Pi and particularly the CM4 is not as good (this page is trying to help with that)
 * on the CM4, it's less polished and has some bugs (notably with HDMI output)
-* it packages version 4.0 of Linux PTP, which is [not compatible](https://github.com/jclark/rpi-cm4-ptp-guide/issues/23) with the CM4; this can [easily be patched](https://www.mail-archive.com/linuxptp-devel@lists.sourceforge.net/msg06374.html), but as far as I know Fedora has not yet done so
+* it packages version 4.0 of Linux PTP, which is [not compatible](https://github.com/jclark/rpi-cm4-ptp-guide/issues/23) with the CM4; although this can [easily be patched](https://www.mail-archive.com/linuxptp-devel@lists.sourceforge.net/msg06374.html), the LinuxPTP maintainer has adopted a policy of not working around "broken" hardware, and Fedora has [decided](https://bugzilla.redhat.com/show_bug.cgi?id=2237149) not to diverge from upstream
 
 The last point means that Raspberry Pi OS is the more convenient option for using PTP. But chrony can make use of the CM4's PTP hardware support for NTP; Fedora is a good basis for experimenting with that. There is a separate page for [chrony](chrony.md) configuration.
 
