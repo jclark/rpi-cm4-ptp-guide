@@ -9,7 +9,7 @@ This page is written assuming [Fedora](fedora.md) as the OS.
 
 ## PPS input
 
-Chrony can work fine with just the PPS siganl from the GPS: the pulse says exactly when a second starts; chrony can figure out which second it is from network sources.
+Chrony can work fine with just the PPS signal from the GPS: the pulse says exactly when a second starts; chrony can figure out which second it is from network sources.
 
 Before trying to get chrony working, it's a good idea to check that the kernel is seeing the PPS signal, which can be done
 with these commands:
@@ -133,7 +133,7 @@ Now
 sudo systemctl restart chronyd
 ```
 
-The /run/chrony.clk.ttyX.sock is a recent addition to gpsd. Before that, it supported only a /run/chrony.ttyX.sock, which works only for PPS data. If you're using a version of gpsd that does not support /run/chrony.clk.ttyX.sock, then you can instead use the SHM 0 refclock.
+The /run/chrony.clk.ttyX.sock feature was added in gpsd 3.25. Before that, it supported only a /run/chrony.ttyX.sock, which works only for PPS data. If you're using a version of gpsd that does not support /run/chrony.clk.ttyX.sock, then you can instead use the SHM 0 refclock.
 
 ```
 refclock SHM 0 poll 3 offset 0.35 noselect refid UART
