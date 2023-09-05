@@ -90,7 +90,6 @@ Edit OPTIONS line in `/etc/sysyconfig/gpsd`:
 OPTIONS="-n /dev/ttyAMA3"
 ```
 
-
 GPSd is usually activated by a socket, but this isn't what we want. So:
 
 ```
@@ -111,19 +110,33 @@ to check that gpsd is seeing the GPS. Use Ctrl-C to exit.
 Now we can make chrony use this, by making the refclocks in `/etc/chrony/chrony.conf` look like this:
 
 ```
-# Use time pulse connected to SYNC_OUT
-# We add lock UART to make this get the time-of-day from the SHM refclock
 refclock PHC /dev/ptp0:extpps poll 0 precision 1e-7 refid PPS lock UART
-# gpsd gets the time-of-day from the GPS over the UART and makes it available in a shared memory segment
-refclock SHM 0 poll 3 offset 0.35 noselect refid UART
+refclock SOCK /run/chrony.clk.ttyAMA3.sock poll 3 offset 0.35 noselect refid UART
 ```
 
-Note that using SOCK refclock doesn't work, since that requires the PPS to go through gpsd.
+There's a lot packed into these two lines. Consider the refclock SOCK line first.
+ * When gpsd starts reading from /dev/ttyX, it checks for the existence of the socket /run/chrony.clk.ttyX.sock; if this socket exists, then it will send the messages with the current date-time derived from messages received from the GPS over this socket.
+ * The refclock SOCK line causes chrony to create the socket in the place where gpsd expects. Chrony will then read date-time messages from that.
+  * The `refid UART` option gives the name `UART` to this reference clock.
+ * The `offset 0.35` means that chrony should assume that there are 0.35 seconds delay between the instant when the second started and the instant when it receives the date-time message for that second through the socket. The figure of 0.35 will be depend on the hardware. You can adjust it so that the offset for UART refclock in `chronyc sources` is small.
+ * The `noselect` option means that this refclock is not going to be used as a time source on its own: it's too inaccurate for that. (Instead it's going to be used to supplement the pulse-per-second signal.)
 
-Then do:
+Now let's look at the `refclock PHC` line.
+ * Usually the PHC (PTP Hardware Clock) refclock expects the PTP Hardware Clock to have been synchronized with PTP; the `extpps` option enables a different mode of operation, in which it reads thes timestamps of pulses on a pin on the PTP hardware clock; it defaults to pin 0, which is what we need.
+ * `/dev/ptp0` is the device for the PTP hardware clock.
+ * the `refid` option names this refclock `PPS`.
+ * the `lock UART` option means that the pulse should be combined with the date-time from the UART refclock to provide a complete and accurate time sample.
+
+Now
 
 ```
 sudo systemctl restart chronyd
+```
+
+The /run/chrony.clk.ttyX.sock is a recent addition to gpsd. Before that, it supported only a /run/chrony.ttyX.sock, which works only for PPS data. If you're using a version of gpsd that does not support /run/chrony.clk.ttyX.sock, then you can instead use the SHM 0 refclock.
+
+```
+refclock SHM 0 poll 3 offset 0.35 noselect refid UART
 ```
 
 ## Hardware timestamping
