@@ -2,8 +2,6 @@
 
 *This is still a work-in-progress. Suggestions for improvements are very welcome and can be made by creating issues.*
 
-*New: how to take advantage of the hardware PTP support using [chrony](chrony.md) on [Fedora](fedora).*
-
 The Raspberry Pi Compute Module 4 (CM4) has hardware support for the Precision Time Protocol (PTP). This repository is a guide to how to use this to provide an accurate source of time within your local network.
 
 Although the CM4 does not have an Ethernet jack, it does have an Ethernet PHY, the Broadcom [BCM54210PE](https://www.broadcom.com/products/ethernet-connectivity/phy-and-poe/copper/gigabit/bcm54210), which has support for PTP. Linux kernel support for this was added recently (2022), as discussed in https://github.com/raspberrypi/linux/issues/4151. This support has now been merged into the mainline Linux kernel.
@@ -22,13 +20,6 @@ This goal of this repository is to be a guide to taking advantage of this. The g
 * [inexpensive network switches with PTP support](switches.md)
 * [how to use the PTP client on Windows 10/11 with this](ptp-windows.md)
 * [how to measure time synchronization](measure.md)
-
-It is also possible to setup NTP in a way that takes advantage of the PTP hardware support. This needs
-the chrony NTP implementation, at least version 4.4, which is included in Fedora but not yet in
-Raspberry Pi OS, so I have written the guide for this using Fedora as the operating system:
-
-* [how to install and configure Fedora](fedora.md)
-* [how to configure chrony](chrony.md)
 
 ## Results
 
