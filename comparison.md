@@ -68,8 +68,8 @@ In the next test we've disconnected the GPS antenna from the Qulsar and observed
 ![qulsar_qg2_pps_drift_after_12h_no_lock](https://github.com/andrepuschmann/rpi-cm4-ptp-guide/assets/525775/cc015308-8186-4bee-94fd-36faeb16ba5e)
 
 It is noteworthy to mention that after reconnecting the GPS antenna back to the DUT neither the PPS nor the client's PHC/PPS jumped straight back to the "synced" position.
-Instead we observed a slow but steady readjustment of the both signal until they eventually reached their
-original offset. In other words, no larger clock corrections where observed at the PTP client.
+Instead we observed a slow but steady readjustment of both signals until they eventually reached their
+original offset. In other words, no larger PHC time/frequency corrections where observed at the PTP client.
 
 
 ## References
