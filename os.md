@@ -1,7 +1,11 @@
 # CM4 OS installation and configuration
 
 These instructions are for the Raspberry Pi OS Lite. Raspberry Pi OS used to be called Raspbian.
-We are using the version based on Debian 11 (Bullseye), since that is current at the time of writing (late 2022). We are using Raspberry Pi OS, because we depend on kernel support that has not yet available in other distributions. We are using the Lite version, since we do not need or want a desktop environment for this application. We are also using the 64-bit version, since this takes best advantage of the CM4 hardware (particularly with 8Gb RAM).
+
+As of the time of writing (early 2024), the current version of Raspberry Pi OS is based on Debian 12 (Bookworm).
+The legacy version of Raspberry Pi OS is based on Debian 11 (Bullseye).
+We are using Raspberry Pi OS, since it is optimized for the Raspberry Pi hardware.
+We are using the Lite version, since we do not need or want a desktop environment for this application. We are also using the 64-bit version, since this takes best advantage of the CM4 hardware (particularly with 8Gb RAM).
 
 ## OS installation
 
@@ -35,7 +39,7 @@ Run `raspi-config`:
    * Yes to enable serial port hardware
 
 Configure the Device Tree for the CM4 and the IO board by adding the following
-at the end of `/boot/config.txt`
+at the end of `/boot/firmware/config.txt` (on Raspberry Pi OS 11, it's `/boot/config.txt`).
 
 ```
 # Enable GPIO pin 18 for PPS (not always necessary, but useful for testing)
@@ -60,14 +64,43 @@ Set the timezone:
 sudo dpkg-reconfigure tzdata
 ```
 
-You probably want a static IP address. Edit the section of `/etc/dhcpcd.conf` starting
-`Example static IP configuration`.
-
 Use raspi-config to set
 * wifi country (under System Options > Wireless LAN)
 * hostname (under System Options)
 
 Reboot.
+
+## Static IP address
+
+Although it's not essential, you probably want a static IP address.
+
+### Network Manager
+
+Raspberry Pi OS 12 by default uses Network Manager to manage network connections.
+
+You can see the current connections using
+
+```
+nmcli con show
+```
+
+Assuming the connection on the interface is named `Wired connection 1`, you can change it to a static IP using a command like:
+
+```
+nmcli con mod "Wired connection 1" ipv4.method manual ipv4.addresses 192.168.0.5/24 ipv4.gateway 192.168.0.1 \
+   ipv4.dns 8.8.8.8 ipv4.dns-search lan
+```
+
+You can activate this by doing:
+
+```
+nmcli con down "Wired connection 1"
+nmcli con up "Wired connection 1"
+```
+
+### dhcpcd
+
+Raspberry Pi OS 11 by default uses dhcpcd to manage the network. Edit the section of `/etc/dhcpcd.conf` starting with `Example static IP configuration`.
 
 ## Verify OS setup
 
