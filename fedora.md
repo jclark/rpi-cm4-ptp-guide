@@ -2,7 +2,7 @@
 
 ## Fedora compared to Raspberry Pi OS
 
-Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37. At the time of writing (September 2023) the current version is release 38. It's considerably less mature than Raspberry Pi OS, which is the offical OS for the Raspberry Pi.
+Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37. At the time of writing (December 2023) the current version is release 39. It's considerably less mature than Raspberry Pi OS, which is the offical OS for the Raspberry Pi.
 
 Fedora has some advantages, which I think give it the potential in the future to be a better platform than Raspberry Pi OS.
 
@@ -78,23 +78,11 @@ Note that after writing the image and before booting from eMMC, you will need to
 
 ### rpiboot on Fedora desktop
 
-Install packages needed for building rpiboot:
+There's a Copr repository with `rpiboot`. Install from this:
 
 ```
-sudo dnf install git gcc make libusb1 libusb1-devel 
-```
-
-Get the rpiboot source
-
-```
-git clone --depth=1 https://github.com/raspberrypi/usbboot
-```
-
-Build rpiboot
-
-```
-cd usbboot
-make
+sudo dnf copr enable lsevcik/usbboot 
+sudo dnf install -y usbboot
 ```
 
 After powering on the CM4 so it boots from USB as described above, check that your desktop is recognizing the CM4 by doing
@@ -106,7 +94,7 @@ sudo dmesg | grep BCM2711
 Then, in the usbboot directory, do
 
 ```
-sudo ./rpiboot
+sudo rpiboot
 ```
 
 The output should look something like this:
@@ -168,13 +156,15 @@ sudo dnf install arm-image-installer
 Now, run it. The command looks something like this:
 
 ```
-sudo arm-image-installer --target=rpi4 --image=Fedora-Server-38-1.6.aarch64.raw.xz   --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub
+sudo arm-image-installer --target=rpi4 --image=Fedora-Server-39-1.5.aarch64.raw.xz  --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub --args nomodeset --resizefs
 ```
 You will need to adjust the command:
 * you will always need `--target=rpi4` for the CM4
 * the `--image` option specifies the image to write; it expects a compressed `.xz` image
 * the `--media` option specifies the device name where you made the CM4 storage available in the previous stage
 * the `--addkey` option is only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
+* the `--args nomodeset` works around a problem with their being no HDMI display output
+* the `--resizefs` argument resizes the image to match the actual size of the disk 
 
 It takes about 25 minutes for arm-image-installer to write the image.
 
@@ -344,6 +334,8 @@ Update packages
 sudo dnf update
 ```
 
-With Fedora 38, after updating everything, HDMI output no longer works.
-
 You can make use of the Cockpit web administration interface by connecting to port 9090 on the CM4.
+
+```
+systemctl enable --now cockpit.socket
+```
