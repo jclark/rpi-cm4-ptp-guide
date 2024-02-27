@@ -1,36 +1,9 @@
-# Configure time synchronization
+# Time server using ts2phc
 
-This page describes how to set things up yourself, using open source software.
+This page describes how to set up a time server using the `ts2phc` program, which is part
+of LinuxPTP.
 
-If this isn't your idea of fun, you might want to try [Timebeat](https://timebeat.app/). It is a commercial synchronization solution, but offers a free download. The people behind it were instrumental in implementing the kernel support for the PHC in the CM4's Ethernet PHY. 
-
-## Verify GPS connection
-
-Download and compile `testptp` program:
-
-```
-wget https://raw.githubusercontent.com/torvalds/linux/master/tools/testing/selftests/ptp/testptp.c
-gcc -o testptp testptp.c -lrt
-```
-
-Use testptp to check PPS signal on SYNC_OUT pin:
-
-```
-# Configure SYNC_OUT pin to be an input pin
-sudo ./testptp  -d /dev/ptp0 -L 0,1
-# Read some timestamps (e.g. 5)
-sudo ./testptp  -d /dev/ptp0 -e 5
-```
-
-The ethernet needs to be plugged in for PTP hardware clock to work.
-
-Check serial connection to GPS
-
-```
-(stty 9600 -echo -icrnl; cat) </dev/ttyAMA0
-```
-
-This should show some NMEA sentences (lines starting with `$`).
+Before attempting this make sure the GPS connection is working.
 
 ## Minimal PTP test setup
 
@@ -188,36 +161,3 @@ This should report an offset close to to -37s (i.e. -37000000000 ns).
 
 The output of `chronyc tracking` should show (in the Reference Id line) that it is using the SHM0 refclock, and after a while the RMS offset should be small (single digit number of microseconds).
 
-## PTP client with NTP on CM4
-
-This runs PTP as a client on a CM4 together with an NTP server that is synced from PTP. 
-
-We can manage this using the timemaster service, which is part of linuxptp.
-
-Install linuxptp and chrony:
-```
-apt install linuxptp chrony
-```
-
-Copy [timemaster.conf](files/timemaster.conf) to `/etc/linuxptp/` and then change `192.168.0.10` in the ntp_server line to the address of your NTP server.
-
-Then enable the timemaster service:
-
-```
-sudo systemctl enable timemaster.service
-```
-
-You may get the following error on startup from ptp4l:
-
-```
-interface 'eth0' does not support requested timestamping
-```
-
-You can avoid this by copying [phc@.service](files/phc%40.service) to `/etc/systemd/system/` and then do
-
-```
-sudo systemctl daemon-reload
-sudo systemctl enable phc@eth0.service
-```
-
-This service makes sure the PHC is ready before ptp4l runs.

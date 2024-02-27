@@ -141,7 +141,7 @@ refclock SHM 0 poll 3 offset 0.35 noselect refid UART
 
 ## Hardware timestamping
 
-*This isn't working reliably yet.*
+*This isn't working yet.*
 
 The hardware on the CM4 cannot timestamp arbitrary packets: it can only timestamp PTP packets.
 This means we have to use [NTP-over-PTP](https://datatracker.ietf.org/doc/draft-ietf-ntp-over-ptp/) in order to use hardware timestamping.

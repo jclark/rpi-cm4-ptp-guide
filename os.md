@@ -155,3 +155,60 @@ You should see:
 ```
 cooling_device0  thermal_zone0
 ```
+
+## Verify GPS connection
+
+You should verify that the GPS is properly connected. There are two connections
+
+- the serial connection
+- the PPS connection
+
+### Serial connection
+
+Assuming you have specified `dtoverlay=disable-bt` above and you have connected the GPS
+RX (white) and TX (green) pins to pins 8 and 10 respectively on the J8 HAT connector,
+then the serial device will be `/dev/ttyAMA0`.
+
+Do:
+
+```
+(stty 9600 -echo -icrnl; cat) </dev/ttyAMA0
+```
+
+Here 9600 is the speed. The most common default speed is 9600, but some receivers default to 38400 or 115200.
+
+You should see  lines starting with `$`.
+In particular look for a line starting with `$GPRMC` or `$GNRMC`. The number following that should be the current UTC time;
+for example, `025713.00` means `02:57:13.00` UTC.
+After another 8 commas, there will be a field that should have the current UTC date;
+for example, `140923` means 14th Septemember 2023.
+
+### PPS connection
+
+To verify that the PPS connection is working, first configure the SYNC_OUT for input: 
+
+```
+echo 1 0 | sudo tee /sys/class/ptp/ptp0/pins/SYNC_OUT
+```
+
+Replace the `0` in `ptp0` with whatever `ethtool` said was the number.
+`SYNC_OOUT` here is the name of the pin to which the PPS is connected. In the `echo 1 0`, 1 means to use the pin for input and 0 means the pin should use input channel 0.
+
+
+Now do:
+```
+echo 0 1 | sudo tee /sys/class/ptp/ptp0/extts_enable
+```
+
+This means to enable timestamping of pulses on channel 0. In the `echo 0 1`, 0 means channel 0 and 1 means to enable timestamping.
+
+
+Now see if we're getting timestamps:
+
+```
+sudo cat /sys/class/ptp/ptp0/fifo
+```
+
+The `cat` command should output a line, which represents a timestamp of an input pulse and consists of 3 numbers: channel number, which is zero in this case, seconds count, nanoseconds count. Repeating the last command will give lines for successive input timestamps.
+
+If `cat` outputs nothing, then it's not working.

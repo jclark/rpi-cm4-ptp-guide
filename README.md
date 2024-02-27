@@ -13,10 +13,11 @@ There's a useful introductory [blog](https://www.jeffgeerling.com/blog/2022/ptp-
 This goal of this repository is to be a guide to taking advantage of this. The guide is split into the following sections:
 
 * [parts needed to create a CM4-based computer](cm4-computer.md)
-* [how to install and configure the operating system](os.md)
 * [GPS receiver hardware options](gps-hw.md)
+* [how to install and configure the operating system](os.md)
 * [how to  the configure the GPS receiver](gps-config.md)
-* [how to configure time synchronization](time-config.md)
+* [how to set up a time server using LinuxPTP's ts2phc program](ts2phc.md)
+* [how to set up a combined PTP/NTP client on a CM4](ptp-client.md)
 * [inexpensive network switches with PTP support](switches.md)
 * [how to use the PTP client on Windows 10/11 with this](ptp-windows.md)
 * [how to measure time synchronization](measure.md)
