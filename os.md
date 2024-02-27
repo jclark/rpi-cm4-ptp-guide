@@ -192,7 +192,7 @@ echo 1 0 | sudo tee /sys/class/ptp/ptp0/pins/SYNC_OUT
 ```
 
 Replace the `0` in `ptp0` with whatever `ethtool` said was the number.
-`SYNC_OOUT` here is the name of the pin to which the PPS is connected. In the `echo 1 0`, 1 means to use the pin for input and 0 means the pin should use input channel 0.
+`SYNC_OUT` here is the name of the pin to which the PPS is connected. In the `echo 1 0`, 1 means to use the pin for input and 0 means the pin should use input channel 0.
 
 
 Now do:
