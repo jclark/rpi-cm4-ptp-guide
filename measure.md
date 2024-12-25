@@ -29,7 +29,7 @@ The [TAPR TICC](https://tapr.org/product/tapr-ticc/) looks like a good option fo
 
 ## Example setup
 
-Here's a photo showing a measurement using the CM5 and an inexpensive oscilloscope (an FNIRSI 5014D). Note that on the CM5 the SYNC_OUT is on pin 6 (which the silkscreen incorrectly labels as USB_OTG).
+Here's a photo showing a measurement using the CM5 and an inexpensive oscilloscope (an FNIRSI 5014D). Note that on the CM5 the SYNC_OUT is on pin 6 (which the silkscreen incorrectly labels as USB_OTG). This is using a pigtail (15cm SMA bulkhead female to Dupont 2.54mm female bought from [AliExpress](https://www.aliexpress.com/item/1005006226703757.html)) with the Wifi antenna mounting hole on the CM5 IO board case to make the SYNC_OUT signal available outside the case.
 
 ![image](https://github.com/user-attachments/assets/5921d777-9a1c-4a1d-8a3b-d2fa47ff6901)
 
