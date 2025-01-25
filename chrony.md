@@ -141,10 +141,12 @@ refclock SHM 0 poll 3 offset 0.35 noselect refid UART
 
 ## Hardware timestamping
 
-*This isn't working yet.*
+*This isn't working on the CM4 yet.*
 
 The hardware on the CM4 cannot timestamp arbitrary packets: it can only timestamp PTP packets.
 This means we have to use [NTP-over-PTP](https://datatracker.ietf.org/doc/draft-ietf-ntp-over-ptp/) in order to use hardware timestamping.
+Note that this requires that the PHC is free running, so you have to use a vclock if you want to run this together with PTP
+over the same network interface.
 Reading the PTP hardware clock on the CM4 is unusually slow, so we need the
 the `hwtstimeout` directive, which was added in chrony version 4.4 (released in August 2023).
 
@@ -167,14 +169,12 @@ sudo firewall-cmd --add-service ptp --permanent
 On the client side, you will need something like this:
 
 ```
-server 192.168.1.2 minpoll 0 maxpoll 0 xleave port 319
+server 192.168.1.2 minpoll 0 maxpoll 0 xleave port 319 extfield F323 extfield F324
 hwtimestamp enp1s0 rxfilter ptp
 ptpport 319
 ```
 
+The `extfield F324` was added in chrony 4.5 and allows chrony to take advantage of network switches with PTP support
+(specifically end-to-end transparent clocks).
+
 Chrony only supports NTP-over-PTP between server and client running the same versions of chrony.
-
-
-
-
-
