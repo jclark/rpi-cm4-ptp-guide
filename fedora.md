@@ -2,27 +2,34 @@
 
 ## Fedora compared to Raspberry Pi OS
 
-Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37. At the time of writing (December 2023) the current version is release 39. It's considerably less mature than Raspberry Pi OS, which is the offical OS for the Raspberry Pi.
+Fedora added support for the Raspberry Pi 4 (including the CM4) with release 37. At the time of writing (January 2025) the current version is release 41. It's less mature on the CM4 than Raspberry Pi OS, which is the offical OS for the Raspberry Pi.
 
 Fedora has some advantages, which I think give it the potential in the future to be a better platform than Raspberry Pi OS.
 
 * Fedora has a strong [upstream focus](https://docs.fedoraproject.org/en-US/package-maintainers/Staying_Close_to_Upstream_Projects/), particularly for the kernel.
-* RedHat has strong expertise PTP and NTP. In particular, the maintainer of [chrony](https://chrony-project.org/) (an NTP implementation) works for RedHat, so Fedora always has the latest version of chrony.
+* RedHat has strong expertise PTP and NTP. In particular, the maintainer of [chrony](https://chrony-project.org/) (an NTP implementation) works for RedHat.
 * Fedora includes [Cockpit](https://cockpit-project.org/), which is a very nice web interface for server administration.
 * Fedora has an IoT variant; this provides a [non-traditional immutable approach](https://docs.fedoraproject.org/en-US/iot/) to an OS, which could be a more robust approach when a CM4 is being used as a PTP or NTP appliance (although I haven't tried this yet).
 
 Fedora currently has some disadvantages compared to Raspberry Pi OS
 
 * the documentation specific to the Raspberry Pi and particularly the CM4 is not as good (this page is trying to help with that)
-* on the CM4, it's less polished and has some bugs (notably with HDMI output)
-* it packages version 4.0 of Linux PTP, which is [not compatible](https://github.com/jclark/rpi-cm4-ptp-guide/issues/23) with the CM4; although this can [easily be patched](https://www.mail-archive.com/linuxptp-devel@lists.sourceforge.net/msg06374.html), the LinuxPTP maintainer has adopted a policy of not working around "broken" hardware, and Fedora has [decided](https://bugzilla.redhat.com/show_bug.cgi?id=2237149) not to diverge from upstream
+* it relies on u-boot, which assumes that primary UART (`dev/ttyAMA0`) will be used as a serial console;
+  this is a big problem if you are using a GPS hat that is designed also to use the primary UART
+* it boots a lot slower
 
-The last point means that Raspberry Pi OS is the more convenient option for using PTP. But chrony can make use of the CM4's PTP hardware support for NTP; Fedora is a good basis for experimenting with that. There is a separate page for [chrony](chrony.md) configuration. Unfortunately, chrony's PTP hardware support is not yet working well on the CM4, so at this stage it is suitable only for experimenting.
+Fedora always has the latest version of chrony and chrony can make use of the CM4's PTP hardware support for NTP. Fedora is a good basis for experimenting with that. There is a separate page for [chrony](chrony.md) configuration. Unfortunately, chrony's PTP hardware support is not yet fully working on the CM4.
+
+Note that Fedora includes linuxptp version 4. This requires using the option `ptp_minor_version 0`, which can be specified in `/etc/ptp4l.conf`.
 
 ## RAM and storage requirements
 
 CM4 RAM sizes range from 1Gb to 8Gb; eMMC sizes range from 8Gb to 32Gb.
-I tried Fedora Server 38 on a CM4 with 8Gb of RAM and an 8Gb eMMC. 8Gb eMMC is plenty for just running a NTP/PTP server. From a cursory look at `/proc/meminfo`: 8Gb RAM is more than is useful: 4Gb should be plenty; 2Gb should be OK; 1Gb would be tight.
+8Gb eMMC is enough for just running a NTP/PTP server, but can get tight during upgrades.
+From a cursory look at `/proc/meminfo`: 8Gb RAM is more than is useful: 4Gb should be plenty; 2Gb should be OK; 1Gb would be tight.
+
+I would recommend using a CM4 Lite with Fedora Server. This allows using an SD card, which can be as big as you want.
+It is also a bit easier and quicker to install.
 
 ## Installation and configuration overview
 
@@ -42,7 +49,7 @@ The normal Fedora approach for step 4 requires using an HDMI monitor and keyboar
 
 ## Select and download the image
 
-Fedora has three editions that could potentially be used with the CM4: Workstation, Server and IoT. This guide uses the Server edition, which is comparable to Raspberry Pi OS Lite.
+Fedora has three editions that could potentially be used with the CM4: Workstation, Server and IoT. This guide focuses the Server edition.
 
 To download, visit [getfedora.org](https://getfedora.org/) on the desktop. Then
 
@@ -50,13 +57,17 @@ To download, visit [getfedora.org](https://getfedora.org/) on the desktop. Then
 2. Go to the section for `For ARM® aarch64 systems`
 3. Download the raw `raw.xz` image
 
+There is also a alternative version (Fedora calls it a *spin*) called [Fedora Minimal](https://fedoraproject.org/spins/minimal/download), which is comparable to Raspberry Pi OS Lite.
+This is not as much tested as Fedora Server, but is worth considering if you have a CM4 with an eMMC. This guide should mostly work with the Minimal spin also.
+
 ## Making CM4 storage accessible from desktop
 
 In this stage, we need to make the storage used by the CM4 available as a disk on the desktop system.
 
 The CM4 is available with or without an eMMC. A CM4 without an eMMC is sometimes called a CM4 Lite. Most of the CM4s that I have seen available for sale have an eMMC.
+But if you have a choice, I would recommend using a CM4 Lite with Fedora.
 
-A CM4 without an eMMC uses an SD card for storage. In this case, all you have to do for this stage is to plug the CM4 into your desktop.
+A CM4 without an eMMC uses an SD card for storage. In this case, all you have to do for this stage is to plug the SD card into your desktop.
 
 If you have a CM4 with an eMMC, things are more complicated. (Note that you cannot use an SD card to boot a CM4 that has an eMMC.) We need to connect the CM4 using USB to the desktop and then boot it in a way that makes the eMMC appear as a disk on the desktop. This requires running the rpiboot program on the desktop.
 
@@ -156,17 +167,16 @@ sudo dnf install arm-image-installer
 Now, run it. The command looks something like this:
 
 ```
-sudo arm-image-installer --target=rpi4 --image=Fedora-Server-39-1.5.aarch64.raw.xz  --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub --args nomodeset --resizefs
+sudo arm-image-installer --target=rpi4 --image=Fedora-Server-41-1.4.aarch64.raw.xz  --media=/dev/sdX --addkey=/home/jjc/.ssh/id_ecdsa.pub --resizefs
 ```
 You will need to adjust the command:
 * you will always need `--target=rpi4` for the CM4
 * the `--image` option specifies the image to write; it expects a compressed `.xz` image
 * the `--media` option specifies the device name where you made the CM4 storage available in the previous stage
 * the `--addkey` option is only necessary if you want to be able to do initial setup using SSH rather than using a monitor and keyboard connected to the CM4; the argument for the `--addkey` option needs to point to your public SSH key (I generated mine with `ssh-keygen -t ecdsa -b 521`)
-* the `--args nomodeset` works around a problem with their being no HDMI display output
 * the `--resizefs` argument resizes the image to match the actual size of the disk 
 
-It takes about 25 minutes for arm-image-installer to write the image.
+It takes about 25 minutes for arm-image-installer to write the Fedora Server image to internal eMMC. Writing to an SD card is much quicker.
 
 ### Windows desktop
 
@@ -209,7 +219,7 @@ Note that you shouldn't do the manual setup over ssh while the normal setup proc
 
 Fedora has some [documentation on Raspberri Pi HATs](https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi/HATs) that is also applicable to the CM4 with an IO board (even without additional HATs).
 
-TODO: The serial port explanation didn't seem consistent with what I had understood about the serial ports from the official Raspberry Pi [documentation](https://www.raspberrypi.com/documentation/computers/configuration.html#configuring-uarts).
+TODO: The serial port explanation didn't seem consistent with what I had understood about the serial ports from the official Raspberry Pi [documentation](https://www.raspberrypi.com/documentation/computers/configuration.html#configure-uarts).
 
 After making the changes in this section, I recommend shutting down (with `shutdown -h now`) and power cycling.
 
@@ -335,7 +345,3 @@ sudo dnf update
 ```
 
 You can make use of the Cockpit web administration interface by connecting to port 9090 on the CM4.
-
-```
-systemctl enable --now cockpit.socket
-```
