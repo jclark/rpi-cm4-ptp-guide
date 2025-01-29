@@ -42,8 +42,6 @@ Configure the Device Tree for the CM4 and the IO board by adding the following
 at the end of `/boot/firmware/config.txt` (on Raspberry Pi OS 11, it's `/boot/config.txt`).
 
 ```
-# Enable GPIO pin 18 for PPS (not always necessary, but useful for testing)
-dtoverlay=pps-gpio,gpiopin=18
 # realtime clock
 dtoverlay=i2c-rtc,pcf85063a,i2c_csi_dsi
 # fan
