@@ -1,9 +1,10 @@
-# CM4 OS installation and configuration
+# CM4/CM5 OS installation and configuration
 
 These instructions are for the Raspberry Pi OS Lite. Raspberry Pi OS used to be called Raspbian.
 
-As of the time of writing (early 2024), the current version of Raspberry Pi OS is based on Debian 12 (Bookworm).
-The legacy version of Raspberry Pi OS is based on Debian 11 (Bullseye).
+As of the time of writing (early 2025), the current version of Raspberry Pi OS is based on Debian Bookworm.
+The legacy version of Raspberry Pi OS is based on Debian Bullseye.
+The CM5 requires Bookworm.
 We are using Raspberry Pi OS, since it is optimized for the Raspberry Pi hardware.
 We are using the Lite version, since we do not need or want a desktop environment for this application. We are also using the 64-bit version, since this takes best advantage of the CM4 hardware (particularly with 8Gb RAM).
 
@@ -11,7 +12,7 @@ We are using the Lite version, since we do not need or want a desktop environmen
 
 Install Raspberry Pi OS Lite 64-bit.
 
-If your CM4 has eMMC, follow these [instructions](https://www.raspberrypi.com/documentation/computers/compute-module.html#flashing-the-compute-module-emmc).
+If your CM4/CM5 has eMMC, follow these [instructions](https://www.raspberrypi.com/documentation/computers/compute-module.html#flashing-the-compute-module-emmc).
 When using the Raspberry Pi Imager, select `Raspberry Pi OS (other)` and then  `Raspberry Pi OS Lite (64-bit)`.
 
 TODO: installation without eMMC
@@ -32,14 +33,24 @@ sudo apt update
 sudo apt upgrade
 ```
 
+and reboot.
+
+On the CM5, it is necessary to have at least kernel version 6.12 for PTP hardware timestamping to work.
+You can check your kernel version with `uname -r`.
+If that says you are running something earlier than 6.12 (e.g. 6.6.x), then you will need to update to a more recent kernel.
+At the time of writing (January 2025), this can be done using the command `sudo rpi-update next`. See
+this [forum thread](https://forums.raspberrypi.com/viewtopic.php?t=379745).
+This is not necessary nor recommended for the CM4. 
+
 Run `raspi-config`:
 
 * enable serial port (under Interface/Serial Port); answer
    * No to login shell accessible over serial
    * Yes to enable serial port hardware
 
-Configure the Device Tree for the CM4 and the IO board by adding the following
-at the end of `/boot/firmware/config.txt` (on Raspberry Pi OS 11, it's `/boot/config.txt`).
+For the CM4, but not the CM5, add the following
+at the end of `/boot/firmware/config.txt` (on Bullseye, it's `/boot/config.txt`).
+This should not 
 
 ```
 # realtime clock
@@ -74,7 +85,7 @@ Although it's not essential, you probably want a static IP address.
 
 ### Network Manager
 
-Raspberry Pi OS 12 by default uses Network Manager to manage network connections.
+Raspberry Pi OS Bookworm by default uses Network Manager to manage network connections.
 
 You can see the current connections using
 
@@ -97,7 +108,7 @@ nmcli d reapply eth0
 
 ### dhcpcd
 
-Raspberry Pi OS 11 by default uses dhcpcd to manage the network. Edit the section of `/etc/dhcpcd.conf` starting with `Example static IP configuration`.
+Raspberry Pi OS Bullseye by default uses dhcpcd to manage the network. Edit the section of `/etc/dhcpcd.conf` starting with `Example static IP configuration`.
 
 ## Verify OS setup
 
