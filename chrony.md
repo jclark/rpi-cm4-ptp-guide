@@ -141,8 +141,6 @@ refclock SHM 0 poll 3 offset 0.35 noselect refid UART
 
 ## Hardware timestamping
 
-*This isn't working on the CM4 yet.*
-
 The hardware on the CM4 cannot timestamp arbitrary packets: it can only timestamp PTP packets.
 This means we have to use [NTP-over-PTP](https://datatracker.ietf.org/doc/draft-ietf-ntp-over-ptp/) in order to use hardware timestamping.
 Note that this requires that the PHC is free running, so you have to use a vclock if you want to run this together with PTP
@@ -174,7 +172,12 @@ hwtimestamp enp1s0 rxfilter ptp
 ptpport 319
 ```
 
+The `rxfilter ptp` option should only be included if `ethtool -T` says that the Hardware Receiver Filter Modes includes ptpv2-event.
+On, for example, the i226, the only modes are `none` and `all`; in this case `rxfilter ptp` should be omitted.
+
 The `extfield F324` was added in chrony 4.5 and allows chrony to take advantage of network switches with PTP support
 (specifically end-to-end transparent clocks).
 
 Chrony only supports NTP-over-PTP between server and client running the same versions of chrony.
+
+On the CM4, this works to some extent, but the precision achieved is not as good as with Intel NICs.
