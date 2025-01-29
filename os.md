@@ -81,21 +81,20 @@ Raspberry Pi OS 12 by default uses Network Manager to manage network connections
 You can see the current connections using
 
 ```
-nmcli con show
+nmcli c show
 ```
 
 Assuming the connection on the interface is named `Wired connection 1`, you can change it to a static IP using a command like:
 
 ```
-nmcli con mod "Wired connection 1" ipv4.method manual ipv4.addresses 192.168.0.5/24 ipv4.gateway 192.168.0.1 \
+nmcli c mod "Wired connection 1" ipv4.method manual ipv4.addresses 192.168.0.5/24 ipv4.gateway 192.168.0.1 \
    ipv4.dns 8.8.8.8 ipv4.dns-search lan
 ```
 
 You can activate this by doing:
 
 ```
-nmcli con down "Wired connection 1"
-nmcli con up "Wired connection 1"
+nmcli d reapply eth0
 ```
 
 ### dhcpcd
