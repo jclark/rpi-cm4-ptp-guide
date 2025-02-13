@@ -6,3 +6,4 @@
 /etc/chrony/conf.d/allow.conf
 /usr/local/sbin/ptp4l-gm-set.sh
 /etc/dhcpcd.exit-hook
+/etc/NetworkManager/dispatcher.d/80-ptp4l-gm

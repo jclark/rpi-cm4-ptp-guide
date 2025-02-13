@@ -1,0 +1,21 @@
+#!/bin/sh
+# NetworkManager dispatcher script
+# goes in /etc/NetworkManager/dispatcher.d
+# needs to be executable
+# starts/stops can be seen with journalctl -u NetworkManager-dispatcher
+. /etc/default/ptp4l-gm
+EXTTS_IFACE=eth0
+interface="$1"
+reason="$2"
+if [ "$interface" = "$EXTTS_IFACE" ]; then
+	case "$reason" in
+		up)
+			echo "starting ptp4l-gm on $interface" 1>&2
+			systemctl start ptp4l-gm phc2shm
+			;;
+		down)
+			echo "stopping ptp4l-gm on $interface" 1>&2
+			systemctl stop ts2phc
+			;;
+	esac
+fi
