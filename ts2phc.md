@@ -106,7 +106,7 @@ sudo systemctl start ptp4l-gm phc2shm
 ```
 
 Do *not* use systemctl to enable the ptp4l-gm service. (It will get started on boot
-by a dhcpcd hook.)
+by a dhcpcd hook or a NetworkManager dispatcher script.)
 
 ### Explanation
 
@@ -130,7 +130,11 @@ This sets up the following three new services:
 - ptp4l-gm: this starts ptp4l and then uses pmc (the PTP management client) to make some additonal settings needed when it is running as a grandmaster; this depends on the ts2phc service
 - phc2shm: this runs `phc2sys -E ntpshm` to put samples from the PHC into an NTP-compatible shared memory segment, where they can be used by chrony (via an SHM refclock); this also depends on the ts2phc service
 
-These services are not enabled (and you should not enable them). Instead they are started up by a dhcpcd hook when a carrier is detected on eth0, and stopped when the carrier is lost. This is because the PHC driver does not work properly when there is no carrier.
+These services are not enabled (and you should not enable them). Instead they are started automaticallu when
+the network interface comes up and stopped when the network interface comes down.
+This is necessary because the PHC driver does not work properly when there is no carrier.
+On Raspberry Pi OS Bookworm, this is done by a NetworkManager dispatcher script;
+on Raspberry Pi OS Bullseye, this is done by a dhcpcd hook.
 
 The three services all use some configuration options in `/etc/default/ptp4l-gm`, which you
 can edit to taste.
