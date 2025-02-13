@@ -87,8 +87,10 @@ You can install everything needed using the following commands.
 ```
 # Install chrony
 sudo apt install chrony
+# Install git
+sudo apt install git
 # Clone this repository
-https://github.com/jclark/rpi-cm4-ptp-guide.git
+git clone https://github.com/jclark/rpi-cm4-ptp-guide.git
 # Change into the files directory
 cd rpi-cm4-ptp-guide/files/
 # Install fixed version of linuxptp package
