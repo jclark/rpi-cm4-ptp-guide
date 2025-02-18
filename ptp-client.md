@@ -1,6 +1,6 @@
-# PTP client with NTP on CM4
+# PTP client with NTP on CM4/CM5
 
-This runs PTP as a client on a CM4 together with an NTP server that is synced from PTP. 
+This runs PTP as a client on a CM4/CM5 together with an NTP server that is synced from PTP. 
 
 We can manage this using the timemaster service, which is part of linuxptp.
 
