@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sun, 12 Jan 2025 12:36:25 +0700
+Source: linuxptp
+Binary: linuxptp linuxptp-dbgsym
+Architecture: arm64
+Version: 4.2-1~bpo12+1
+Distribution: bookworm-backports
+Urgency: medium
+Maintainer: Debian Multimedia Maintainers <debian-multimedia@lists.debian.org>
+Changed-By: James Clark  <jjc@jclark.com>
+Description:
+ linuxptp   - Precision Time Protocol (PTP, IEEE1588) implementation for Linux
+Changes:
+ linuxptp (4.2-1~bpo12+1) bookworm-backports; urgency=medium
+ .
+   * Rebuild for bookworm-backports.
+Checksums-Sha1:
+ c58ff4f731cadb6063153d50580caa25fecd1077 1090504 linuxptp-dbgsym_4.2-1~bpo12+1_arm64.deb
+ d3500fa151f165f597591336e1da5186e213ad19 5316 linuxptp_4.2-1~bpo12+1_arm64.buildinfo
+ 02385179b9c28c8c893cad1f560fa66ea43fee89 207376 linuxptp_4.2-1~bpo12+1_arm64.deb
+Checksums-Sha256:
+ 81b488cca62e96832c74f92faf46df4298c78c0b2c72f44b71d579acd7992e54 1090504 linuxptp-dbgsym_4.2-1~bpo12+1_arm64.deb
+ 1ecf4c38d72943c4b21e0293552af81239faddda300c30945d445fcdfc6ea40c 5316 linuxptp_4.2-1~bpo12+1_arm64.buildinfo
+ 2e4b0373fd3850783f01a139b4e0ec8a5dbda1bbb85fed9c3beebcffe2aaa8c7 207376 linuxptp_4.2-1~bpo12+1_arm64.deb
+Files:
+ 2646be648a77016bbb3d8b9e6ee47796 1090504 debug optional linuxptp-dbgsym_4.2-1~bpo12+1_arm64.deb
+ 257dfbf74d96dfc01dd7dbb62d743fc3 5316 utils optional linuxptp_4.2-1~bpo12+1_arm64.buildinfo
+ 0fe4590708038300e82a6b831b0b608e 207376 utils optional linuxptp_4.2-1~bpo12+1_arm64.deb
