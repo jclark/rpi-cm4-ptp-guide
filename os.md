@@ -38,7 +38,7 @@ and reboot.
 On the CM5, it is necessary to have at least kernel version 6.12 for PTP hardware timestamping to work.
 You can check your kernel version with `uname -r`.
 If that says you are running something earlier than 6.12 (e.g. 6.6.x), then you will need to update to a more recent kernel.
-At the time of writing (January 2025), this can be done using the command `sudo rpi-update next`. See
+At the time of writing (March 2025), this can be done using the command `sudo rpi-update`. See
 this [forum thread](https://forums.raspberrypi.com/viewtopic.php?t=379745).
 This is not necessary nor recommended for the CM4. 
 
