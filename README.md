@@ -21,6 +21,7 @@ The goal of this repository is to be a guide to taking advantage of this. The gu
 * [inexpensive network switches with PTP support](switches.md)
 * [how to use the PTP client on Windows 10/11 with a CM4/CM5-based PTP server](ptp-windows.md)
 * [how to measure time synchronization](measure.md)
+* [comparison against third-party/commercial PTP solutions](comparison.md)
 
 ## Results
 
