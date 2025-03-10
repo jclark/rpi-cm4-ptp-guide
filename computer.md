@@ -72,7 +72,7 @@ The board fits snugly in the case with no spare space on any side, which makes i
 
 The obvious choice is the official [CM5 IO Board](https://www.raspberrypi.com/products/compute-module-5-io-board/) from the Raspberry Pi Foundation, which costs about $25. It includes a slot for an M.2 NVMe SSD.
 
-Note that there is an error in the silkscreen on the first version of these boards. The silkscreen labels pin 9 as being the SYNC_OUT pin (as on the CM4 IO board), but the SYNC_OUT pin is actually pin 6 (above the pin labelled as USB_OTG).
+Note that there is an error in the silkscreen on the first version of these boards. The silkscreen labels pin 9 of the J2 jumpers as being the SYNC_OUT pin (as on the CM4 IO board), but the SYNC_OUT pin is actually pin 6 (above the pin labelled as USB_OTG).
 
 There is also an official matching [case](https://www.raspberrypi.com/products/io-case-cm5/), which I would recommend getting as well. The case comes with a fan, but you can also buy an official [heatsink](https://www.raspberrypi.com/products/cooler/), which can be used instead of the fan and gives a quieter system.
 

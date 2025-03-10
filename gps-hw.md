@@ -14,7 +14,7 @@ The CM4 SYNC_OUT pin can be connected in two ways:
    * the SMA connector on the case can be connected to a device to measure the PPS signal
 * internal: a GPS module can be mounted in the case containing the CM4, with the PPS pin connected to the SYNC_OUT pin and the TX/RX pins connected to the GPIO header
 
-Note that the silkscreen on official CM5 IO board does not correctly label the SYNC_OUT pin: SYNC_OUT is pin 6 not pin 9.
+Note that the silkscreen on official CM5 IO board does not correctly label the SYNC_OUT pin: SYNC_OUT is pin 6 not pin 9 on the J2 jumpers.
 
 ## External
 
