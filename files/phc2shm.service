@@ -1,7 +1,7 @@
 [Unit]
 Description=Output samples of PTP hardware clock (PHC) to NTP-compatible shared memory segment
 Documentation=man:phc2sys
-Requires=ts2phc
+Requires=ts2phc.service
 
 [Service]
 Type=simple
