@@ -1,6 +1,6 @@
 # Guide to using the hardware PTP support in the Raspberry Pi CM4 and CM5
 
-*This is still a work-in-progress. Suggestions for improvements are very welcome and can be made by creating issues.*
+*New: I have released [SatPulse](https://satpulse.net), which provides a daemon that connects the GPS receiver, the PHC, ptp4l and chrony. It is intended to replace the ts2phc-based approach described here. The hardware and OS setup remains the same.*
 
 The Raspberry Pi Compute Module 4 (CM4) and Compute Module 5 (CM5) have hardware support for the Precision Time Protocol (PTP). This repository is a guide to how to using this to provide an accurate source of time within your local network.
 
