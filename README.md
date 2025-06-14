@@ -36,7 +36,7 @@ This shows the results from using a TAPR TICC in interval mode with two CM4 PTP 
 
 ## References
 
-Fedora has great [docs](https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/servers/Configuring_PTP_Using_ptp4l/) for PTP, although some details are different for Raspberry Pi OS, which is Debian-based.
+Fedora has great [docs](https://docs.fedoraproject.org/en-US/fedora/f40/system-administrators-guide/servers/Configuring_PTP_Using_ptp4l/) for PTP, although some details are different for Raspberry Pi OS, which is Debian-based.
 
 
 
