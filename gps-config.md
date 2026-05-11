@@ -1,5 +1,7 @@
 # GPS configuration
 
+> **This page is no longer maintained.** For up-to-date information, see [GPS configuration](https://satpulse.net/setup/gps-config.html) on the SatPulse site.
+
 For best results, you are likely to need to configure your GPS module.
 
 ## What to configure

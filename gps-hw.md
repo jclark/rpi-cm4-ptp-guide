@@ -1,5 +1,12 @@
 # GPS receiver
 
+> **This page is no longer maintained.** For up-to-date information, see the following pages on the SatPulse site:
+>
+> * [GNSS modules](https://satpulse.net/hardware/gnss-modules.html)
+> * [GNSS boards/cards](https://satpulse.net/hardware/gnss-boards.html)
+> * [GNSS receivers](https://satpulse.net/hardware/gnss-receivers.html)
+> * [GNSSDOs](https://satpulse.net/hardware/gnssdos.html)
+
 This discusses solutions for connecting a GPS receiver solutions that satisfy the following constraints.
 
 * The Pulse Per Second (PPS) signal is connected to the CM4 NIC.

@@ -1,8 +1,6 @@
 # Guide to using the hardware PTP support in the Raspberry Pi CM4 and CM5
 
-*New: I have released [SatPulse](https://satpulse.net), which provides a daemon that connects the GPS receiver, the PHC, ptp4l and chrony. It is intended to replace the ts2phc-based approach described here. The hardware and OS setup remains the same.*
-
-The Raspberry Pi Compute Module 4 (CM4) and Compute Module 5 (CM5) have hardware support for the Precision Time Protocol (PTP). This repository is a guide to how to using this to provide an accurate source of time within your local network.
+The Raspberry Pi Compute Module 4 (CM4) and Compute Module 5 (CM5) have hardware support for the Precision Time Protocol (PTP). This repository was a guide to how to use this to provide an accurate source of time within your local network. Based on my experience with the approach in this repository, I developed [SatPulse](https://satpulse.net), which provides a much better solution. This guide accordingly now links mainly to pages on the SatPulse web site. 
 
 Although the CM4/CM5 do not have an Ethernet jack, they do have an Ethernet PHY, meaning that Ethernet functionality requires only wiring up a jack. The PHY is the Broadcom [BCM54210PE](https://www.broadcom.com/products/ethernet-connectivity/phy-and-poe/copper/gigabit/bcm54210), which has support for PTP. Linux kernel support for this was added in 2022, as discussed in https://github.com/raspberrypi/linux/issues/4151. This support has now been merged into the mainline Linux kernel.
 
@@ -10,17 +8,29 @@ The PTP support involves the Ethernet PHY having its own clock, called the PTP h
 
 There's a useful introductory [blog](https://www.jeffgeerling.com/blog/2022/ptp-and-ieee-1588-hardware-timestamping-on-raspberry-pi-cm4) from Jeff Geerling and also a [video](https://www.youtube.com/watch?v=RvnG-ywF6_s).
 
-The goal of this repository is to be a guide to taking advantage of this. The guide is split into the following sections:
+### Hardware
 
-* [parts needed to create a CM4/CM5-based computer](computer.md)
-* [GPS receiver hardware options](gps-hw.md)
-* [how to install and configure the operating system](os.md)
-* [how to configure the GPS receiver](gps-config.md)
-* [how to set up a time server using LinuxPTP's ts2phc program](ts2phc.md)
+* [parts needed to create a CM4/CM5-based computer](https://satpulse.net/hardware/cm-build.html)
+* GPS hardware: [modules](https://satpulse.net/hardware/gnss-modules.html), [boards/cards](https://satpulse.net/hardware/gnss-boards.html), [receivers](https://satpulse.net/hardware/gnss-receivers.html), [GPSDOs](https://satpulse.net/hardware/gnssdos.html), [antennas](https://satpulse.net/hardware/antennas.html)
+* [inexpensive network switches with PTP support](https://satpulse.net/hardware/switches.html)
+
+### Setting up a time server
+
+SatPulse has a [setup guide](https://satpulse.net/setup/index.html). Key stages are:
+
+* [install and configure the operating system](https://satpulse.net/setup/rpi-os.html)
+* [install SatPulse](https://satpulse.net/setup/satpulse-install.html)
+* [configure the GPS receiver](https://satpulse.net/setup/gps-config.html)
+* [configure and run satpulsed](https://satpulse.net/setup/satpulsed.html)
+* [set up ptp4l](https://satpulse.net/setup/ptp4l.html)
+
+This guide described [setting up a time server using LinuxPTP's ts2phc program](ts2phc.md), but I now recommend using [SatPulse](https://satpulse.net/) instead.
+
+### Other topics
+
 * [how to set up a combined PTP/NTP client on a CM4/CM5](ptp-client.md)
-* [inexpensive network switches with PTP support](switches.md)
-* [how to use the PTP client on Windows 10/11 with a CM4/CM5-based PTP server](ptp-windows.md)
-* [how to measure time synchronization](measure.md)
+* [how to use the PTP client on Windows 10/11 with a CM4/CM5-based PTP server](https://satpulse.net/howtos/ptp-windows.html)
+* [how to measure time synchronization](https://satpulse.net/howtos/measure.html)
 
 ## Results
 
