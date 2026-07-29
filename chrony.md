@@ -11,16 +11,8 @@ This page is written assuming [Fedora](fedora.md) as the OS.
 
 Chrony can work fine with just the PPS signal from the GPS: the pulse says exactly when a second starts; chrony can figure out which second it is from network sources.
 
-Before trying to get chrony working, it's a good idea to check that the kernel is seeing the PPS signal, which can be done
-with these commands:
-
-```
-echo 1 0 | sudo tee /sys/class/ptp/ptp0/pins/SYNC_OUT
-echo 0 1 | sudo tee /sys/class/ptp/ptp0/extts_enable
-sudo cat /sys/class/ptp/ptp0/fifo
-```
-
-The last command should output a line, which represents a timestamp of an input pulse and consists of 3 numbers (channel number, which is zero in this case, seconds count, nanoseconds count). Repeating the last command will give lines for successive input pulses.
+Before trying to get chrony working, it's a good idea to check that the kernel is seeing the PPS
+signal, as described in [Verify GPS connections](verify-gps.md#pps-connection).
 
 To use the PPS as a source of time, add this line to `/etc/chrony.conf`:
 
@@ -66,17 +58,10 @@ It should should a line starting with `#* PPS`. This means it has successfully s
 
 Connecting up the serial output from the GPS allows chrony to work even when there is no connection to any other NTP server.
 
-First check that your GPS is producing output. You can do this with
-
-Check serial connection to GPS
-
-```
-(stty 9600 -echo -icrnl; cat) </dev/ttyAMA3
-```
-
-(This is using `/dev/ttyAMA3` because Fedora has issues with `/dev/ttyAMA0`. With Raspberry Pi OS, you could use `/dev/ttyAMA0`.)
-
-The most common default speed is 9600, but some receivers default to 38400.
+First check that your GPS is producing output, as described in
+[Verify GPS connections](verify-gps.md#serial-connection).
+The examples below use `/dev/ttyAMA3` because Fedora has issues with `/dev/ttyAMA0`;
+with Raspberry Pi OS you could use `/dev/ttyAMA0`.
 
 Install gpsd:
 

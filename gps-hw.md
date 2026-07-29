@@ -4,7 +4,7 @@
 >
 > * [GNSS modules](https://satpulse.net/hardware/gnss-modules.html)
 > * [GNSS boards/cards](https://satpulse.net/hardware/gnss-boards.html)
-> * [GNSS receivers](https://satpulse.net/hardware/gnss-receivers.html)
+> * [Enclosed GNSS receivers](https://satpulse.net/hardware/gnss-enclosed.html)
 > * [GNSSDOs](https://satpulse.net/hardware/gnssdos.html)
 
 This discusses solutions for connecting a GPS receiver solutions that satisfy the following constraints.

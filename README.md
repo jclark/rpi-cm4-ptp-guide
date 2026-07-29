@@ -11,7 +11,7 @@ There's a useful introductory [blog](https://www.jeffgeerling.com/blog/2022/ptp-
 ### Hardware
 
 * [parts needed to create a CM4/CM5-based computer](https://satpulse.net/hardware/cm-build.html)
-* GPS hardware: [modules](https://satpulse.net/hardware/gnss-modules.html), [boards/cards](https://satpulse.net/hardware/gnss-boards.html), [receivers](https://satpulse.net/hardware/gnss-receivers.html), [GPSDOs](https://satpulse.net/hardware/gnssdos.html), [antennas](https://satpulse.net/hardware/antennas.html)
+* GPS hardware: [modules](https://satpulse.net/hardware/gnss-modules.html), [boards/cards](https://satpulse.net/hardware/gnss-boards.html), [enclosed receivers](https://satpulse.net/hardware/gnss-enclosed.html), [GNSSDOs](https://satpulse.net/hardware/gnssdos.html), [antennas](https://satpulse.net/hardware/antennas.html)
 * [inexpensive network switches with PTP support](https://satpulse.net/hardware/switches.html)
 
 ### Setting up a time server
@@ -20,14 +20,17 @@ SatPulse has a [setup guide](https://satpulse.net/setup/index.html). Key stages 
 
 * [install and configure the operating system](https://satpulse.net/setup/rpi-os.html)
 * [install SatPulse](https://satpulse.net/setup/satpulse-install.html)
-* [configure the GPS receiver](https://satpulse.net/setup/gps-config.html)
+* [verify the serial connection to the GPS](https://satpulse.net/setup/gps-serial.html)
 * [configure and run satpulsed](https://satpulse.net/setup/satpulsed.html)
-* [set up ptp4l](https://satpulse.net/setup/ptp4l.html)
+* [configure the GPS receiver](https://satpulse.net/setup/gps-config.html)
+* [set up precision timing with a PHC](https://satpulse.net/setup/phc.html), which covers ptp4l and chrony
 
 This guide described [setting up a time server using LinuxPTP's ts2phc program](ts2phc.md), but I now recommend using [SatPulse](https://satpulse.net/) instead.
 
 ### Other topics
 
+* [how to verify the GPS serial and PPS connections using only standard Linux commands](verify-gps.md)
+* [how to configure chrony to use PPS input and hardware timestamping](chrony.md)
 * [how to set up a combined PTP/NTP client on a CM4/CM5](ptp-client.md)
 * [how to use the PTP client on Windows 10/11 with a CM4/CM5-based PTP server](https://satpulse.net/howtos/ptp-windows.html)
 * [how to measure time synchronization](https://satpulse.net/howtos/measure.html)

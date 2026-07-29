@@ -3,7 +3,7 @@
 This page describes how to set up a time server using the `ts2phc` program, which is part
 of LinuxPTP.
 
-Before attempting this make sure the [GPS connection is working](os.md#verify-gps-connection).
+Before attempting this make sure the [GPS connections are working](verify-gps.md).
 
 ## Minimal PTP test setup
 
